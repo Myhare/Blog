@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ming.m_blog.mapper.UniqueViewMapper">
+
+    <!--获取最近七天的访问结果-->
+    <select id="getUniqueViewDTO" resultType="com.ming.m_blog.dto.UniqueViewDTO">
+        select
+            DATE_FORMAT(create_time,"%Y-%m-%d") day,
+            views_count
+        from unique_view
+        where create_time &gt; #{startDate}
+          and create_time &lt;= #{endDate}
+        order by
+            create_time;
+    </select>
+</mapper>

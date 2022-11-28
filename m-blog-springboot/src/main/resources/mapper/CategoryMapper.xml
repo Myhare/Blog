@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ming.m_blog.mapper.CategoryMapper">
+
+    <select id="selectCategoryList" resultType="com.ming.m_blog.dto.CategoryListDTO">
+        select
+        c.id categoryId,
+        c.category_name categoryName,
+        c.update_time updateTime,
+        count(a.id) articleCount
+        from category c
+        left join article a on c.id = a.category_id
+        <where>
+            <if test="keywords != null">
+                c.category_name like concat('%',#{keywords},'%')
+            </if>
+        </where>
+        group by c.id
+        limit #{pageNum},#{pageSize}
+    </select>
+
+    <!--前台查询分类列表-->
+    <select id="listCategory" resultType="com.ming.m_blog.dto.CategoryDTO">
+        select
+            c.id,
+            c.category_name categoryName,
+            count(a.id) articleCount
+        from category c
+                 left join article a on c.id = a.category_id
+        group by c.id
+    </select>
+
+
+</mapper>

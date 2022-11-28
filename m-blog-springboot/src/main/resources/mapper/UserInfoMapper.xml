@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ming.m_blog.mapper.UserInfoMapper">
+
+
+    <select id="selectRoleByUserId" resultType="java.lang.String">
+        select r.role_name
+        from role r
+                 left join in_user_role iur on r.id = iur.role_id
+                 left join user_info ui on  ui.id = iur.user_id
+        where ui.id = #{userId}
+    </select>
+
+    <resultMap id="userListMap" type="com.ming.m_blog.dto.UserListDTO">
+        <result column="userId" property="userId"/>
+        <result column="avatar" property="avatar"/>
+        <result column="nickname" property="nickname"/>
+        <result column="blogCount" property="blogCount"/>
+        <result column="isDelete" property="isDelete"/>
+        <result column="create_time" property="createTime"/>
+        <result column="login_time" property="lastLoginTime"/>
+        <collection property="roles" ofType="java.lang.String">
+            <result column="roles"/>
+        </collection>
+    </resultMap>
+    <!--后台分页查询用户列表-->
+    <select id="selectUserList" resultMap="userListMap">
+        select
+        ua.id userId, avatar, nickname, r.role_name roles,
+        (select count(a.id) from article a where a.user_id=ua.id) blogCount,
+        ui.is_delete isDelete, ua.create_time, ua.login_time
+        from (
+        select
+        id,
+        avatar,
+        nickname,
+        is_delete
+        from user_info
+        limit #{pageNum},#{pageSize}
+        ) ui
+        left join user_auth ua on ui.id = ua.user_info_id
+        left join in_user_role iur on iur.user_id=ua.id
+        left join role r on iur.role_id = r.id
+        <where>
+            <if test="keywords != null">
+                ui.nickname like concat('%',#{keywords},'%')
+            </if>
+        </where>;
+    </select>
+
+</mapper>

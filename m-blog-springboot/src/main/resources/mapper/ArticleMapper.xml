@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ming.m_blog.mapper.ArticleMapper">
+
+    <!--查询博客数量-->
+    <select id="getArticleCount" resultType="java.lang.Integer">
+        select count(DISTINCT a.id)
+        from article a
+        left join in_article_tag iat on a.id = iat.article_id
+        left join tag t on iat.tag_id = t.id
+        <where>
+            a.is_delete = #{adminArticlesVO.isDelete}
+            <if test="adminArticlesVO.type!=null">
+                and a.type = #{adminArticlesVO.type}
+            </if>
+            <if test="adminArticlesVO.status!=null">
+                and a.status = #{adminArticlesVO.status}
+            </if>
+            <if test="adminArticlesVO.categoryId!=null">
+                and a.category_id = #{adminArticlesVO.categoryId}
+            </if>
+            <if test="adminArticlesVO.tagId!=null">
+                and t.id = #{adminArticlesVO.tagId}
+            </if>
+            <if test="adminArticlesVO.keywords!=null">
+                and a.title like concat('%',#{adminArticlesVO.keywords},'%')
+            </if>
+        </where>
+    </select>
+
+    <!--分页查询文章列表-->
+    <select id="getArticleList" resultMap="articleListMap">
+        select
+        a.id,
+        a.cover,
+        a.title,
+        c.category_name,
+        t.tag_name,
+        a.type,
+        a.is_top
+        from (
+        select id, category_id, cover, title, type, is_top, is_delete
+        from article
+        <where>
+            is_delete=#{adminArticlesVO.isDelete}
+            <if test="adminArticlesVO.type!=null">
+                and article.type = #{adminArticlesVO.type}
+            </if>
+            <if test="adminArticlesVO.status!=null">
+                and article.status = #{adminArticlesVO.status}
+            </if>
+            <if test="adminArticlesVO.categoryId!=null">
+                and category_id = #{adminArticlesVO.categoryId}
+            </if>
+            <if test="adminArticlesVO.keywords!=null">
+                and title like concat('%',#{adminArticlesVO.keywords},'%')
+            </if>
+            <if test="adminArticlesVO.tagId!=null">
+                and id in (
+                select iat.article_id
+                from in_article_tag iat
+                where iat.article_id = #{adminArticlesVO.tagId}
+                )
+            </if>
+        </where>
+        limit #{adminArticlesVO.pageNum},#{adminArticlesVO.pageSize}
+        ) a
+        left join in_article_tag iat on a.id = iat.article_id
+        left join tag t on iat.tag_id = t.id
+        left join category c on a.category_id = c.id
+    </select>
+
+    <!--查询首页博客列表-->
+    <select id="getHomeLArticle" resultMap="homeArticle">
+        select
+            a.id,
+            a.cover,
+            a.title,
+            a.content,
+            c.id categoryId,
+            c.category_name,
+            t.id tagId,
+            t.tag_name,
+            a.type,
+            a.is_top,
+            a.update_time
+        from (
+                 select
+                     a.id,
+                     a.cover,
+                     substring(a.content,1,200) content,
+                     a.title,
+                     a.category_id,
+                     a.type,
+                     a.is_top,
+                     a.update_time
+                 from article a
+                 where a.is_delete = 0
+                   and a.status != 0
+                   and a.status != 2
+                 order by is_top desc, id desc
+                 limit #{pageNum},#{pageSize}
+             ) a
+                 left join category c on c.id = a.category_id
+                 left join in_article_tag iat on iat.article_id = a.id
+                 left join tag t on iat.tag_id = t.id;
+    </select>
+
+    <!--登录之后查询文章主页列表-->
+    <select id="loginGetHomeArticle" resultMap="homeArticle">
+        select
+            distinct a.id,
+                     a.cover,
+                     a.title,
+                     a.content,
+                     c.id categoryId,
+                     c.category_name,
+                     t.id tagId,
+                     t.tag_name,
+                     a.type,
+                     a.is_top,
+                     a.update_time
+        from (
+                 select
+                     a.id,
+                     a.cover,
+                     substring(a.content,1,200) content,
+                     a.title,
+                     a.category_id,
+                     a.type,
+                     a.is_top,
+                     a.update_time
+                 from article a
+                 where (
+                               (
+                                       a.is_delete = 0
+                                       and a.status != 0
+                                       and a.status != 2
+                                   )
+                               or(
+                                       a.user_id = #{userId}
+                                       and a.is_delete = 0
+                                       and a.status != 0
+                                   )
+                           )
+                 order by is_top desc, id desc
+                 limit #{pageNum},#{pageSize}
+             ) a
+                 left join category c on c.id = a.category_id
+                 left join in_article_tag iat on iat.article_id = a.id
+                 left join tag t on iat.tag_id = t.id;
+    </select>
+
+    <!--查询文章预览列表-->
+    <select id="getArticleCondition" resultMap="articleCondition">
+        select
+        a.id,
+        a.cover,
+        a.title,
+        a.update_time,
+        a.category_id,
+        c.category_name,
+        t.id tagId,
+        t.tag_name
+        from (
+        select
+        a.id,
+        a.cover,
+        a.title,
+        a.update_time,
+        a.content,
+        a.category_id
+        from article a
+        <where>
+            <if test="conditionVO.categoryId != null">
+                a.category_id=#{conditionVO.categoryId}
+            </if>
+            <if test="conditionVO.tagId != null">
+                id in (
+                select article_id
+                from in_article_tag
+                where tag_id = #{conditionVO.tagId}
+                )
+            </if>
+            and a.is_delete = 0
+            and a.status = 1
+            order by id DESC
+        </where>
+        limit #{pageNum},#{pageSize}
+        ) a
+        left join category c on a.category_id = c.id
+        left join in_article_tag iat on a.id = iat.article_id
+        left join tag t on iat.tag_id = t.id;
+    </select>
+
+    <!--登陆后查询文章预览结果-->
+    <select id="loginGetArticleCondition" resultMap="articleCondition">
+        select
+        a.id,
+        a.cover,
+        a.title,
+        a.update_time,
+        a.category_id,
+        c.category_name,
+        t.id tagId,
+        t.tag_name
+        from (
+        select
+        a.id,
+        a.cover,
+        a.title,
+        a.update_time,
+        a.content,
+        a.category_id
+        from article a
+        <where>
+            <if test="conditionVO.categoryId != null">
+                a.category_id=#{conditionVO.categoryId}
+            </if>
+            <if test="conditionVO.tagId != null">
+                id in (
+                select article_id
+                from in_article_tag
+                where tag_id = #{conditionVO.tagId}
+                )
+            </if>
+            and (
+            (
+            a.is_delete = 0
+            and a.status != 0
+            and a.status != 2
+            )
+            or(
+            a.user_id = #{userId}
+            and a.is_delete = 0
+            and a.status != 0
+            )
+            )
+            order by id DESC
+        </where>
+        limit #{pageNum},#{pageSize}
+        ) a
+        left join category c on a.category_id = c.id
+        left join in_article_tag iat on a.id = iat.article_id
+        left join tag t on iat.tag_id = t.id;
+    </select>
+
+    <!--查询推荐文章-->
+    <select id="getArticleRecommend" resultType="com.ming.m_blog.dto.ArticleRecommendDTO">
+        select
+            a.id,
+            a.cover,
+            a.title,
+            a.update_time updateTime
+        from (
+                 select distinct
+                     iat.article_id
+                 from (
+                          select
+                              tag_id
+                          from in_article_tag iat
+                          where iat.article_id = #{articleId}
+                      ) t
+                          join in_article_tag iat on iat.tag_id = t.tag_id
+                 where iat.article_id != #{articleId}
+
+             ) a2
+                 join article a on a.id = a2.article_id
+        where
+            a.is_delete = 0
+        order by
+            a.is_top DESC,a.id DESC
+        limit 6;
+
+    </select>
+
+    <!--通过id查询文章详细信息-->
+    <select id="getArticleDetailedById" resultMap="articleDetailedById">
+        select
+            a.id,
+            a.cover,
+            a.title,
+            a.content,
+            a.type,
+            a.category_id,
+            a.create_time,
+            a.update_time,
+            c.category_name,
+            t.id tagId,
+            t.tag_name
+        from article a
+                 left join in_article_tag iat on a.id = iat.article_id
+                 left join tag t on iat.tag_id = t.id
+                 left join category c on a.category_id = c.id
+        where a.id = #{articleId};
+    </select>
+
+    <!--查询文章统计列表-->
+    <select id="listArticleStatistics" resultType="com.ming.m_blog.dto.ArticleStatisticsDTO">
+        select
+            DATE_FORMAT(create_time,'%Y-%m-%d') date,
+            count(1) count
+        from article
+        group by
+            date
+        order by
+            date desc
+    </select>
+
+    <!--登录查询文章归档-->
+    <select id="loginGetArchive" resultType="com.ming.m_blog.dto.ArchiveDTO">
+        select
+            a.id,
+            a.title,
+            a.create_time
+        from article a
+        where(
+                     (
+                             a.is_delete = 0
+                             and a.status != 0
+                             and a.status != 2
+                         )
+                     or(
+                             a.user_id = #{userId}
+                             and a.is_delete = 0
+                             and a.status != 0
+                         )
+                 )
+    </select>
+    <!--登录后查询归档文章数量-->
+    <select id="loginGetArchiveCount" resultType="java.lang.Integer">
+        select count(*)
+        from article a
+        where (
+                      (
+                              a.is_delete = 0
+                              and a.status != 0
+                              and a.status != 2
+                          )
+                      or(
+                              a.user_id = #{userId}
+                              and a.is_delete = 0
+                              and a.status != 0
+                          )
+                  )
+    </select>
+
+    <!--查询文章详细信息-->
+    <resultMap id="articleDetailedById" type="com.ming.m_blog.dto.ArticleDTO">
+        <result column="id" property="id"/>
+        <result column="cover" property="cover"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="category_name" property="categoryName"/>
+        <collection property="tagList" ofType="com.ming.m_blog.dto.TagSimpleDTO">
+            <result column="tagId" property="id"/>
+            <result column="tag_name" property="tagName"/>
+        </collection>
+    </resultMap>
+
+    <!--查询文章缩略图-->
+    <resultMap id="articleCondition" type="com.ming.m_blog.dto.ArticlePreviewDTO">
+        <result column="id" property="id"/>
+        <result column="cover" property="cover"/>
+        <result column="title" property="title"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="category_name" property="categoryName"/>
+        <collection property="tagDTOList" ofType="com.ming.m_blog.dto.TagSimpleDTO">
+            <result column="tagId" property="id"/>
+            <result column="tag_name" property="tagName"/>
+        </collection>
+    </resultMap>
+
+    <!--首页文章查询映射-->
+    <resultMap id="homeArticle" type="com.ming.m_blog.dto.HomeArticleDTO">
+        <result column="id" property="id"/>
+        <result column="cover" property="cover"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="categoryId" property="categoryId"/>
+        <result column="category_name" property="categoryName"/>
+        <result column="type" property="type"/>
+        <result column="is_top" property="isTop"/>
+        <result column="update_time" property="updateTime"/>
+        <collection property="tagList" ofType="com.ming.m_blog.dto.TagSimpleDTO">
+            <result column="tag_name" property="tagName"/>
+            <result column="tagId" property="id"/>
+        </collection>
+    </resultMap>
+
+    <!--添加文章映射-->
+    <resultMap id="articleVO" type="com.ming.m_blog.vo.ArticleAddVO">
+        <result column="id" property="id"/>
+        <result column="title" property="articleTitle"/>
+        <result column="content" property="articleContent"/>
+        <result column="category_name" property="categoryName"/>
+        <result column="type" property="articleType"/>
+        <result column="cover" property="coverUrl"/>
+        <result column="is_top" property="isTop"/>
+        <result column="status" property="status"/>
+        <collection property="tagList" ofType="java.lang.String">
+            <result column="tag_name"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="articleListMap" type="com.ming.m_blog.dto.ArticleListInfoDTO">
+        <result column="id" property="id"/>
+        <result column="cover" property="cover"/>
+        <result column="title" property="title"/>
+        <result column="category_name" property="categoryName"/>
+        <result column="type" property="type"/>
+        <result column="is_top" property="isTop"/>
+        <collection property="tagNameList" ofType="java.lang.String">
+            <result column="tag_name"/>
+        </collection>
+    </resultMap>
+
+</mapper>

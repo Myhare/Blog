@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ming.m_blog.mapper.CommentMapper">
+
+    <!--批量恢复评论列表-->
+    <update id="restoreCommentList">
+        update comment
+        set is_delete = 0
+        where id in
+        <foreach open="(" collection="commentIdList" item="commentId" separator="," close=")">
+            #{commentId}
+        </foreach>
+    </update>
+    <!--批量彻底删除评论-->
+    <delete id="reallyDelCommentList">
+        delete from comment
+        where id in
+        <foreach open="(" collection="commentIdList" item="commentId" separator="," close=")">
+            #{commentId}
+        </foreach>
+    </delete>
+
+    <!--后台查询评论列表-->
+    <select id="getAdminCommentList" resultMap="adminCommentDTO">
+        select
+        c.id,
+        ui.avatar,
+        ui.nickname,
+        replyUserI.nickname replyNickname,
+        a.title,
+        c.comment_content,
+        c.create_time,
+        c.is_review,
+        c.type
+        from (
+        select
+        id,
+        user_id,
+        reply_user_id ruid,
+        topic_id,
+        comment_content,
+        create_time,
+        is_review,
+        type
+        from comment
+        <where>
+            is_delete = #{commentsVO.isDelete}
+            <if test="commentsVO.type != null">
+                and type = #{commentsVO.type}
+            </if>
+            <if test="commentsVO.review!=null">
+                and is_review = #{commentsVO.review}
+            </if>
+        </where>
+        limit #{commentsVO.pageNum},#{commentsVO.pageSize}
+        ) c
+        left join user_auth ua on ua.id = c.user_id
+        left join user_info ui on ua.user_info_id = ui.id
+        left join user_auth replyUserA on replyUserA.id = c.ruid
+        left join user_info replyUserI on replyUserA.user_info_id = replyUserI.id
+        left join article a on a.id = c.topic_id
+        <where>
+            <if test="commentsVO.keywords!=null">
+                ui.nickname like concat('%',#{commentsVO.keywords},'%')
+            </if>
+        </where>
+    </select>
+
+    <!--后台查询评论数量-->
+    <select id="getAdminCommentCount" resultType="java.lang.Integer">
+        select count(c.id)
+        from comment c
+        left join user_auth ua on ua.id = c.user_id
+        left join user_info ui on ua.user_info_id = ui.id
+        <where>
+            c.is_delete = #{commentsVO.isDelete}
+            <if test="commentsVO.type != null">
+                and c.type = #{commentsVO.type}
+            </if>
+            <if test="commentsVO.review!=null">
+                and c.is_review = #{commentsVO.review}
+            </if>
+            <if test="commentsVO.keywords!=null">
+                and ui.nickname like concat('%',#{commentsVO.keywords},'%')
+            </if>
+        </where>
+    </select>
+
+    <!--查询评论-->
+    <select id="getCommentDTO" resultType="com.ming.m_blog.dto.CommentDTO">
+        select
+            c.id,
+            user_id userId,
+            ui.nickname,
+            ui.avatar,
+            c.comment_content commentContent,
+            c.create_time
+        from comment c
+                 left join user_auth ua on ua.id=c.user_id
+                 left join user_info ui on ua.user_info_id = ui.id
+        where
+            c.is_review = 1
+          and c.parent_id is null
+          and c.type = #{commentsVO.type}
+          and c.topic_id = #{commentsVO.topicId}
+        order by c.id desc
+        limit #{pageNum},#{pageSize}
+    </select>
+
+    <!--获取主题评论的子评论-->
+    <select id="getReplyDTO" resultType="com.ming.m_blog.dto.ReplyDTO">
+        select *
+        from (
+        select
+        c.id,
+        c.parent_id,
+        c.user_id,
+        ui.nickname,
+        ui.avatar,
+        c.reply_user_id,
+        replyUi.nickname replyNickname,
+        c.comment_content,
+        c.create_time,
+        row_number() over (PARTITION BY c.parent_id order by c.create_time) row_num
+        from comment c
+        left join user_auth ua on c.user_id = ua.id
+        left join user_info ui on ua.user_info_id = ui.id
+        left join user_auth replyUa on c.reply_user_id = replyUa.id
+        left join user_info replyUi on replyUa.user_info_id = replyUi.id
+        where c.is_review = 1
+        and c.parent_id in
+        <foreach open="(" collection="commentIdList" item="commentId" separator="," close=")">
+            #{commentId}
+        </foreach>
+        ) com
+        where 3 > com.row_num;
+
+    </select>
+
+    <!--查询评论回复数量-->
+    <select id="getReplyCount" resultType="com.ming.m_blog.dto.ReplyCountDTO">
+        select
+        parent_id commentId,
+        count(*) replyCount
+        from comment
+        where
+        is_review = 1
+        and
+        parent_id in
+        <foreach open="(" collection="commentIdList" item="commentId" separator="," close=")">
+            #{commentId}
+        </foreach>
+        group by parent_id
+    </select>
+
+    <!--查询具体某个评论下的回复-->
+    <select id="getReplyByCommentId" resultType="com.ming.m_blog.dto.ReplyDTO">
+        select
+            c.id,
+            parent_id,
+            user_id,
+            ui.nickname,
+            ui.avatar,
+            c.reply_user_id,
+            replyUi.nickname replyNickname,
+            comment_content,
+            c.create_time
+        from comment c
+                 left join user_auth ua on c.user_id = ua.id
+                 left join user_info ui on ua.user_info_id = ui.id
+                 left join user_auth replyUa on c.reply_user_id = replyUa.id
+                 left join user_info replyUi on replyUa.user_info_id = replyUi.id
+        where
+            c.parent_id = #{commentId}
+          and
+            c.is_review = 1
+        order by c.id desc
+        limit #{current},#{size}
+    </select>
+
+    <!--查询后台评论列表-->
+    <resultMap id="adminCommentDTO" type="com.ming.m_blog.dto.CommentListDTO">
+        <result column="id" property="id"/>
+        <result column="avatar" property="avatar"/>
+        <result column="nickname" property="nickname"/>
+        <result column="replyNickname" property="replyNickname"/>
+        <result column="title" property="title"/>
+        <result column="comment_content" property="content"/>
+        <result column="create_time" property="commentTime"/>
+        <result column="is_review" property="isReview"/>
+        <result column="type" property="type"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ming.m_blog.mapper.TagMapper">
+
+    <select id="getTagList" resultType="com.ming.m_blog.dto.TagListDTO">
+        select
+            t.id tagId,
+            t.tag_name tagName,
+            count(a.id) articleCount,
+            t.update_time updateTime
+        from tag t
+                 left join in_article_tag iat on t.id = iat.tag_id
+                 left join article a on iat.article_id = a.id
+        <where>
+            <if test="keywords!=null">
+                t.tag_name like concat('%',#{keywords},'%')
+            </if>
+        </where>
+        group by t.id
+        limit #{pageNum},#{pageSize};
+    </select>
+
+    <!--通过文章id查询标签名称-->
+    <select id="getTagNameByArticleId" resultType="java.lang.String">
+        SELECT
+            tag_name
+        FROM
+            tag t
+                JOIN in_article_tag tat ON t.id = tat.tag_id
+        WHERE
+            article_id = #{articleId}
+    </select>
+</mapper>
