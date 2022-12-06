@@ -82,7 +82,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Article article = Article.builder()
                 .id(articleAddVO.getId())
                 .userId(loginUser.getUserId())
-                // .userId(1)
                 .categoryId(category.getId())
                 .title(articleAddVO.getArticleTitle())
                 .content(articleAddVO.getArticleContent())

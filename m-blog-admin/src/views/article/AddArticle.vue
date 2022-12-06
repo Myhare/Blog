@@ -8,6 +8,7 @@
         <el-button style="margin-left: 30px" @click="saveArtDraft">添加草稿</el-button>
         <el-button type="primary" style="margin-left: 30px" @click="showAddArtDialog">发布博客</el-button>
       </div>
+      <!--文章编辑位置-->
       <div>
         <mavon-editor
           ref="editorRef"
@@ -18,6 +19,7 @@
       </div>
     </el-card>
 
+    <!--发布博客对话框-->
     <el-dialog title="发布博客" width="40%" top="3vh" :visible.sync="addArticleShow">
       <el-form :model="article">
         <!--文章分类-->

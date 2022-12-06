@@ -59,7 +59,7 @@
                 and id in (
                 select iat.article_id
                 from in_article_tag iat
-                where iat.article_id = #{adminArticlesVO.tagId}
+                where iat.tag_id = #{adminArticlesVO.tagId}
                 )
             </if>
         </where>

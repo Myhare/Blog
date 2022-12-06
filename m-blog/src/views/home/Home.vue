@@ -224,9 +224,9 @@
       </v-col>
     </v-row>
     <!-- 提示消息 -->
-    <!--    <v-snackbar v-model="tip" top color="#49b1f5" :timeout="2000">-->
-    <!--      按CTRL+D 键将本页加入书签-->
-    <!--    </v-snackbar>-->
+    <v-snackbar v-model="tip" top color="#49b1f5" :timeout="2000">
+      按CTRL+D 键将本页加入书签
+    </v-snackbar>
   </div>
 </template>
 

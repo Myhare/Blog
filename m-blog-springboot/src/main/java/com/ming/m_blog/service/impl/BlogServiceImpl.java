@@ -151,7 +151,7 @@ public class BlogServiceImpl implements BlogService {
         // 判断用户有没有访问过,如果没有访问过，将信息存入redis
         if (!redisService.sIsMember(UNIQUE_VISITOR,md5)){
                 String ipSource = IpUtils.getIpSource(ipAddress);
-                System.out.println("ipSource:"+ipSource);
+                // System.out.println("ipSource:"+ipSource);
                 // 如果ip信息不为空，将ip地址存入redis中
                 if (StringUtils.isNotBlank(ipSource)){
                     ipSource = ipSource.substring(0,2)
