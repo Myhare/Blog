@@ -16,6 +16,14 @@ const userRouter = {
       meta:{
         title:'用户列表'
       }
+    },
+    {
+      path: 'onLine',
+      component: ()=> import('@/views/users/Online'),
+      name: 'onLine',
+      meta: {
+        title: '在线用户'
+      }
     }
   ]
 }

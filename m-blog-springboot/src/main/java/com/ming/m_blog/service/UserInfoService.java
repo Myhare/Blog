@@ -2,11 +2,11 @@ package com.ming.m_blog.service;
 
 import com.ming.m_blog.dto.UserAreaDTO;
 import com.ming.m_blog.dto.UserListDTO;
+import com.ming.m_blog.dto.UserOnlineDTO;
+import com.ming.m_blog.pojo.Page;
 import com.ming.m_blog.pojo.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ming.m_blog.vo.ChangeUserInfoVO;
-import com.ming.m_blog.vo.ResponseResult;
-import com.ming.m_blog.vo.UserSimpInfoVO;
+import com.ming.m_blog.vo.*;
 
 import java.util.List;
 
@@ -57,6 +57,12 @@ public interface UserInfoService extends IService<UserInfo> {
      * @return         修改后的信息
      */
     int changeUserInfo(String nickName,String intro);
+
+    /**
+     * 获取当前在线用户信息
+     * @return  获取结果
+     */
+    PageResult<UserOnlineDTO> getUserOnline(QueryInfoVO queryInfoVO);
 
 }
 

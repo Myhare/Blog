@@ -9,6 +9,7 @@ class MBlogSpringbootApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
     // 测试密码加密

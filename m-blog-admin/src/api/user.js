@@ -74,3 +74,19 @@ export function changeUserInfo(nickName, intro){
   })
 
 }
+
+/**
+ * 获取在线用户信息
+ */
+export function getOnline(params){
+  console.log(params);
+  return request({
+    url: '/api/admin/userInfo/online',
+    method: 'get',
+    params: {
+      keywords: params.keywords,
+      current: params.current,
+      size: params.size
+    }
+  })
+}

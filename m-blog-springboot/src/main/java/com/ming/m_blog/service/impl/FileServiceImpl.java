@@ -30,7 +30,7 @@ public class FileServiceImpl implements FileService {
         String fileUrl = FileUtils.uploadFile(headFile, FilePathEnum.AVATAR.getPath());
         // 将更新之后获取用户头像的路径存入数据库
         UserInfo userInfo = UserInfo.builder()
-                .id(UserUtils.getLoginUser().getUserId())
+                .id(UserUtils.getLoginUser().getUserInfoId())
                 .avatar(fileUrl)
                 .build();
         userInfoMapper.updateById(userInfo);

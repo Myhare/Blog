@@ -1,26 +1,35 @@
 package com.ming.m_blog.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.ming.m_blog.constant.RedisPrefixConst;
 import com.ming.m_blog.dto.UserAreaDTO;
 import com.ming.m_blog.dto.UserListDTO;
+import com.ming.m_blog.dto.UserOnlineDTO;
 import com.ming.m_blog.exception.ReRuntimeException;
+import com.ming.m_blog.mapper.UserAuthMapper;
+import com.ming.m_blog.pojo.Page;
+import com.ming.m_blog.pojo.UserAuth;
 import com.ming.m_blog.pojo.UserInfo;
 import com.ming.m_blog.mapper.UserInfoMapper;
 import com.ming.m_blog.service.RedisService;
 import com.ming.m_blog.service.UserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ming.m_blog.utils.JwtUtil;
+import com.ming.m_blog.utils.PageUtils;
 import com.ming.m_blog.utils.UserUtils;
-import com.ming.m_blog.vo.ChangeUserInfoVO;
-import com.ming.m_blog.vo.ResponseResult;
-import com.ming.m_blog.vo.UserSimpInfoVO;
+import com.ming.m_blog.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -34,9 +43,13 @@ import java.util.List;
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements UserInfoService {
 
     @Autowired
+    private UserAuthMapper userAuthMapper;
+    @Autowired
     private UserInfoMapper userInfoMapper;
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private SessionRegistry sessionRegistry;
 
     // 获取用户角色
     @Override
@@ -67,11 +80,13 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
             throw new ReRuntimeException("非法token");
         }
 
-        List<String> roleList = userInfoMapper.selectRoleByUserId(userId);
+        // 通过userAuth的Id查询userInfo的id
+        Integer userInfoId = userAuthMapper.selectById(userId).getUserInfoId();
+        List<String> roleList = userInfoMapper.selectRoleByUserId(userInfoId);
 
         UserInfo userInfo = userInfoMapper.selectOne(new LambdaQueryWrapper<UserInfo>()
                 .select(UserInfo::getAvatar, UserInfo::getNickname, UserInfo::getIntro)
-                .eq(UserInfo::getId, userId)
+                .eq(UserInfo::getId, userInfoId)
         );
         return UserSimpInfoVO.builder()
                 .roles(roleList)
@@ -109,4 +124,24 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         return userInfoMapper.updateById(userInfo);
     }
 
+    // 获取当前在线用户信息
+    @Override
+    public PageResult<UserOnlineDTO> getUserOnline(QueryInfoVO queryInfoVO) {
+        List<UserOnlineDTO> userOnlineDTOList = sessionRegistry.getAllPrincipals().stream()
+                .filter(principal -> {
+                    return sessionRegistry.getAllSessions(principal, false).size() > 0;
+                })
+                .map(principal -> JSON.parseObject(JSON.toJSONString(principal), UserOnlineDTO.class))
+                .filter(item -> StringUtils.isBlank(queryInfoVO.getKeywords()) || item.getNickname().contains(queryInfoVO.getKeywords()))
+                .sorted(Comparator.comparing(UserOnlineDTO::getLoginTime).reversed())
+                .collect(Collectors.toList());
+        // 手动执行分页操作
+        int startIndex  = PageUtils.getLimitCurrent().intValue();
+        int size = PageUtils.getSize().intValue();
+        int endIndex = userOnlineDTOList.size() - startIndex > size ? startIndex + size : userOnlineDTOList.size();
+        List<UserOnlineDTO> userOnlineDTOS = userOnlineDTOList.subList(startIndex, endIndex);
+        // 获取页面的大小
+        int pageSize = userOnlineDTOS.size();
+        return new PageResult<>(userOnlineDTOS,pageSize);
+    }
 }

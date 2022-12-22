@@ -28,6 +28,7 @@ import ECharts from "vue-echarts";
 import vuetify from "@/plugins/vuetify";
 import * as filters from './filters'; // 通用过滤器
 import tagCloud from './assets/js/tag-cloud'
+import dayjs from "dayjs";  // 日期格式化组件
 // markdown编辑器
 import mavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
@@ -37,11 +38,15 @@ import global from "@/assets/js/global";
 // 引入全局时间格式化组件库
 import moment from "moment";
 import tag from "@/store/modules/tag";
-// // 定义时间格式化全局过滤器
-// Vue.filter('dateFormat', (dateStr, pattern = 'YYYY-DD-MM') => {
-//   return moment(dateStr).format(pattern)
-// })
-Vue.prototype.$moment = moment
+// 定义时间格式化全局过滤器
+Vue.filter("date", function(value, formatStr = "YYYY-MM-DD") {
+  return dayjs(value).format(formatStr);
+});
+
+Vue.filter("dateTime", function(value, formatStr = "YYYY-MM-DD HH:mm:ss") {
+  return dayjs(value).format(formatStr);
+});
+Vue.prototype.$moment = dayjs;
 
 
 Vue.use(mavonEditor); // markdown
@@ -56,12 +61,13 @@ Vue.use(Element, {
   locale: enLang // 如果使用中文，无需设置，请删除
 })
 
-// register global utility filters
+// 注册全局实用程序筛选器
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 
 Vue.config.productionTip = false
+
 
 new Vue({
   el: '#app',

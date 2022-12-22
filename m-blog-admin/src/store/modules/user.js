@@ -4,7 +4,8 @@ import {
   getInfo,
   getUserList,
   updateUserDelete,
-  changeUserInfo
+  changeUserInfo,
+  getOnline
 } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
@@ -219,6 +220,17 @@ const actions = {
         reject(error);
       })
     }))
+  },
+
+  // 获取在线用户信息
+  getOnline(context,params){
+    return new Promise(resolve => {
+      getOnline(params).then(res => {
+        console.log("获取在线用户列表成功");
+        console.log(res);
+        resolve(res.data);
+      })
+    })
   }
 
 }

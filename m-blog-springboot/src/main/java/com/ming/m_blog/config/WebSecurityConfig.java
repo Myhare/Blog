@@ -11,8 +11,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)  // 开启全局权限认证
@@ -45,6 +48,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    // 防止用户重复登录
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
+
+    // 注入SessionRegistry 获取在线用户信息
+    @Bean
+    public SessionRegistry sessionRegistry(){
+        return new SessionRegistryImpl();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 配置登录注销路径
@@ -57,6 +72,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .addLogoutHandler(logoutHandler)        // 登出处理
                 .logoutSuccessHandler(logoutSuccessHandler);    // 登出成功处理
+
+        // session管理
+        http.sessionManagement()
+                .maximumSessions(1) // 最大session数
+                .maxSessionsPreventsLogin(true)  // 某用户达到最大会话并发数后，新会话请求会被拒绝登录
+                .sessionRegistry(sessionRegistry());
 
         // 关闭csrf跨站防护
         http.csrf().disable()

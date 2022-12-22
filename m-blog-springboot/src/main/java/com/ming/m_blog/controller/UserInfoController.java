@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.ming.m_blog.dto.UserAreaDTO;
 import com.ming.m_blog.dto.UserDetailDTO;
 import com.ming.m_blog.dto.UserListDTO;
+import com.ming.m_blog.dto.UserOnlineDTO;
 import com.ming.m_blog.exception.ReRuntimeException;
 import com.ming.m_blog.service.FileService;
 import com.ming.m_blog.service.UserAuthService;
@@ -108,5 +109,10 @@ public class UserInfoController {
         }
     }
 
+    @ApiOperation("获取在线用户信息")
+    @GetMapping("/admin/userInfo/online")
+    public ResponseResult<PageResult<UserOnlineDTO>> getUserInfoOnline(QueryInfoVO queryInfoVO){
+        return ResponseResult.ok(userInfoService.getUserOnline(queryInfoVO));
+    }
 }
 

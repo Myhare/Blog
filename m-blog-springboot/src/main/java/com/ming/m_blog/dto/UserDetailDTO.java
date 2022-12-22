@@ -1,9 +1,8 @@
 package com.ming.m_blog.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Data;
+import com.ming.m_blog.constant.CommonConst;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +13,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Data
+// @Data    这里如果使用@Data，里面重写的equals和hashcode有问题，在查找在线用户时候SessionRegistryImpl中的principals中当key的时候，遍历找不到
+@Getter
+@Setter
+@ToString
 @Builder
 public class UserDetailDTO implements UserDetails {
 
@@ -144,7 +146,7 @@ public class UserDetailDTO implements UserDetails {
     // 用户是否锁定
     @Override
     public boolean isAccountNonLocked() {
-        return this.isDisable==0;
+        return this.isDisable == CommonConst.FALSE;
     }
 
     @Override
@@ -155,6 +157,16 @@ public class UserDetailDTO implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public int hashCode(){
+        return userId.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        return this.toString().equals(obj.toString());
     }
 
 
