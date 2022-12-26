@@ -15,6 +15,7 @@ import com.ming.m_blog.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -114,5 +115,15 @@ public class UserInfoController {
     public ResponseResult<PageResult<UserOnlineDTO>> getUserInfoOnline(QueryInfoVO queryInfoVO){
         return ResponseResult.ok(userInfoService.getUserOnline(queryInfoVO));
     }
+
+    @PreAuthorize("hasAuthority('sys:admin')")
+    @ApiOperation("下线用户功能")
+    @PostMapping("/admin/online/{userId}/remove")
+    public ResponseResult<?> removeOnlineUser(@PathVariable("userId") Integer userId){
+        // 下线用户
+        userInfoService.removeOnlineUser(userId);
+        return ResponseResult.ok();
+    }
+
 }
 

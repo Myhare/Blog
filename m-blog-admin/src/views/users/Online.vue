@@ -64,6 +64,7 @@
             title="确定下线吗？"
             style="margin-left:10px"
             @confirm="removeOnlineUser(scope.row)"
+            @onConfirm="removeOnlineUser(scope.row)"
           >
             <el-button size="mini" type="text" slot="reference">
               <i class="el-icon-delete" /> 下线
@@ -114,8 +115,8 @@ export default {
       }
       this.$store.dispatch('user/getOnline',params)
       .then(data => {
-        console.log('vue界面获取到数据');
-        console.log(data);
+        // console.log('vue界面获取到数据');
+        // console.log(data);
         this.userList = data.recordList;
         this.count = data.count;
         this.loading = false;
@@ -132,22 +133,22 @@ export default {
     },
     // 删除在线用户
     removeOnlineUser(user) {
-      this.axios
-        .delete("/api/admin/users/" + user.userInfoId + "/online")
-        .then(({ data }) => {
-          if (data.flag) {
-            this.$notify.success({
-              title: "成功",
-              message: data.message
-            });
-            this.listOnlineUsers();
-          } else {
-            this.$notify.error({
-              title: "失败",
-              message: data.message
-            });
-          }
-        });
+      this.$store.dispatch('user/removeOnlineUser',user.userInfoId)
+      .then(data => {
+        console.log(data);
+        if (data.flag) {
+          this.$notify.success({
+            title: "成功",
+            message: data.message
+          });
+          this.listOnlineUsers();
+        } else {
+          this.$notify.error({
+            title: "失败",
+            message: data.message
+          });
+        }
+      })
     }
   },
   computed: {

@@ -5,7 +5,8 @@ import {
   getUserList,
   updateUserDelete,
   changeUserInfo,
-  getOnline
+  getOnline,
+  removeOnlineUser
 } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
@@ -205,8 +206,8 @@ const actions = {
   // 禁止/解除禁止某一个用户
   async updateUserDelete(context,param){
     const {userId,isDelete} = param;
-    console.log("updateUserDelete获取到的userId-->"+userId);
-    console.log("updateUserDelete获取到的isDelete-->"+isDelete);
+    // console.log("updateUserDelete获取到的userId-->"+userId);
+    // console.log("updateUserDelete获取到的isDelete-->"+isDelete);
     return new Promise(((resolve, reject) => {
       updateUserDelete(userId,isDelete).then(response=>{
         console.log("修改用户状态成功");
@@ -226,9 +227,18 @@ const actions = {
   getOnline(context,params){
     return new Promise(resolve => {
       getOnline(params).then(res => {
-        console.log("获取在线用户列表成功");
-        console.log(res);
+        // console.log("获取在线用户列表成功");
+        // console.log(res);
         resolve(res.data);
+      })
+    })
+  },
+
+  // 删除在线用户
+  removeOnlineUser(context,userId){
+    return new Promise(resolve => {
+      removeOnlineUser(userId).then(res => {
+        resolve(res.data)
       })
     })
   }

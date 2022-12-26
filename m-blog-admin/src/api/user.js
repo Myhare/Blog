@@ -79,7 +79,7 @@ export function changeUserInfo(nickName, intro){
  * 获取在线用户信息
  */
 export function getOnline(params){
-  console.log(params);
+  // console.log(params);
   return request({
     url: '/api/admin/userInfo/online',
     method: 'get',
@@ -88,5 +88,15 @@ export function getOnline(params){
       current: params.current,
       size: params.size
     }
+  })
+}
+
+/**
+ * 下线用户
+ */
+export function removeOnlineUser(userId){
+  return request({
+    url: `/api/admin/online/${userId}/remove`,
+    method: 'post'
   })
 }

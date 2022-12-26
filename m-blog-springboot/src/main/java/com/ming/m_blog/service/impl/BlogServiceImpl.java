@@ -140,7 +140,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public void report() {
         String ipAddress = IpUtils.getIpAddress(request);
-        System.out.println("ip地址："+ipAddress);
+        // System.out.println("ip地址："+ipAddress);
         // 获取访问设备
         UserAgent userAgent = IpUtils.getUserAgent(request);
         Browser browser = userAgent.getBrowser();

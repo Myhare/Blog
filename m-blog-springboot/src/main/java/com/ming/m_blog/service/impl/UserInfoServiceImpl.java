@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.ming.m_blog.constant.RedisPrefixConst;
 import com.ming.m_blog.dto.UserAreaDTO;
+import com.ming.m_blog.dto.UserDetailDTO;
 import com.ming.m_blog.dto.UserListDTO;
 import com.ming.m_blog.dto.UserOnlineDTO;
 import com.ming.m_blog.exception.ReRuntimeException;
@@ -27,6 +28,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -143,5 +145,22 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         // 获取页面的大小
         int pageSize = userOnlineDTOS.size();
         return new PageResult<>(userOnlineDTOS,pageSize);
+    }
+
+    // 下线用户功能
+    @Override
+    public void removeOnlineUser(Integer userInfoId) {
+        List<Object> userInfoList = sessionRegistry.getAllPrincipals()
+                .stream()
+                .filter(item -> {
+                    UserDetailDTO userDetailDTO = (UserDetailDTO) item;
+                    return userDetailDTO.getUserId().equals(userInfoId);
+                }).collect(Collectors.toList());
+        List<SessionInformation> allSessions = new ArrayList<>();
+        userInfoList.forEach(userInfo -> {
+            allSessions.addAll(sessionRegistry.getAllSessions(userInfo,false));
+        });
+        // 将这个用户的所有session注销掉
+        allSessions.forEach(SessionInformation::expireNow);
     }
 }

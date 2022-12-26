@@ -15,7 +15,6 @@ import java.util.Map;
 /**
  * ip工具类
  *
- * @author 11921
  */
 @SuppressWarnings("all")
 public class IpUtils {
@@ -71,7 +70,7 @@ public class IpUtils {
      */
     public static String getIpSource(String ipAddress) {
         try {
-            URL url = new URL("http://opendata.baidu.com/api.php?query=" + ipAddress + "&co=&resource_id=6006&oe=utf8");
+            URL url = new URL("http://opendata.baidu.com/ap  i.php?query=" + ipAddress + "&co=&resource_id=6006&oe=utf8");
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream(), "utf-8"));
             String line = null;
             StringBuffer result = new StringBuffer();

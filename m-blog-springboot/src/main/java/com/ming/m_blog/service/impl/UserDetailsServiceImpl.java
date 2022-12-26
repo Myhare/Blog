@@ -7,17 +7,10 @@ import com.ming.m_blog.mapper.UserAuthMapper;
 import com.ming.m_blog.mapper.UserInfoMapper;
 import com.ming.m_blog.pojo.UserAuth;
 import com.ming.m_blog.pojo.UserInfo;
-import com.ming.m_blog.utils.IpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -34,8 +27,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private RedisServiceImpl redisService;
 
-    @Resource
-    private HttpServletRequest request;
+    // 当前线程无法获取request
+    // @Resource
+    // private HttpServletRequest request;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -48,16 +42,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (userAuth==null){
             throw new ReRuntimeException("用户不存在");
         }
-        return convertUserDetail(userAuth,request);
+        return convertUserDetail(userAuth);
     }
 
     /**
      * 封装用户登录信息
      * @param userAuth 用户信息
-     * @param request  请求对象
      * @return         封装结果
      */
-    public UserDetailDTO convertUserDetail(UserAuth userAuth,HttpServletRequest request){
+    public UserDetailDTO convertUserDetail(UserAuth userAuth){
         Integer userInfoId = userAuth.getUserInfoId();
         UserInfo userInfo = userInfoMapper.selectById(userInfoId);
 
@@ -70,12 +63,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 获取用户点赞评论列表
         Set<Object> commentLikeSet = redisService.sMembers(COMMENT_USER_LIKE + userId);
 
-        System.out.println(request.toString());
-        // 获取用户ip地址
-        String ipAddress = IpUtils.getIpAddress(request);
-        // 获取ip来源
-        String ipSource = IpUtils.getIpSource(ipAddress);
-
         return UserDetailDTO
                 .builder()
                 .userId(userId)
@@ -86,8 +73,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .nickname(userInfo.getNickname())
                 .avatar(userInfo.getAvatar())
                 .intro(userInfo.getIntro())
-                .ipAddress(ipAddress)
-                .ipSource(ipSource)
                 .isDisable(userInfo.getIsDelete())
                 .roleList(roleList)
                 .powerList(powerList)

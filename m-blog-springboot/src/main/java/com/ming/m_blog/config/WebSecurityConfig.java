@@ -15,6 +15,8 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
@@ -34,6 +36,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // 登出处理类
     @Autowired
     private LogoutTokenHandlerImpl logoutHandler;
+    // 权限不足
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
+    // 用户未登录处理
+    @Autowired
+    private AuthenticationEntryPoint authenticationEntryPoint;
 
     // 创建一个BCryptPasswordEncoding注入容器,设置密码验证方法
     @Bean
@@ -81,7 +89,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 关闭csrf跨站防护
         http.csrf().disable()
-                .cors();
+                .exceptionHandling()
+                // 权限不足处理
+                .accessDeniedHandler(accessDeniedHandler)
+                // 用户未登录处理
+                .authenticationEntryPoint(authenticationEntryPoint);
 
         // 路由权限配置
         http.authorizeRequests()

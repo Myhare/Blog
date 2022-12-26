@@ -72,6 +72,16 @@ public class UserDetailDTO implements UserDetails {
     private String ipSource;
 
     /**
+     * 浏览器
+     */
+    private String browser;
+
+    /**
+     * 操作系统
+     */
+    private String os;
+
+    /**
      * 是否禁用
      */
     private Integer isDisable;

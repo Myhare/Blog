@@ -20,12 +20,4 @@ public class UserUtils {
         return getLoginUser().getUserId();
     }
 
-    // 更新用户登录ip地址
-    public static void updateIpInfo(String ipAddress,String ipSource){
-        UserDetailDTO userDetailDTO = getLoginUser();
-        userDetailDTO.setIpAddress(ipAddress);
-
-        userDetailDTO.setIpSource(ipSource);
-    }
-
 }

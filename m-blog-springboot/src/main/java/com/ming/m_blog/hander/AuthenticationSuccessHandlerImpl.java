@@ -16,6 +16,7 @@ import com.ming.m_blog.utils.IpUtils;
 import com.ming.m_blog.utils.JwtUtil;
 import com.ming.m_blog.utils.UserUtils;
 import com.ming.m_blog.vo.ResponseResult;
+import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,7 +50,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         // 判断是前台登录还是后台登录
         boolean isFront = Boolean.parseBoolean(httpServletRequest.getParameter("isFront"));
         // System.out.println(isFront);
-        // 判断是前台还是后台登录
+        // 判断是前台还是后台登录，因为前端的验证逻辑不同，这里返回给前端的信息也不同
         if (isFront){
             // 前台登录
             UserInfoDTO userLoginDTO = BeanCopyUtils.copyObject(UserUtils.getLoginUser(), UserInfoDTO.class);
@@ -67,7 +68,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         }
 
         // 更新用户基本信息
-        updateUserInfo(authentication);
+        updateUserInfo(httpServletRequest);
     }
 
     /**
@@ -82,17 +83,27 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
     /**
      * 更新登录用户信息
-     * @param authentication SpringSecurity中底层信息
+     * @param request 用户发起的请求
      */
-    private void updateUserInfo(Authentication authentication){
+    private void updateUserInfo(HttpServletRequest request){
         UserDetailDTO loginUser = UserUtils.getLoginUser();
 
-        // 获取ip地址
-        WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
-        String ipAddress = details.getRemoteAddress();
-        // System.out.println("获取到的ip地址："+ipAddress);
+        // 获取用户ip地址
+        String ipAddress = IpUtils.getIpAddress(request);
+        // 获取ip来源
         String ipSource = IpUtils.getIpSource(ipAddress);
+        // 获取设备信息
+        UserAgent userAgent = IpUtils.getUserAgent(request);
+        String browser = userAgent.getBrowser().getName();      // 浏览器
+        String os = userAgent.getOperatingSystem().getName();   // 操作系统
 
+        // 更新SpringSecurity中UserDetails中的用户登录设备信息
+        loginUser.setIpAddress(ipAddress);
+        loginUser.setIpSource(ipSource);
+        loginUser.setBrowser(browser);
+        loginUser.setOs(os);
+
+        // 更新数据库中用户的信息
         Integer userId = loginUser.getUserId();
         Date loginTime = loginUser.getLoginTime();
         UserAuth userAuth = UserAuth.builder()
@@ -103,8 +114,6 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
                 .build();
         userAuth.setLoginTime(loginTime);
         userAuthMapper.updateById(userAuth);
-        // 更新登录用户ip信息
-        UserUtils.updateIpInfo(ipAddress,ipSource);
     }
 
 }
