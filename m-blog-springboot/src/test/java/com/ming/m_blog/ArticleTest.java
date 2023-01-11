@@ -37,7 +37,7 @@ public class ArticleTest {
                 .isTop(0)
                 .status(1)
                 .build();
-        boolean flag = articleService.addArticle(articleAddVO);
+        boolean flag = articleService.addOrUpdateArticle(articleAddVO);
         if (flag){
             System.out.println("添加博客成功");
         }else {

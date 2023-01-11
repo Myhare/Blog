@@ -1,9 +1,6 @@
 package com.ming.m_blog.config;
 
-import com.ming.m_blog.hander.AuthenticationFailHandlerImpl;
-import com.ming.m_blog.hander.AuthenticationSuccessHandlerImpl;
-import com.ming.m_blog.hander.LogoutTokenHandlerImpl;
-import com.ming.m_blog.hander.LogoutSuccessHandlerImpl;
+import com.ming.m_blog.hander.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,6 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationEntryPoint authenticationEntryPoint;
 
+
+    private final String LOGIN_URI = "/login";
+
     // 创建一个BCryptPasswordEncoding注入容器,设置密码验证方法
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    // 防止用户重复登录
+    // 防止用户重复登录,监听session
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {
         return new HttpSessionEventPublisher();
@@ -72,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 配置登录注销路径
         http.formLogin()
-                .loginProcessingUrl("/login")
+                .loginProcessingUrl(LOGIN_URI)
                 .successHandler(authenticationSuccessHandler)   // 登录成功处理
                 .failureHandler(authenticationFailHandler)      // 登录失败处理
                 .and()
@@ -83,8 +83,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // session管理
         http.sessionManagement()
-                .maximumSessions(1) // 最大session数
-                .maxSessionsPreventsLogin(true)  // 某用户达到最大会话并发数后，新会话请求会被拒绝登录
+                .maximumSessions(10) // 最大session数
+                .maxSessionsPreventsLogin(false)  // 某用户达到最大会话并发数后，新会话请求会被拒绝登录
+                .expiredSessionStrategy(new SessionInformationExpiredStrategyImpl()) // 监听session消除后的处理
                 .sessionRegistry(sessionRegistry());
 
         // 关闭csrf跨站防护

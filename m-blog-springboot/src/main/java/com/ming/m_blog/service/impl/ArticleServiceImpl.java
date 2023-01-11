@@ -1,6 +1,7 @@
 package com.ming.m_blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ming.m_blog.dto.*;
 import com.ming.m_blog.enums.ArticleStatusEnum;
@@ -63,7 +64,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     // 添加一个文章
     @Override
     @Transactional
-    public boolean addArticle(ArticleAddVO articleAddVO) {
+    public boolean addOrUpdateArticle(ArticleAddVO articleAddVO) {
 
         // 获取文章分类名称
         String categoryName = articleAddVO.getCategoryName();
@@ -93,6 +94,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         // 调用service中的save方法，执行后对象中id会自动添加
         boolean saveFlag = this.saveOrUpdate(article);
+        // 如果文章的分类为空，手动将文章的分类修改成null，saveOrUpdate不会自动修改为null的字段
+        if (Objects.isNull(article.getCategoryId())){
+            articleMapper.update(null,new LambdaUpdateWrapper<Article>()
+                    .eq(Article::getId,article.getId())
+                    .set(Article::getCategoryId,article.getCategoryId())
+            );
+        }
         // 添加文章标签
         saveTag(articleAddVO.getTagList(),article.getId());
         return saveFlag;
@@ -155,6 +163,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                         .tagName(tagName)
                         .build();
                 tagMapper.insert(tag);
+            }
+            // 判断当前标签是否已经存入中间表
+            List<InArticleTag> iatList = inArticleTagMapper.selectList(new LambdaQueryWrapper<InArticleTag>()
+                    .eq(InArticleTag::getArticleId, articleId)
+                    .eq(InArticleTag::getTagId, tag.getId())
+                    .last("limit 1")
+            );
+            // 如果查询到的结果不为空，说明当前标签已经存在中间表，直接进入下一循环
+            if (iatList.size() > 0){
+                continue;
             }
             // 添加中间表数据
             inArticleTagMapper.insert(InArticleTag

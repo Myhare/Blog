@@ -76,11 +76,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         } catch (Exception e) {
             throw new ReRuntimeException("用户登录过期，请重新登录");
         }
-        // 判断token是否合法
-        String redisToken = (String) redisService.get(RedisPrefixConst.BACKSTAGE_LOGIN_TOKEN + userId);
-        if (!token.equals(redisToken)){
-            throw new ReRuntimeException("非法token");
-        }
+        // 判断token是否合法,防止重复登录和假用户
+        // 不使用redis判断登录用户，鉴权完全交给SpringSecurity
+        // String redisToken = (String) redisService.get(RedisPrefixConst.BACKSTAGE_LOGIN_TOKEN + userId);
+        // if (!token.equals(redisToken)){
+        //     throw new ReRuntimeException("非法token,请不要重复登录");
+        // }
 
         // 通过userAuth的Id查询userInfo的id
         Integer userInfoId = userAuthMapper.selectById(userId).getUserInfoId();
@@ -154,7 +155,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
                 .stream()
                 .filter(item -> {
                     UserDetailDTO userDetailDTO = (UserDetailDTO) item;
-                    return userDetailDTO.getUserId().equals(userInfoId);
+                    return userDetailDTO.getUserInfoId().equals(userInfoId);
                 }).collect(Collectors.toList());
         List<SessionInformation> allSessions = new ArrayList<>();
         userInfoList.forEach(userInfo -> {

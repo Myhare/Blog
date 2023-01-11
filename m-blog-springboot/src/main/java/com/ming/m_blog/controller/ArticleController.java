@@ -43,10 +43,10 @@ public class ArticleController {
     }
 
     @PreAuthorize("hasAuthority('sys:admin')")
-    @ApiOperation("添加文章")
+    @ApiOperation("添加或者修改文章")
     @PostMapping("/addArticle")
-    public ResponseResult<String> addArticle(@RequestBody ArticleAddVO articleAddVO){
-        boolean flag = articleService.addArticle(articleAddVO);
+    public ResponseResult<String> addOrUpdateArticle(@RequestBody ArticleAddVO articleAddVO){
+        boolean flag = articleService.addOrUpdateArticle(articleAddVO);
         if (flag){
             return ResponseResult.ok();
         }else {

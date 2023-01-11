@@ -30,7 +30,7 @@ public interface ArticleService extends IService<Article> {
      * @param articleAddVO 文章对象
      * @return             是否添加成功
      */
-    boolean addArticle(ArticleAddVO articleAddVO);
+    boolean addOrUpdateArticle(ArticleAddVO articleAddVO);
 
     /**
      * 后台分页查询文章列表

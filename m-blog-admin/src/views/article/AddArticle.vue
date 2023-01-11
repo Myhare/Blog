@@ -448,7 +448,7 @@ export default {
     // 添加草稿
     saveArtDraft(){
       const article = this.article;
-      article.status = 3;    // 将状态设置成草稿
+      article.status = 0;    // 将状态设置成草稿
       // console.log(article);
       if (article.articleTitle === ''){
         return this.$message.error('文章标题不能为空')

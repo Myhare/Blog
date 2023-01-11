@@ -215,7 +215,7 @@ export default {
           this.articleQueryInfo.isDelete = 0;
           break;
         case 'draft':
-          this.articleQueryInfo.status = 3;
+          this.articleQueryInfo.status = 0;
           this.articleQueryInfo.isDelete = 0;
           break;
         case 'recycle':
