@@ -4,8 +4,8 @@ server:
     session:
       # 设置session过期时间
       timeout: 21600
-  tomcat:
-    connection-timeout: 18000000
+#  tomcat:
+#    connection-timeout: 18000000
 
 spring:
   application:

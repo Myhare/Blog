@@ -1,6 +1,8 @@
 package com.ming.m_blog.controller;
 
 
+import com.ming.m_blog.annotation.OptLog;
+import com.ming.m_blog.constant.OptTypeConstant;
 import com.ming.m_blog.dto.*;
 import com.ming.m_blog.service.ArticleService;
 import com.ming.m_blog.service.FileService;
@@ -42,6 +44,7 @@ public class ArticleController {
         return ResponseResult.ok(articleService.getArticle(articleId));
     }
 
+    @OptLog(optType = OptTypeConstant.SAVE_OR_UPDATE)
     @PreAuthorize("hasAuthority('sys:admin')")
     @ApiOperation("添加或者修改文章")
     @PostMapping("/addArticle")
@@ -54,6 +57,7 @@ public class ArticleController {
         }
     }
 
+    @OptLog(optType = OptTypeConstant.UPLOAD)
     @ApiOperation(value = "博客文章图片上传")
     @PreAuthorize("hasAuthority('sys:admin')")
     @PostMapping("/articleFile")
@@ -71,6 +75,7 @@ public class ArticleController {
     }
 
     // 删除博客
+    @OptLog(optType = OptTypeConstant.REMOVE)
     @ApiOperation("删除博客")
     @PreAuthorize("hasAuthority('sys:admin')")
     @PostMapping("/admin/deleteArticle")
@@ -82,6 +87,7 @@ public class ArticleController {
     }
 
     // 修改文章置顶情况
+    @OptLog(optType = OptTypeConstant.UPDATE)
     @ApiOperation("修改文章置顶情况")
     @PreAuthorize("hasAuthority('sys:admin')")
     @PostMapping("/admin/changeTop")

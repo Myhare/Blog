@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ming.m_blog.mapper.OperationLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.ming.m_blog.pojo.OperationLog">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="optModule" column="opt_module" jdbcType="VARCHAR"/>
+            <result property="optType" column="opt_type" jdbcType="VARCHAR"/>
+            <result property="optUrl" column="opt_url" jdbcType="VARCHAR"/>
+            <result property="optMethod" column="opt_method" jdbcType="VARCHAR"/>
+            <result property="optDesc" column="opt_desc" jdbcType="VARCHAR"/>
+            <result property="requestParam" column="request_param" jdbcType="VARCHAR"/>
+            <result property="requestMethod" column="request_method" jdbcType="VARCHAR"/>
+            <result property="responseData" column="response_data" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="ipAddress" column="ip_address" jdbcType="VARCHAR"/>
+            <result property="ipSource" column="ip_source" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,opt_module,opt_type,
+        opt_url,opt_method,opt_desc,
+        request_param,request_method,response_data,
+        user_id,nickname,ip_address,
+        ip_source,create_time,update_time
+    </sql>
+</mapper>

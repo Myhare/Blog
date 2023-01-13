@@ -1,7 +1,7 @@
 package com.ming.m_blog.interceptor;
 
 import com.ming.m_blog.constant.RedisPrefixConst;
-import com.ming.m_blog.interfaces.AccessLimit;
+import com.ming.m_blog.annotation.AccessLimit;
 import com.ming.m_blog.service.RedisService;
 import com.ming.m_blog.utils.WebUtils;
 import com.ming.m_blog.vo.ResponseResult;

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-@Api("博客信息模块")
+@Api(tags = "博客信息模块")
 @RestController
 public class BlogInfoController {
 

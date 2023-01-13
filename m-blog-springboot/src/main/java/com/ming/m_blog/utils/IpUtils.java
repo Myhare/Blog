@@ -69,6 +69,9 @@ public class IpUtils {
      * @return 解析后的ip地址
      */
     public static String getIpSource(String ipAddress) {
+        if ("127.0.0.1".equals(ipAddress)){
+            return "本地";
+        }
         try {
             URL url = new URL("http://opendata.baidu.com/api.php?query=" + ipAddress + "&co=&resource_id=6006&oe=utf8");
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream(), "utf-8"));

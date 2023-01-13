@@ -4,7 +4,7 @@ package com.ming.m_blog.controller;
 import com.ming.m_blog.dto.CommentDTO;
 import com.ming.m_blog.dto.CommentListDTO;
 import com.ming.m_blog.dto.ReplyDTO;
-import com.ming.m_blog.interfaces.AccessLimit;
+import com.ming.m_blog.annotation.AccessLimit;
 import com.ming.m_blog.service.CommentService;
 import com.ming.m_blog.vo.CommentsVO;
 import com.ming.m_blog.vo.AdminCommentsVO;
@@ -13,15 +13,12 @@ import com.ming.m_blog.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-
-import static com.ming.m_blog.constant.CommonConst.*;
 
 /**
  *
