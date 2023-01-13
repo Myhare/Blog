@@ -19,3 +19,9 @@
 ![后台主页](http://www.static.mingzib.xyz/blogUploadFile/articles/1ebcbfc98e67448a81d3d151608cf149.png)
 
 ![文章管理](http://www.static.mingzib.xyz/blogUploadFile/articles/c28ee7ea2b4e407a84b891d10bd524b1.png)
+
+# 在线体验
+前台地址：http://www.mingzib.xyz/
+后台地址：http://www.admin.mingzib.xyz/
+测试账号：test
+测试密码：123456
