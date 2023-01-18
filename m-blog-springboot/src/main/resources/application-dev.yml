@@ -33,11 +33,35 @@ spring:
         # 连接池中的最小空闲连接
         min-idle: 0
     # redis密码
-#    password: 7621559..
+#    password:
     # Redis服务器连接端口
     port: 6379
     # 连接超时时间（毫秒）
     timeout: 1800000
+  # rabbitMQ
+  rabbitmq:
+    host: 192.168.131.3
+    username: admin
+    password: 123456
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3 #最大重试次数
+          initial-interval: 3000 #重试间隔时间（单位毫秒）
+  # 邮箱配置
+  mail:
+    host: smtp.qq.com
+    username: 1940307627@qq.com
+    password: yxnmblbfwvjndibh
+    default-encoding: UTF-8
+    port: 587
+    properties:
+      mail:
+      smtp:
+      auth: true
+      socketFactory:
+      class: javax.net.ssl.SSLSocketFactory
   # 上传文件最大大小
   servlet:
     multipart:

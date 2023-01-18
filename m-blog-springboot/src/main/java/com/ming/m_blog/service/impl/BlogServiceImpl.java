@@ -65,7 +65,7 @@ public class BlogServiceImpl implements BlogService {
 
     // 获取博客基本信息
     @Override
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public BlogInfoDTO getBlogInfo() {
         // 查询博客文章数量
         Integer articleCount = articleMapper.selectCount(new LambdaQueryWrapper<Article>()
@@ -170,7 +170,7 @@ public class BlogServiceImpl implements BlogService {
 
         // 获取后台访问信息DTO
         @Override
-        @Transactional
+        @Transactional(rollbackFor=Exception.class)
         public BlogBackStatisticsDTO getBackStatistics() {
             // 查询访问量
             Object blogViewCountObject = redisService.get(BLOG_VIEW_COUNT);

@@ -48,7 +48,7 @@ public class UserInfo implements Serializable {
     private String intro;
 
     @ApiModelProperty(value = "是否被封禁(0表示正常，1表示被封禁)")
-    // @TableLogic
+    @TableLogic
     private Integer isDelete;
 
     @ApiModelProperty(value = "创建时间")

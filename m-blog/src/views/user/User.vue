@@ -52,7 +52,7 @@
               绑定邮箱
             </v-btn>
           </div>
-          <v-btn @click="updataUserInfo" outlined class="mt-5">修改</v-btn>
+          <v-btn @click="updateUserInfo" outlined class="mt-5">修改</v-btn>
         </v-col>
       </v-row>
     </v-card>
@@ -74,7 +74,7 @@ export default {
     };
   },
   methods: {
-    updataUserInfo() {
+    updateUserInfo() {
       this.axios.put("/api/users/info", this.userInfo).then(({ data }) => {
         if (data.flag) {
           this.$store.commit("updateUserInfo", this.userInfo);

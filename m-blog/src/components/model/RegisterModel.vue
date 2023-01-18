@@ -7,7 +7,7 @@
       <div class="login-wrapper">
         <!-- 用户名 -->
         <v-text-field
-          v-model="username"
+          v-model="email"
           label="邮箱号"
           placeholder="请输入您的邮箱号"
           clearable
@@ -60,7 +60,7 @@
 export default {
   data: function() {
     return {
-      username: "",
+      email: "",
       code: "",
       password: "",
       flag: true,
@@ -74,18 +74,23 @@ export default {
       this.$store.state.registerFlag = false;
       this.$store.state.loginFlag = true;
     },
+    // 发送验证码
     sendCode() {
       const that = this;
-      // eslint-disable-next-line no-undef
-      var captcha = new TencentCaptcha(this.config.TENCENT_CAPTCHA, function(
-        res
-      ) {
-        if (res.ret === 0) {
+      // // eslint-disable-next-line no-undef
+      // var captcha = new TencentCaptcha(this.config.TENCENT_CAPTCHA, function(
+      //   res
+      // ) {
+      //   console.log('发送邮件验证码:');
+      //   console.log(res);
+      //   if (res.ret === 0) {
           //发送邮件
           that.countDown();
-          that.axios
-            .get("/api/users/code", {
-              params: { username: that.username }
+          that.$axios
+            .get("/api/sendEmail", {
+              params: {
+                email: that.email
+              }
             })
             .then(({ data }) => {
               if (data.flag) {
@@ -94,11 +99,12 @@ export default {
                 that.$toast({ type: "error", message: data.message });
               }
             });
-        }
-      });
-      // 显示验证码
-      captcha.show();
+        // }
+      // });
+      // // 显示验证码
+      // captcha.show();
     },
+    // 倒计时
     countDown() {
       this.flag = true;
       this.timer = setInterval(() => {
@@ -112,9 +118,10 @@ export default {
         }
       }, 1000);
     },
+    // 注册
     register() {
       var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-      if (!reg.test(this.username)) {
+      if (!reg.test(this.email)) {
         this.$toast({ type: "error", message: "邮箱格式不正确" });
         return false;
       }
@@ -127,20 +134,23 @@ export default {
         return false;
       }
       const user = {
-        username: this.username,
+        email: this.email,
         password: this.password,
         code: this.code
       };
-      this.axios.post("/api/register", user).then(({ data }) => {
+      this.$axios.post("/api/register", user).then(({ data }) => {
         if (data.flag) {
           let param = new URLSearchParams();
-          param.append("username", user.username);
+          param.append("username", user.email);
           param.append("password", user.password);
-          this.axios.post("/api/login", param).then(({ data }) => {
-            this.username = "";
+          param.append("isFront", true);  // 给一个标记，表示这个是前端登录
+          this.$axios.post("/api/login", param).then(({ data }) => {
+            console.log('登录接口返回对象data:');
+            console.log(data);
+            this.email = "";
             this.password = "";
-            this.$store.commit("login", data.data);
-            this.$store.commit("closeModel");
+            this.$store.commit("LOGIN", data.data);
+            this.$store.commit("CLOSE_MODEL");
           });
           this.$toast({ type: "success", message: "登录成功" });
         } else {
@@ -167,7 +177,7 @@ export default {
     }
   },
   watch: {
-    username(value) {
+    email(value) {
       var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
       if (reg.test(value)) {
         this.flag = false;

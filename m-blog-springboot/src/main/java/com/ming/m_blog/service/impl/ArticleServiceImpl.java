@@ -63,7 +63,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     // 添加一个文章
     @Override
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public boolean addOrUpdateArticle(ArticleAddVO articleAddVO) {
 
         // 获取文章分类名称

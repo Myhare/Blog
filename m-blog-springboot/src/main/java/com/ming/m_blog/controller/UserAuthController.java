@@ -6,6 +6,7 @@ import com.ming.m_blog.dto.UserInfoDTO;
 import com.ming.m_blog.mapper.UserAuthMapper;
 import com.ming.m_blog.service.UserAuthService;
 import com.ming.m_blog.vo.LoginUserVO;
+import com.ming.m_blog.vo.RegisterVO;
 import com.ming.m_blog.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,9 +37,16 @@ public class UserAuthController {
 
     @ApiOperation("用户注册")
     @PostMapping("/register")
-    public ResponseResult<?> register(){
+    public ResponseResult<?> register(@RequestBody RegisterVO registerVO){
+        userAuthService.registerUser(registerVO);
+        return ResponseResult.ok();
+    }
 
-        return null;
+    @ApiOperation("发送邮件")
+    @GetMapping("/sendEmail")
+    public ResponseResult<String> sendEmail(String email){
+        userAuthService.sendEmail(email);
+        return ResponseResult.ok("邮件发送成功，请等待",null);
     }
 
     @ApiOperation("测试获取用户权限信息")

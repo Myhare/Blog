@@ -63,7 +63,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     // 批量删除评论列表
     @Override
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public int delCommentList(List<Integer> commentIdList) {
         return commentMapper.deleteBatchIds(commentIdList);
     }
@@ -76,7 +76,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     // 批量通过评论列表
     @Override
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public boolean reviewCommentList(List<Integer> commentIdList) {
         List<Comment> commentList = commentIdList
                 .stream()

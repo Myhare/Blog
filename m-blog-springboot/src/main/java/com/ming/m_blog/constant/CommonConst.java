@@ -72,5 +72,9 @@ public class CommonConst {
      */
     public static final String APPLICATION_JSON = "application/json;charset=utf-8";
 
+    /**
+     * websiteConfig的Id
+     */
+    public static final String WEBSITE_CONFIG_ID = "1";
 
 }

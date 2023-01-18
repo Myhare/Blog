@@ -63,6 +63,7 @@ export default new Vuex.Store({
     // 关闭所有对话框
     CLOSE_MODEL(state){
       state.loginFlag = false;
+      state.registerFlag = false;
     },
     // 评论点赞
     COMMENT_LIKE(state,commentId){

@@ -34,7 +34,11 @@ public class CodeAutogenerate {
         globalConfig.setOpen(false);   // 是否打开资源管理器
         globalConfig.setFileOverride(false);  // 是否覆盖
         // globalConfig.setServiceName("%sService"); // 去掉Service的前缀
-        globalConfig.setIdType(IdType.ASSIGN_ID);   // 生成主键的Id类型
+
+        //-----------------------------------------
+        // globalConfig.setIdType(IdType.ASSIGN_ID);   // 生成主键的Id类型
+        //-----------------------------------------
+
         globalConfig.setDateType(DateType.ONLY_DATE);  // 设置日期类型
         globalConfig.setSwagger2(true);  // 开启Swagger
         mpg.setGlobalConfig(globalConfig);  // 将配置的策略添加到mpg代码生成器对象中

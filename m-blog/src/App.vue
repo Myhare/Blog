@@ -17,9 +17,9 @@
     <!-- 登录模态框 -->
     <LoginModel></LoginModel>
     <!-- 注册模态框 -->
-<!--    <RegisterModel></RegisterModel>-->
+    <RegisterModel></RegisterModel>
     <!-- 忘记密码模态框 -->
-<!--    <ForgetModel></ForgetModel>-->
+    <ForgetModel></ForgetModel>
     <!-- 绑定邮箱模态框 -->
 <!--    <EmailModel></EmailModel>-->
     <!--聊天室-->

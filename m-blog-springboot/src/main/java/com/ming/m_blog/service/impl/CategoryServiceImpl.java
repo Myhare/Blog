@@ -82,7 +82,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     // 删除分类
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     @Override
     public int deleteCategory(List<Integer> cateIdList) {
         // 查询要删除的分类下面有没有文章，如果有，报错

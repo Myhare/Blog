@@ -7,12 +7,14 @@ import com.ming.m_blog.mapper.UserAuthMapper;
 import com.ming.m_blog.mapper.UserInfoMapper;
 import com.ming.m_blog.pojo.UserAuth;
 import com.ming.m_blog.pojo.UserInfo;
+import com.ming.m_blog.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.ming.m_blog.constant.RedisPrefixConst.*;
@@ -33,16 +35,34 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
+        UserInfo userInfo = null;
+        UserAuth userAuth = null;
+        // 判断当前username是用户名还是邮箱
+        if (CommonUtils.checkEmail(username)){
+            // 如果是邮箱，通过邮箱查找userInfo
+            userInfo = userInfoMapper.selectOne(new LambdaQueryWrapper<UserInfo>()
+                    .eq(UserInfo::getEmail, username)
+            );
+            // 查询UserAuth
+            userAuth = userAuthMapper.selectOne(new LambdaQueryWrapper<UserAuth>()
+                    .eq(UserAuth::getUserInfoId, userInfo.getId())
+            );
+        }else {
+            // 说明是用户名登录
+            userAuth = userAuthMapper.selectOne(
+                    new LambdaQueryWrapper<UserAuth>()
+                            .eq(UserAuth::getUsername,username)
+            );
+            // 通过UserAuth查询用户信息
+            userInfo = userInfoMapper.selectOne(new LambdaQueryWrapper<UserInfo>()
+                    .eq(UserInfo::getId, userAuth.getUserInfoId())
+            );
+        }
 
-        // 通过用户名查询用户信息
-        UserAuth userAuth = userAuthMapper.selectOne(
-                new LambdaQueryWrapper<UserAuth>()
-                        .eq(UserAuth::getUsername,username)
-        );
-        if (userAuth==null){
+        if (Objects.isNull(userAuth) || Objects.isNull(userInfo)){
             throw new ReRuntimeException("用户不存在");
         }
-        return convertUserDetail(userAuth);
+        return convertUserDetail(userAuth,userInfo);
     }
 
     /**
@@ -50,9 +70,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * @param userAuth 用户信息
      * @return         封装结果
      */
-    public UserDetailDTO convertUserDetail(UserAuth userAuth){
+    public UserDetailDTO convertUserDetail(UserAuth userAuth, UserInfo userInfo){
         Integer userInfoId = userAuth.getUserInfoId();
-        UserInfo userInfo = userInfoMapper.selectById(userInfoId);
 
         Integer userId = userAuth.getId();
         // 获取用户角色
