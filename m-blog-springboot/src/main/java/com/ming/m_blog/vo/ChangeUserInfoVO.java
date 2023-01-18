@@ -20,7 +20,7 @@ public class ChangeUserInfoVO {
     public String nickName;
 
     @NotNull
-    @ApiModelProperty(name = "nickName",value = "用户昵称",required = true,dataType = "String")
+    @ApiModelProperty(name = "intro",value = "用户简介",required = true,dataType = "String")
     public String intro;
 
 }

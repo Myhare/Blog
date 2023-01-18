@@ -22,7 +22,7 @@
         </v-col>
         <v-col md="7" cols="12">
           <v-text-field
-              v-model="userInfo.nickname"
+              v-model="userInfo.nickName"
               label="昵称"
               placeholder="请输入您的昵称"
           />
@@ -66,7 +66,7 @@ export default {
   data: function() {
     return {
       userInfo: {
-        nickname: this.$store.state.nickname,
+        nickName: this.$store.state.nickname,
         intro: this.$store.state.intro,
         webSite: this.$store.state.webSite,
         loginType: this.$store.state.loginType
@@ -74,10 +74,11 @@ export default {
     };
   },
   methods: {
+    // 修改用户个人信息
     updateUserInfo() {
-      this.axios.put("/api/users/info", this.userInfo).then(({ data }) => {
+      this.$axios.post("/api/admin/userInfoChange", this.userInfo).then(({ data }) => {
         if (data.flag) {
-          this.$store.commit("updateUserInfo", this.userInfo);
+          this.$store.commit("UPDATE_USER_INFO", this.userInfo);
           this.$toast({ type: "success", message: "修改成功" });
         } else {
           this.$toast({ type: "error", message: data.message });

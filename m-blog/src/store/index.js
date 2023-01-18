@@ -73,7 +73,13 @@ export default new Vuex.Store({
       } else {
         commentLikeSet.push(commentId);
       }
-    }
+    },
+    // 修改登录用户信息
+    UPDATE_USER_INFO(state, user) {
+      state.nickname = user.nickname;
+      state.intro = user.intro;
+      state.webSite = user.webSite;
+    },
   },
   actions: {
 
