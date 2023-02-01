@@ -43,6 +43,9 @@ public class UserAuth implements Serializable {
     @ApiModelProperty(value = "用户密码")
     private String password;
 
+    @ApiModelProperty(value = "登录类型")
+    private Integer loginType;
+
     @ApiModelProperty(value = "ip地址")
     private String ipAddress;
 

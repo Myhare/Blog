@@ -86,6 +86,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .builder()
                 .userId(userId)
                 .userInfoId(userInfoId)
+                .loginType(userAuth.getLoginType())
                 .email(userInfo.getEmail())
                 .username(userAuth.getUsername())
                 .password(userAuth.getPassword())
@@ -95,7 +96,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .isDisable(userInfo.getIsDelete())
                 .roleList(roleList)
                 .powerList(powerList)
-                .commentLikeSet(commentLikeSet)
+                .commentLikeSet(commentLikeSet) // 文章点赞集合
                 .loginTime(new Date())
                 .build();
     }

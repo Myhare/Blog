@@ -49,6 +49,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         // 获取当前登录用户返回登录信息
         // 判断是前台登录还是后台登录
         boolean isFront = Boolean.parseBoolean(httpServletRequest.getParameter("isFront"));
+        // 更新用户基本信息
+        updateUserInfo(httpServletRequest);
         // System.out.println(isFront);
         // 判断是前台还是后台登录，因为前端的验证逻辑不同，这里返回给前端的信息也不同
         if (isFront){
@@ -66,9 +68,6 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
             httpServletResponse.setContentType(APPLICATION_JSON);
             httpServletResponse.getWriter().write(JSON.toJSONString(ResponseResult.ok(token))); // 将token返回给前端
         }
-
-        // 更新用户基本信息
-        updateUserInfo(httpServletRequest);
     }
 
     /**

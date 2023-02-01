@@ -46,6 +46,11 @@ public class UserInfoDTO {
     private String intro;
 
     /**
+     * 登录方式
+     */
+    private Integer loginType;
+
+    /**
      * ip地址
      */
     private String ipAddress;
