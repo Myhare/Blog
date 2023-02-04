@@ -45,7 +45,7 @@ export default new Vuex.Store({
       state.commentLikeSet = user.commentLikeSet ? user.commentLikeSet : [];  // 用户评论点赞列表
       state.talkLikeSet = user.talkLikeSet ? user.talkLikeSet : [];           // 未完成
       state.email = user.email;
-      state.loginType = user.loginType; // 未完成
+      state.loginType = user.loginType; // 登录类型
     },
     // 退出登录
     LOGOUT(state){
@@ -58,7 +58,7 @@ export default new Vuex.Store({
       state.commentLikeSet = [];    // 评论点赞集合
       state.talkLikeSet = [];       // 未完成
       state.email = null;
-      state.loginType = null; // 未完成
+      state.loginType = null; // 登录类型
     },
     // 关闭所有对话框
     CLOSE_MODEL(state){
@@ -68,7 +68,7 @@ export default new Vuex.Store({
     // 评论点赞
     COMMENT_LIKE(state,commentId){
       var commentLikeSet = state.commentLikeSet;
-      if (commentLikeSet.indexOf(commentId) != -1) {
+      if (commentLikeSet.indexOf(commentId) !== -1) {
         commentLikeSet.splice(commentLikeSet.indexOf(commentId), 1);
       } else {
         commentLikeSet.push(commentId);
@@ -76,7 +76,7 @@ export default new Vuex.Store({
     },
     // 修改登录用户信息
     UPDATE_USER_INFO(state, user) {
-      state.nickname = user.nickname;
+      state.nickname = user.nickName;
       state.intro = user.intro;
       state.webSite = user.webSite;
     },

@@ -355,6 +355,7 @@ export default {
       .then(({data}) => {
         console.log('获取到的用户地区信息data：');
         console.log(data);
+        this.userAreaMap.series[0].data = data;
       })
       // this.axios
       //   .get("/api/admin/users/area", {

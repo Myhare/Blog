@@ -43,6 +43,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             userInfo = userInfoMapper.selectOne(new LambdaQueryWrapper<UserInfo>()
                     .eq(UserInfo::getEmail, username)
             );
+            if (Objects.isNull(userInfo)){
+                throw new ReRuntimeException("用户不存在");
+            }
             // 查询UserAuth
             userAuth = userAuthMapper.selectOne(new LambdaQueryWrapper<UserAuth>()
                     .eq(UserAuth::getUserInfoId, userInfo.getId())
@@ -53,6 +56,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     new LambdaQueryWrapper<UserAuth>()
                             .eq(UserAuth::getUsername,username)
             );
+            if (Objects.isNull(userAuth)){
+                throw new ReRuntimeException("用户不存在");
+            }
             // 通过UserAuth查询用户信息
             userInfo = userInfoMapper.selectOne(new LambdaQueryWrapper<UserInfo>()
                     .eq(UserInfo::getId, userAuth.getUserInfoId())
