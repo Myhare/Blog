@@ -64,6 +64,7 @@ export default new Vuex.Store({
     CLOSE_MODEL(state){
       state.loginFlag = false;
       state.registerFlag = false;
+      state.emailFlag = false;
     },
     // 评论点赞
     COMMENT_LIKE(state,commentId){
@@ -80,6 +81,10 @@ export default new Vuex.Store({
       state.intro = user.intro;
       state.webSite = user.webSite;
     },
+    // 修改用户绑定邮箱
+    CHANGE_EMAIL(state, email){
+      state.email = email
+    }
   },
   actions: {
 

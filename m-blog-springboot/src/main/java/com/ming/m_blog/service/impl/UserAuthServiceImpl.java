@@ -119,7 +119,7 @@ public class UserAuthServiceImpl extends ServiceImpl<UserAuthMapper, UserAuth> i
                 .build();
         // 通知rabbitMQ消费者发送邮件
         // rabbitTemplate.convertAndSend(MQPrefixConst.EMAIL_EXCHANGE,"",new Message(JSON.toJSONBytes(emailSendDTO),new MessageProperties()));
-        // 直接使用对象发送,想消费者发送消息
+        // 直接使用对象发送,向消费者发送消息
         rabbitTemplate.convertAndSend(MQPrefixConst.EMAIL_EXCHANGE,"",emailSendDTO);
         // 将随机数存入redis
         redisService.set(REGISTER_CODE+email,randomCode,60 * CODE_TIME);
@@ -151,6 +151,7 @@ public class UserAuthServiceImpl extends ServiceImpl<UserAuthMapper, UserAuth> i
                 .userInfoId(userInfo.getId())   // 前面insert后id会自动填充进来
                 .username(registerVO.getEmail()) // 用户名直接使用Email填充
                 .password(BCrypt.hashpw(registerVO.getPassword(), BCrypt.gensalt()))
+                .loginType(LOGIN_TYPE_EMAIL_CODE)   // 登录类型，这里使用邮件注册
                 .build();
         userAuthMapper.insert(userAuth);
     }

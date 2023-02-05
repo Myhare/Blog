@@ -56,6 +56,10 @@ export default {
   methods: {
     sendCode() {
       const that = this;
+      // 校验当前输入的邮箱是不是用户当前的邮箱
+      if (this.$store.state.email && this.$store.state.email === that.email){
+        return that.$toast({type: "error",message: "已经绑定当前邮箱"})
+      }
       // eslint-disable-next-line no-undef
       var captcha = new TencentCaptcha(this.config.TENCENT_CAPTCHA, function(
         res
@@ -63,17 +67,19 @@ export default {
         if (res.ret === 0) {
           //发送邮件
           that.countDown();
-          that.axios
-            .get("/api/users/code", {
-              params: { username: that.email }
-            })
-            .then(({ data }) => {
-              if (data.flag) {
-                that.$toast({ type: "success", message: data.message });
-              } else {
-                that.$toast({ type: "error", message: data.message });
-              }
-            });
+          that.$axios
+              .get("/api/sendEmail", {
+                params: {
+                  email: that.email
+                }
+              })
+              .then(({ data }) => {
+                if (data.flag) {
+                  that.$toast({ type: "success", message: data.message });
+                } else {
+                  that.$toast({ type: "error", message: data.message });
+                }
+              });
         }
       });
       // 显示验证码
@@ -92,13 +98,12 @@ export default {
         }
       }, 1000);
     },
+    // 绑定用户邮箱
     saveUserEmail() {
-      var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-      if (!reg.test(this.email)) {
+      if (!this.checkEmail(this.email)){
         this.$toast({ type: "error", message: "邮箱格式不正确" });
-        return false;
       }
-      if (this.code.trim().length != 6) {
+      if (this.code.trim().length !== 6) {
         this.$toast({ type: "error", message: "请输入6位验证码" });
         return false;
       }
@@ -106,17 +111,22 @@ export default {
         email: this.email,
         code: this.code
       };
-      this.axios.post("/api/users/email", user).then(({ data }) => {
+      this.$axios.post("/api/users/email", user).then(({ data }) => {
         if (data.flag) {
-          this.$store.commit("saveEmail", this.email);
+          this.$store.commit("CHANGE_EMAIL", this.email);
           this.email = "";
           this.code = "";
-          this.$store.commit("closeModel");
+          this.$store.commit("CLOSE_MODEL");
           this.$toast({ type: "success", message: data.message });
         } else {
           this.$toast({ type: "error", message: data.message });
         }
       });
+    },
+    // 验证邮箱格式是否正确
+    checkEmail(email){
+      var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+      return reg.test(email);
     }
   },
   computed: {

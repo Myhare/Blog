@@ -72,7 +72,7 @@ public class RedisPrefixConst {
     public static final String ACCESS_LIMIT = "access_limit:";
 
     /**
-     * 注册验证码
+     * 验证码
      * 前缀:用户邮箱
      */
     public static final String REGISTER_CODE = "register_code:";

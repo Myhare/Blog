@@ -17,6 +17,7 @@ import com.ming.m_blog.mapper.UserInfoMapper;
 import com.ming.m_blog.service.RedisService;
 import com.ming.m_blog.service.UserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ming.m_blog.utils.CommonUtils;
 import com.ming.m_blog.utils.JwtUtil;
 import com.ming.m_blog.utils.PageUtils;
 import com.ming.m_blog.utils.UserUtils;
@@ -163,5 +164,28 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         });
         // 将这个用户的所有session注销掉
         allSessions.forEach(SessionInformation::expireNow);
+    }
+
+    // 修改用户绑定邮箱
+    @Override
+    public int changeUserEmails(UserEmailVO userEmailVO) {
+        // 校验邮箱格式
+        if (!CommonUtils.checkEmail(userEmailVO.getEmail())){
+            throw new ReRuntimeException("邮箱格式错误");
+        }
+        // 验证码校验
+        // 获取用户原始邮箱
+        String redisKey = RedisPrefixConst.REGISTER_CODE + userEmailVO.getEmail();
+        if (!userEmailVO.getCode().equals(redisService.get(redisKey).toString())){
+            throw new ReRuntimeException("邮箱验证错误");
+        }
+
+        // 更新用户绑定邮箱
+        Integer userInfoId = UserUtils.getLoginUserInfoId();
+        UserInfo userInfo = UserInfo.builder()
+                .id(userInfoId)
+                .email(userEmailVO.getEmail())
+                .build();
+        return userInfoMapper.updateById(userInfo);
     }
 }

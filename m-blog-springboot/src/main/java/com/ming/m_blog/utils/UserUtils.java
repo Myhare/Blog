@@ -20,4 +20,9 @@ public class UserUtils {
         return getLoginUser().getUserId();
     }
 
+    // 获取登录用户信息Id
+    public static Integer getLoginUserInfoId(){
+        return getLoginUser().getUserInfoId();
+    }
+
 }

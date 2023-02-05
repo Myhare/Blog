@@ -70,5 +70,12 @@ public interface UserInfoService extends IService<UserInfo> {
      */
     void removeOnlineUser(Integer userId);
 
+    /**
+     * 更改当前登录用户的邮箱
+     * @param userEmailVO 邮箱类
+     * @return       修改结果
+     */
+    int changeUserEmails(UserEmailVO userEmailVO);
+
 }
 

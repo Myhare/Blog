@@ -22,7 +22,7 @@ public class UserDetailDTO implements UserDetails {
 
 
     /**
-     * 用户账号id
+     * 用户账号id(UserAuthId)
      */
     private Integer userId;
 

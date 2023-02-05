@@ -125,5 +125,13 @@ public class UserInfoController {
         return ResponseResult.ok();
     }
 
+    @ApiOperation("用户更改邮箱绑定")
+    @PostMapping("/users/email")
+    public ResponseResult<String> changeEmail(@RequestBody UserEmailVO userEmailVO){
+        userInfoService.changeUserEmails(userEmailVO);
+        return ResponseResult.ok("修改邮箱绑定成功",null);
+    }
+
 }
+
 

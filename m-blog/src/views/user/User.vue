@@ -38,7 +38,7 @@
               label="简介"
               placeholder="介绍下自己吧"
           />
-          <div v-if="loginType != 0" class="mt-7 binding">
+          <div v-if="loginType !== 0" class="mt-7 binding">
             <v-text-field
                 disabled
                 v-model="email"
@@ -93,6 +93,7 @@ export default {
         this.$toast({ type: "error", message: data.message });
       }
     },
+    // 打开修改绑定框
     openEmailModel() {
       this.$store.state.emailFlag = true;
     }

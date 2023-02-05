@@ -40,9 +40,9 @@ spring:
     timeout: 1800000
     # rabbitMQ
   rabbitmq:
-    host: 192.168.131.3
+    host: www.mingzib.xyz
     username: admin
-    password: 123456
+    password: 1940307627
     listener:
       simple:
         retry:

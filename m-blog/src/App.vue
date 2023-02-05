@@ -21,7 +21,7 @@
     <!-- 忘记密码模态框 -->
     <ForgetModel></ForgetModel>
     <!-- 绑定邮箱模态框 -->
-<!--    <EmailModel></EmailModel>-->
+    <EmailModel></EmailModel>
     <!--聊天室-->
     <ChatRoom></ChatRoom>
   </v-app>

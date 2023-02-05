@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-@Data@NotNull
+@Data
+@NotNull
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginUserVO {

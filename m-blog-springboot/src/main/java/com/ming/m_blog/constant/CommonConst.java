@@ -1,6 +1,8 @@
 package com.ming.m_blog.constant;
 
 
+import io.swagger.models.auth.In;
+
 /**
  * 公共常量
  */
@@ -76,5 +78,15 @@ public class CommonConst {
      * websiteConfig的Id
      */
     public static final String WEBSITE_CONFIG_ID = "1";
+
+    /**
+     * 邮箱或用户名登录
+     */
+    public static final Integer LOGIN_TYPE_EMAIL_CODE = 1;
+
+    /**
+     * qq登录
+     */
+    public static final Integer LOGIN_TYPE_QQ_CODE = 2;
 
 }

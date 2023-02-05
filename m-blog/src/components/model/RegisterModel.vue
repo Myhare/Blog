@@ -94,7 +94,7 @@ export default {
             })
             .then(({ data }) => {
               if (data.flag) {
-                that.$toast({ type: "success", message: "发送成功" });
+                that.$toast({ type: "success", message: data.message });
               } else {
                 that.$toast({ type: "error", message: data.message });
               }
