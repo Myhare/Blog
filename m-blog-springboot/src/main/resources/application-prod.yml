@@ -38,9 +38,10 @@ spring:
     port: 6379
     # 连接超时时间（毫秒）
     timeout: 1800000
-    # rabbitMQ
+  # rabbitMQ
   rabbitmq:
     host: www.mingzib.xyz
+    port: 5673
     username: admin
     password: 1940307627
     listener:
