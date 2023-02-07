@@ -13,8 +13,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: defaultDataSource
-    url: jdbc:mysql://www.mingzib.xyz:3306/blog?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    username: blog
+    url: 
+    username: 
     password: MySQL密码
   # redis相关
   redis:
@@ -40,10 +40,10 @@ spring:
     timeout: 1800000
   # rabbitMQ
   rabbitmq:
-    host: www.mingzib.xyz
-    port: 5673
-    username: admin
-    password: 1940307627
+    host: 
+    port: 
+    username: 
+    password: 
     listener:
       simple:
         retry:
@@ -53,8 +53,8 @@ spring:
   # 邮箱配置
   mail:
     host: smtp.qq.com
-    username: 1940307627@qq.com
-    password: yxnmblbfwvjndibh
+    username: 
+    password: 
     default-encoding: UTF-8
     port: 587
     properties:
@@ -84,11 +84,11 @@ mybatis-plus:
 
 
 gravatar:
-  qqEmail: 1940307627@qq.com
+  qqEmail: 
 
 # 上传文件
 upload:
   # nginx映射本地文件位置
-  url: http://www.static.mingzib.xyz/blogUploadFile/
+  url: 
   # 本地文件存储路径
   path: /www/blog/uploadImg/
