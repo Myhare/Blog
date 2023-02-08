@@ -57,7 +57,6 @@ public class ArticleController {
         }
     }
 
-    @OptLog(optType = OptTypeConstant.UPLOAD)
     @ApiOperation(value = "博客文章图片上传")
     @PreAuthorize("hasAuthority('sys:admin')")
     @PostMapping("/articleFile")
