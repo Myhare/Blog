@@ -1,6 +1,8 @@
 package com.ming.m_blog;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.ming.m_blog.service.BlogService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
@@ -19,6 +21,9 @@ class MBlogSpringbootApplicationTests {
 
     @Resource
     private JavaMailSender mailSender;
+
+    @Resource
+    private BlogService blogService;
 
     @Test
     void contextLoads() {
@@ -49,6 +54,12 @@ class MBlogSpringbootApplicationTests {
         mailMessage.setText("邮件文本信息:hello,dede,これは testEmails");
         mailSender.send(mailMessage);
         System.out.println("发送邮件成功");
+    }
+
+    // 查看当前网站配置
+    @Test
+    void testWebsiteConfig(){
+        System.out.println(JSON.toJSONString(blogService.getWebsiteConfig()));
     }
 
 

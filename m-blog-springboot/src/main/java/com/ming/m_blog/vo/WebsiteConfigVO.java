@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -71,7 +73,7 @@ public class WebsiteConfigVO {
     /**
      * 是否开启聊天室
      */
-    @ApiModelProperty(name = "isReward", value = "是否打赏", required = true, dataType = "Integer")
+    @ApiModelProperty(name = "isReward", value = "是否开启聊天室", required = true, dataType = "Integer")
     private Integer isChatRoom;
 
     /**
@@ -92,4 +94,27 @@ public class WebsiteConfigVO {
     @ApiModelProperty(name = "isEmailNotice", value = "是否邮箱通知", required = true, dataType = "Integer")
     private Integer isEmailNotice;
 
+    /**
+     * 社交url列表
+     */
+    @ApiModelProperty(name = "isSocialList", value = "isSocialList", required = true, dataType = "Integer")
+    private List<String> socialUrlList;
+
+    /**
+     * qq
+     */
+    @ApiModelProperty(name = "qq", value = "qq", required = true, dataType = "String")
+    private String qq;
+
+    /**
+     * github
+     */
+    @ApiModelProperty(name = "github", value = "github", required = true, dataType = "String")
+    private String github;
+
+    /**
+     * gitee
+     */
+    @ApiModelProperty(name = "gitee", value = "我的gitee", required = true, dataType = "String")
+    private String gitee;
 }

@@ -55,7 +55,16 @@ const routes = [
     meta: {
       title: '个人中心'
     }
+  },
+  // 留言
+  {
+    path: "/message",
+    component: () => import('@/views/message/Message'),
+    meta: {
+      title: "留言板"
+    }
   }
+
 ]
 
 const router = new VueRouter({

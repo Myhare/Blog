@@ -103,11 +103,11 @@
         <!--            <i class="iconfont iconzhifeiji" /> 关于-->
         <!--          </router-link>-->
         <!--        </div>-->
-        <!--        <div class="menus-item">-->
-        <!--          <router-link class="menu-btn" to="/message">-->
-        <!--            <i class="iconfont iconpinglunzu" /> 留言-->
-        <!--          </router-link>-->
-        <!--        </div>-->
+                <div class="menus-item">
+                  <router-link class="menu-btn" to="/message">
+                    <i class="iconfont iconpinglunzu" /> 留言
+                  </router-link>
+                </div>
         <div class="menus-item">
           <a
               class="menu-btn"

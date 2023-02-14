@@ -42,8 +42,8 @@ spring:
   rabbitmq:
     host: www.mingzib.xyz
     port: 5673
-    username: 
-    password: 
+    username: admin
+    password: 1940307627
     listener:
       simple:
         retry:
@@ -53,8 +53,8 @@ spring:
   # 邮箱配置
   mail:
     host: smtp.qq.com
-    username: 
-    password: 
+    username: 1940307627@qq.com
+    password: yxnmblbfwvjndibh
     default-encoding: UTF-8
     port: 587
     properties:
@@ -84,11 +84,11 @@ mybatis-plus:
 
 
 gravatar:
-  qqEmail: 你的邮箱，和上面发送邮箱相同
+  qqEmail: 1940307627@qq.com
 
 # 上传文件
 upload:
   # nginx映射本地文件位置
-  url: 
+  url: http://127.0.0.1/blogUploadFile/
   # 本地文件存储路径
-  path: 
+  path: F:/Java_IDEA练习/上传文件/blogUploadFile/

@@ -30,4 +30,11 @@ public class QueryInfoVO {
      */
     @ApiModelProperty(name = "keywords", value = "搜索内容", dataType = "String")
     private String keywords;
+
+    /**
+     * 是否审核
+     */
+    @ApiModelProperty(name = "isReview", value = "是否审核", dataType = "Integer")
+    private Integer isReview;
+
 }

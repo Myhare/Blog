@@ -3,6 +3,7 @@ package com.ming.m_blog.aspect;
 import com.alibaba.fastjson.JSON;
 import com.ming.m_blog.annotation.OptLog;
 import com.ming.m_blog.dto.UserDetailDTO;
+import com.ming.m_blog.exception.ReRuntimeException;
 import com.ming.m_blog.mapper.OperationLogMapper;
 import com.ming.m_blog.pojo.OperationLog;
 import com.ming.m_blog.utils.IpUtils;
@@ -24,6 +25,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -61,6 +63,9 @@ public class OptLogAspect {
         OptLog optLogAnnotation = method.getAnnotation(OptLog.class);
         // Class declaringType = signature.getDeclaringType(); // 获取切点方法所在类的Class对象
         Api apiAnnotation = (Api) signature.getDeclaringType().getAnnotation(Api.class); // 获取类所在对象的注解
+        if (Objects.isNull(apiAnnotation)){
+            throw new ReRuntimeException("请在接口类上添加@Api注解");
+        }
         ApiOperation apiOperationAnnotation = method.getAnnotation(ApiOperation.class);
 
         // 获取登录用户
@@ -77,7 +82,7 @@ public class OptLogAspect {
         operationLog.setOptUrl(request.getRequestURI()); // 请求uri
         operationLog.setOptMethod(methodName);    // 方法名称
         operationLog.setOptDesc(apiOperationAnnotation.value());  // 操作描述
-        operationLog.setRequestParam(JSON.toJSONString(joinPoint.getArgs())); // 请求参数
+        operationLog.setRequestParam(JSON.toJSONString(joinPoint.getArgs())); // 获取请求参数
         operationLog.setRequestMethod(request.getMethod()); // 请求方式
         operationLog.setResponseData(JSON.toJSONString(result));    // 响应结果
         operationLog.setUserId(loginUser.getUserId());  // 用户id

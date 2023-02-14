@@ -168,30 +168,30 @@
               加入书签
             </a>
             <!-- 社交信息 -->
-            <!--            <div class="card-info-social">-->
-            <!--              <a-->
-            <!--                  v-if="isShowSocial('qq')"-->
-            <!--                  class="mr-5 iconfont iconqq"-->
-            <!--                  target="_blank"-->
-            <!--                  :href="-->
-            <!--                  'http://wpa.qq.com/msgrd?v=3&uin=' +-->
-            <!--                    blogInfo.websiteConfig.qq +-->
-            <!--                    '&site=qq&menu=yes'-->
-            <!--                "-->
-            <!--              />-->
-            <!--              <a-->
-            <!--                  v-if="isShowSocial('github')"-->
-            <!--                  target="_blank"-->
-            <!--                  :href="blogInfo.websiteConfig.github"-->
-            <!--                  class="mr-5 iconfont icongithub"-->
-            <!--              />-->
-            <!--              <a-->
-            <!--                  v-if="isShowSocial('gitee')"-->
-            <!--                  target="_blank"-->
-            <!--                  :href="blogInfo.websiteConfig.gitee"-->
-            <!--                  class="iconfont icongitee-fill-round"-->
-            <!--              />-->
-            <!--            </div>-->
+            <div class="card-info-social">
+              <a
+                  v-if="isShowSocial('qq')"
+                  class="mr-5 iconfont iconqq"
+                  target="_blank"
+                  :href="
+                          'http://wpa.qq.com/msgrd?v=3&uin=' +
+                            1940307627 +
+                            '&site=qq&menu=yes'
+                        "
+              />
+              <a
+                  v-if="isShowSocial('github')"
+                  target="_blank"
+                  :href="blogInfo.websiteConfig.github"
+                  class="mr-5 iconfont icongithub"
+              />
+              <a
+                  v-if="isShowSocial('gitee')"
+                  target="_blank"
+                  :href="blogInfo.websiteConfig.gitee"
+                  class="iconfont icongitee-fill-round"
+              />
+            </div>
           </v-card>
           <!-- 网站信息 -->
           <v-card class="blog-card animated zoomIn mt-5 big">
@@ -356,8 +356,7 @@ export default {
     },
     isShowSocial() {
       return function(social) {
-        // return this.blogInfo.websiteConfig.socialUrlList.indexOf(social) != -1;
-        return false;
+        return this.blogInfo.websiteConfig.socialUrlList.indexOf(social) !== -1;
       };
     },
     cover() {
@@ -365,7 +364,7 @@ export default {
       // 遍历公共信息中的页面的封面
       let flag = true;
       this.$store.state.blogInfo.pageList.forEach(item => {
-        if (item.pageLabel == "home") {
+        if (item.pageLabel === "home") {
           cover = item.pageCover;
           flag = false;
         }

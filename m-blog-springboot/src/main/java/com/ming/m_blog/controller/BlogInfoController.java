@@ -1,5 +1,7 @@
 package com.ming.m_blog.controller;
 
+import com.ming.m_blog.annotation.OptLog;
+import com.ming.m_blog.constant.OptTypeConstant;
 import com.ming.m_blog.dto.BlogBackStatisticsDTO;
 import com.ming.m_blog.dto.BlogInfoDTO;
 import com.ming.m_blog.service.BlogService;
@@ -48,6 +50,7 @@ public class BlogInfoController {
         return ResponseResult.ok(blogService.getWebsiteConfig());
     }
 
+    @OptLog(optType = OptTypeConstant.UPDATE)
     @PreAuthorize("hasAuthority('sys:admin')")
     @ApiOperation("修改网站基本信息")
     @PostMapping("/admin/website/config")

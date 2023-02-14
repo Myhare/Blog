@@ -14,6 +14,7 @@ import InfiniteLoading from "vue-infinite-loading"; // 引用无限加载组件
 import dayjs from "dayjs";               // 时间处理插件
 import "highlight.js/styles/atom-one-dark.css";    // 代码高亮组件
 import VueImageSwipe from "vue-image-swipe";        // 图片预览组件
+// import { vueBaberrage } from 'vue-baberrage'    // 弹幕组件
 import NProgress from "nprogress";
 import "vue-image-swipe/dist/vue-image-swipe.css";
 import Toast from "./components/toast/index";       // 全局消息提示
@@ -23,6 +24,7 @@ import global from "@/assets/js/global";        // 全局变量
 Vue.use(InfiniteLoading);
 Vue.use(VueImageSwipe);
 Vue.use(Toast);
+// Vue.use(vueBaberrage)
 
 Vue.prototype.$global = global; // 设置全局变量
 Vue.prototype.config = config;
