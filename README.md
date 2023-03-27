@@ -1,9 +1,3 @@
-**写在前面**：
-
-这个博客前端前台部分完全参照了开源项目[https://github.com/X1192176811/blog](https://github.com/X1192176811/blog)，在原本的前端组件上修改得来。
-
-后端自己完成，技术栈相比上面开源博客少一点，代码也更容易理解，初学者更容易看懂。
-
 # 1.技术栈
 
 前端：vue2 + vuex + vue-router + axios + vuetify + element + echarts
