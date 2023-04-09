@@ -16,6 +16,14 @@ const messageRouter = {
       meta: {
         title: '评论管理'
       }
+    },
+    {
+      path: "message",
+      component:() => import('@/views/message/Message'),
+      name: 'message',
+      meta: {
+        title: '留言管理'
+      }
     }
   ]
 

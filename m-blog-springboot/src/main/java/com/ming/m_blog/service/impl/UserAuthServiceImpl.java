@@ -33,6 +33,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ming.m_blog.service.UserInfoService;
 import com.ming.m_blog.utils.CommonUtils;
 import com.ming.m_blog.utils.UserUtils;
+import com.ming.m_blog.vo.PasswordVO;
 import com.ming.m_blog.vo.RegisterVO;
 import com.ming.m_blog.vo.WebsiteConfigVO;
 import org.springframework.amqp.core.Message;
@@ -41,6 +42,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -220,6 +222,27 @@ public class UserAuthServiceImpl extends ServiceImpl<UserAuthMapper, UserAuth> i
                 .collect(Collectors.toList());
         // 将UserAreaDTO列表存入redis中，更新信息
         redisService.set(USER_AREA, JSON.toJSONString(userAreaDTOList));
+    }
+
+    // 后台修改用户密码
+    @Override
+    public int adminUpdatePassword(PasswordVO passwordVO) {
+        UserDetailDTO loginUser = UserUtils.getLoginUser();
+        // 将旧的密码加密后和数据库中的进行对照
+        String bcOldPassword = new BCryptPasswordEncoder().encode(passwordVO.getOldPassword());
+        if (Objects.isNull(bcOldPassword) || !BCrypt.checkpw(passwordVO.getOldPassword(),loginUser.getPassword())){
+            throw new ReRuntimeException("旧密码不正确");
+        }
+        // 修改数据库中的旧密码
+        String hashPassword = BCrypt.hashpw(passwordVO.getNewPassword());
+        UserAuth userAuth = UserAuth.builder()
+                .id(loginUser.getUserId())
+                .password(hashPassword)
+                .build();
+        int line = userAuthMapper.updateById(userAuth);
+        // 修改SpringSecurity中存的用户信息
+        loginUser.setPassword(hashPassword);
+        return line;
     }
 
     /**

@@ -85,6 +85,26 @@ public class ArticleController {
         return ResponseResult.ok();
     }
 
+    // 彻底删除博客
+    @OptLog(optType = OptTypeConstant.REMOVE)
+    @ApiOperation("彻底删除博客")
+    @PreAuthorize("hasAuthority('sys:admin')")
+    @PostMapping("/admin/reallyDeleteArticles")
+    public ResponseResult<String> realDeleteArticle(@RequestBody List<Integer> articleIdList){
+        articleService.realDeleteArticle(articleIdList);
+        return ResponseResult.ok();
+    }
+
+    // 恢复博客
+    @OptLog(optType = OptTypeConstant.UPDATE)
+    @ApiOperation("恢复删除博客")
+    @PreAuthorize("hasAuthority('sys:admin')")
+    @PostMapping("/admin/restoreArticle")
+    public ResponseResult<String> restoreArticle(@RequestBody List<Integer> articleIdList){
+        articleService.restoreArticle(articleIdList);
+        return ResponseResult.ok();
+    }
+
     // 修改文章置顶情况
     @OptLog(optType = OptTypeConstant.UPDATE)
     @ApiOperation("修改文章置顶情况")

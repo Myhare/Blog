@@ -40,7 +40,7 @@ spring:
     timeout: 1800000
   # rabbitMQ
   rabbitmq:
-    host: www.mingzib.xyz
+    host: 
     port: 5673
     username: 
     password: 

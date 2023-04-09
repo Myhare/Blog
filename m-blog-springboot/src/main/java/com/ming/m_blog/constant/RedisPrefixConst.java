@@ -20,7 +20,7 @@ public class RedisPrefixConst {
 
     /**
      * 文章阅读数量
-     * Hash格式(文章id，点赞数量)
+     * zSet格式(文章id，阅读量)
      */
     public static final String ARTICLE_VIEW_COUNT = "article_view_count";
 

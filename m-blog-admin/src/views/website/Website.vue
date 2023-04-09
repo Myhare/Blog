@@ -89,43 +89,42 @@
         </el-tab-pane>
         <!-- 网站公告 -->
         <el-tab-pane label="社交信息" name="notice">
-          <h2>暂未开放</h2>
-<!--          <el-form label-width="70px" :model="websiteConfigForm">-->
-<!--            <el-checkbox-group v-model="websiteConfigForm.socialUrlList">-->
-<!--              <el-form-item label="QQ">-->
-<!--                <el-input-->
-<!--                  v-model="websiteConfigForm.qq"-->
-<!--                  size="small"-->
-<!--                  style="width:400px;margin-right:1rem"-->
-<!--                />-->
-<!--                <el-checkbox label="qq">是否展示</el-checkbox>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="Github">-->
-<!--                <el-input-->
-<!--                  v-model="websiteConfigForm.github"-->
-<!--                  size="small"-->
-<!--                  style="width:400px;margin-right:1rem"-->
-<!--                />-->
-<!--                <el-checkbox label="github">是否展示</el-checkbox>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="Gitee">-->
-<!--                <el-input-->
-<!--                  v-model="websiteConfigForm.gitee"-->
-<!--                  size="small"-->
-<!--                  style="width:400px;margin-right:1rem"-->
-<!--                />-->
-<!--                <el-checkbox label="gitee">是否展示</el-checkbox>-->
-<!--              </el-form-item>-->
-<!--              <el-button-->
-<!--                type="primary"-->
-<!--                size="medium"-->
-<!--                style="margin-left:4.375rem"-->
-<!--                @click="updateWebsiteConfig"-->
-<!--              >-->
-<!--                修改-->
-<!--              </el-button>-->
-<!--            </el-checkbox-group>-->
-<!--          </el-form>-->
+          <el-form label-width="70px" :model="websiteConfigForm">
+            <el-checkbox-group v-model="websiteConfigForm.socialUrlList">
+              <el-form-item label="QQ">
+                <el-input
+                  v-model="websiteConfigForm.qq"
+                  size="small"
+                  style="width:400px;margin-right:1rem"
+                />
+                <el-checkbox label="qq">是否展示</el-checkbox>
+              </el-form-item>
+              <el-form-item label="Github">
+                <el-input
+                  v-model="websiteConfigForm.github"
+                  size="small"
+                  style="width:400px;margin-right:1rem"
+                />
+                <el-checkbox label="github">是否展示</el-checkbox>
+              </el-form-item>
+              <el-form-item label="Gitee">
+                <el-input
+                  v-model="websiteConfigForm.gitee"
+                  size="small"
+                  style="width:400px;margin-right:1rem"
+                />
+                <el-checkbox label="gitee">是否展示</el-checkbox>
+              </el-form-item>
+              <el-button
+                type="primary"
+                size="medium"
+                style="margin-left:4.375rem"
+                @click="updateWebsiteConfig"
+              >
+                修改
+              </el-button>
+            </el-checkbox-group>
+          </el-form>
         </el-tab-pane>
         <!-- 修改密码 -->
         <el-tab-pane label="其他设置" name="password">
@@ -332,6 +331,7 @@ export default {
       console.log(response);
       this.websiteConfigForm.websiteIcon = response.data;
     },
+    // 上传站主头像
     handleUserAvatarSuccess(response) {
       if (response.code !== 20000){
         return this.$notify({

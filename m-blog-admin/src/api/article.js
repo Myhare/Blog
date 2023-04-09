@@ -77,6 +77,24 @@ export function deleteArticle(articleIdList){
   })
 }
 
+// 彻底删除文章
+export function reallyDeleteArticle(articleIdList){
+  return request({
+    url: '/api/admin/reallyDeleteArticles',
+    method: 'post',
+    data: articleIdList
+  })
+}
+
+// 批量恢复文章
+export function restoreArticle(articleIdList){
+  return request({
+    url: '/api/admin/restoreArticle',
+    method: 'post',
+    data: articleIdList
+  })
+}
+
 // 修改文章置顶情况
 export function changeArticleTop(data){
   return request({

@@ -6,6 +6,7 @@ import com.ming.m_blog.pojo.UserAuth;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ming.m_blog.pojo.UserInfo;
 import com.ming.m_blog.vo.LoginUserVO;
+import com.ming.m_blog.vo.PasswordVO;
 import com.ming.m_blog.vo.RegisterVO;
 import com.ming.m_blog.vo.ResponseResult;
 import org.apache.ibatis.annotations.Param;
@@ -49,4 +50,10 @@ public interface UserAuthService extends IService<UserAuth> {
      */
     List<UserAreaDTO> getUserAreaDTO(Integer type);
 
+    /**
+     * 后台修改用户密码
+     * @param passwordVO 密码对象
+     * @return 影响的行数
+     */
+    int adminUpdatePassword(PasswordVO passwordVO);
 }

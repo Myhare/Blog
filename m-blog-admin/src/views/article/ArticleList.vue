@@ -15,8 +15,12 @@
       <!--文章修改、搜索区域-->
       <el-row class="articles-search" style="width: 100%;">
         <el-col :span="6">
-          <div class="articles-search-left">
+          <div v-if="articleQueryInfo.isDelete === 0" class="articles-search-left">
             <el-button @click="deleteArticle" type="danger" size="small" plain :disabled="articleIdList.length===0">批量删除</el-button>
+          </div>
+          <div v-else class="articles-search-left">
+            <el-button @click="reallyDeleteArticle" type="danger" size="small" plain :disabled="articleIdList.length===0">批量彻底删除</el-button>
+            <el-button @click="restoreArticle" type="success" size="small" plain :disabled="articleIdList.length===0">批量恢复</el-button>
           </div>
         </el-col>
         <el-col :span="18">
@@ -146,10 +150,16 @@
           <el-table-column
             prop="address"
             label="操作"
-            width="160">
+            width="180">
             <template slot-scope="scope">  <!--scope.row就相当于这一行的所有数据-->
-              <el-button type="primary" @click="editArticle(scope.row.id)" size="small" plain>编辑</el-button>
-              <el-button type="danger" size="small" plain @click="deleteArticle($event,scope.row.id)">删除</el-button>
+              <div v-if="articleQueryInfo.isDelete === 0">
+                <el-button type="primary" @click="editArticle(scope.row.id)" size="small" plain>编辑</el-button>
+                <el-button type="danger" size="small" plain @click="deleteArticle($event,scope.row.id)">删除</el-button>
+              </div>
+              <div v-else>
+                <el-button type="primary" size="small" plain @click="restoreArticle($event,scope.row.id)">恢复</el-button>
+                <el-button type="danger" size="small" plain @click="reallyDeleteArticle($event,scope.row.id)">彻底删除</el-button>
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -312,6 +322,62 @@ export default {
             this.getArticleList();
           }).catch(err => {
           console.log('删除文章失败,err:');
+          console.log(err);
+        })
+      })
+    },
+    // 彻底删除文章
+    reallyDeleteArticle(event,articleId) {
+      this.$confirm('确定要彻底删除文章吗？删除后无法恢复', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        console.log('articleId=>');
+        console.log(articleId);
+        let articleIdList = [];
+        if (articleId){
+          articleIdList = [articleId];
+        }else {
+          // 遍历选择的所有文章对象，将选择了的文章id添加进来
+          articleIdList = this.articleIdList;
+        }
+        // 批量删除文章
+        this.$store.dispatch('article/reallyDeleteArticle',articleIdList)
+          .then(res => {
+            this.$notify.success("彻底删除文章成功");
+            console.log('彻底删除文章成功,res:');
+            console.log(res);
+            this.getArticleList();
+          }).catch(err => {
+          console.log('彻底删除文章失败,err:');
+          console.log(err);
+        })
+      })
+    },
+    // 恢复文章
+    restoreArticle(event,articleId){
+      this.$confirm('确定恢复文章吗', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        console.log('articleId=>');
+        console.log(articleId);
+        let articleIdList = [];
+        if (articleId){
+          articleIdList = [articleId];
+        }else {
+          // 遍历选择的所有文章对象，将选择了的文章id添加进来
+          articleIdList = this.articleIdList;
+        }
+        // 批量删除文章
+        this.$store.dispatch('article/restoreArticle',articleIdList)
+          .then(res => {
+            this.$notify.success("恢复文章成功");
+            this.getArticleList();
+          }).catch(err => {
+          console.log('恢复文章失败,err:');
           console.log(err);
         })
       })

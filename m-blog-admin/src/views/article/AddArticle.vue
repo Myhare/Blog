@@ -184,6 +184,7 @@ export default {
   name: "Article",
   data(){
     return{
+      isAuthSave: true,  // 是否自动保存
       addArticleShow:false,
       selectCateName:'',  // 查询博客分类val
       selectTagName:'',    // 查询标签val
@@ -215,6 +216,10 @@ export default {
         status: 1         // 文章状态，1公开，2私密
       },
     }
+  },
+  // 销毁页面钩子函数
+  destroyed() {
+      this.authSaveArticle()
   },
   methods:{
     /**
@@ -439,11 +444,16 @@ export default {
         console.log('上传文章成功，res：');
         console.log(res);
         this.$notify.success('上传文章成功')
+        // 删除本地缓存
+        sessionStorage.removeItem("article")
         this.$router.push('/article/articles')
       }).catch(err => {
         console.log('上传文章失败');
       })
       this.addArticleShow = false
+
+      // 关闭自动保存功能
+      this.isAuthSave = false
     },
     // 添加草稿
     saveArtDraft(){
@@ -462,11 +472,15 @@ export default {
           console.log('添加草稿成功，res：');
           console.log(res);
           this.$notify.success('保存草稿成功')
+          // 删除本地缓存
+          sessionStorage.removeItem("article")
           // 重新跳转到当前页面
           this.$router.push('/article/articles')
         }).catch(err => {
         console.log('保存草稿失败');
       })
+      // 关闭自动保存功能
+      this.isAuthSave = false
     },
     // 通过id查询文章
     getArticleById(id){
@@ -480,6 +494,31 @@ export default {
         console.log('查询文章失败');
         console.log(err);
       })
+    },
+    // 自动保存文章
+    authSaveArticle(){
+      console.log('触发自动保存文章');
+      // 判断是否满足自动保存的条件
+      if(this.isAuthSave &&
+        this.article.articleTitle.trim() !== '' &&
+        this.article.articleContent.trim() !== '' &&
+        this.article.id !== null
+      ){
+        // 可以自动保存
+        // 上传博客
+        this.$store.dispatch('article/addArticle',this.article)
+          .then(res => {
+            // console.log('上传文章成功，res：');
+            // console.log(res);
+            this.$notify.success('自动保存成功')
+          }).catch(err => {
+          this.$notify.error('自动保存失败')
+        })
+      }
+      // 保存本地文章记录
+      if (this.isAuthSave && this.article.id == null) {
+        sessionStorage.setItem("article", JSON.stringify(this.article));
+      }
     }
   },
   created() {
@@ -487,6 +526,12 @@ export default {
     if (articleId){
       console.log('当前传递过来的文章id：'+this.$route.query.id);
       this.getArticleById(articleId);
+    }else {
+      // 不是修改问卷
+      const article = sessionStorage.getItem("article");
+      if (article){
+        this.article = JSON.parse(article)
+      }
     }
   }
 }

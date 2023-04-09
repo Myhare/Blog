@@ -57,6 +57,18 @@
           </el-table-column>
         </el-table>
       </div>
+      <!-- 分页 -->
+      <el-pagination
+        class="pagination-container"
+        background
+        @size-change="sizeChange"
+        @current-change="currentChange"
+        :current-page="queryInfo.pageNum"
+        :page-size="queryInfo.pageSize"
+        :total="categoryCount"
+        :page-sizes="[10, 20]"
+        layout="total, sizes, prev, pager, next, jumper"
+      />
     </el-card>
 
     <!--新增分类对话框-->
@@ -100,7 +112,7 @@ export default {
       categoryIdList:[],  // 分类id列表
       queryInfo: {
         pageNum: 1,         // 当前的页数
-        pageSize: 5,        // 一页显示的大小
+        pageSize: 10,        // 一页显示的大小
         keywords: ''        // 查询条件
       },
       addCategoryShow: false,
@@ -132,6 +144,14 @@ export default {
           console.log("查询分类失败");
           console.log(err);
         })
+    },
+    sizeChange(size) {
+      this.queryInfo.pageSize = size;
+      this.getCateList();
+    },
+    currentChange(current) {
+      this.queryInfo.pageNum = current;
+      this.getCateList();
     },
     // 向后端发送请求添加分类
     addCategory(cateName){

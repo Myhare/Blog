@@ -6,7 +6,8 @@ import {
   updateUserDelete,
   changeUserInfo,
   getOnline,
-  removeOnlineUser
+  removeOnlineUser,
+  updatePassword
 } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
@@ -129,6 +130,16 @@ const actions = {
         reject(error);
       })
     });
+  },
+
+  // 修改用户密码
+  updatePassword(commit,data){
+    return new Promise(resolve => {
+      updatePassword(data)
+        .then(res => {
+          resolve(res)
+        })
+    })
   },
 
 

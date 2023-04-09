@@ -109,4 +109,18 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     Integer loginGetArchiveCount(@Param("userId")Integer userId);
 
+    /**
+     * 批量彻底删除文章列表
+     * @param articleIdList 文章id列表
+     * @return              影响行数
+     */
+    Integer reallyDelArticleList(@Param("articleIdList")List articleIdList);
+
+    /**
+     * 批量恢复已删除的文章
+     * @param articleIdList 文章列表
+     * @return              影响的行数
+     */
+    Integer restoreArticle(@Param("articleIdList")List articleIdList);
+
 }

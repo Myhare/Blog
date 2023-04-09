@@ -47,6 +47,13 @@ public interface ArticleService extends IService<Article> {
     int deleteArticle(List<Integer> articleIdList);
 
     /**
+     * 彻底删除博客
+     * @param articleIdList 文章id列表
+     * @return              影响行数
+     */
+    int realDeleteArticle(List<Integer> articleIdList);
+
+    /**
      * 修改用户文章置顶情况
      * @param changeArticleTopVO 要修改的文章信息
      * @return                   影响的行数
@@ -79,4 +86,11 @@ public interface ArticleService extends IService<Article> {
      * @return        查询结果
      */
     PageResult<ArchiveDTO> getArchive(Integer current);
+
+    /**
+     * 批量恢复删除了的博客
+     * @param articleIdList 博客id列表
+     * @return              影响行数
+     */
+    Integer restoreArticle(List<Integer> articleIdList);
 }

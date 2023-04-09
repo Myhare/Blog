@@ -45,6 +45,32 @@ export function restoreCommentList(commentIdList){
   })
 }
 
+// 后台查询留言列表
+export function messageList(queryInfo){
+  return request({
+    url: '/api/admin/messages',
+    method: 'get',
+    params: queryInfo
+  })
+}
+
+// 删除留言列表
+export function delMessageList(messageIdList){
+  return request({
+    url: '/api/admin/delMessage',
+    method: 'post',
+    data: messageIdList
+  })
+}
+
+// 审核留言
+export function updateMessageReview(param){
+  return request({
+    url: '/api/admin/updateMessage',
+    method: 'post',
+    data: param
+  })
+}
 
 
 

@@ -76,6 +76,19 @@ export function changeUserInfo(nickName, intro){
 }
 
 /**
+ * 更新用户密码
+ * @param data 数据
+ * @returns 结果
+ */
+export function updatePassword(data){
+  return request({
+    url: '/api/admin/updatePassword',
+    method: 'post',
+    data
+  })
+}
+
+/**
  * 获取在线用户信息
  */
 export function getOnline(params){

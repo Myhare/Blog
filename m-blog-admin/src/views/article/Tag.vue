@@ -57,6 +57,18 @@
           </el-table-column>
         </el-table>
       </div>
+      <!-- 分页 -->
+      <el-pagination
+        class="pagination-container"
+        background
+        @size-change="sizeChange"
+        @current-change="currentChange"
+        :current-page="queryInfo.pageNum"
+        :page-size="queryInfo.pageSize"
+        :total="tagCount"
+        :page-sizes="[10, 20]"
+        layout="total, sizes, prev, pager, next, jumper"
+      />
     </el-card>
 
     <!--新增标签对话框-->
@@ -101,7 +113,7 @@ export default {
       tagIdList:[],  // 标签id列表
       queryInfo: {
         pageNum: 1,         // 当前的页数
-        pageSize: 5,        // 一页显示的大小
+        pageSize: 10,        // 一页显示的大小
         keywords: ''        // 查询条件
       },
       addTagShow: false,
@@ -154,6 +166,14 @@ export default {
           console.log(err);
         })
       this.addTagShow = false
+    },
+    sizeChange(size) {
+      this.queryInfo.pageSize = size;
+      this.getCateList();
+    },
+    currentChange(current) {
+      this.queryInfo.pageNum = current;
+      this.getCateList();
     },
 
     // 修改表格前面多选框时调用的函数，参数为当前表格的数据

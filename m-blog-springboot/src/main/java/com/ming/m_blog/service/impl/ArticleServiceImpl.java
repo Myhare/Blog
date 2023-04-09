@@ -16,22 +16,20 @@ import com.ming.m_blog.pojo.InArticleTag;
 import com.ming.m_blog.pojo.Tag;
 import com.ming.m_blog.service.ArticleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ming.m_blog.service.RedisService;
 import com.ming.m_blog.utils.BeanCopyUtils;
 import com.ming.m_blog.utils.CommonUtils;
 import com.ming.m_blog.utils.PageUtils;
 import com.ming.m_blog.utils.UserUtils;
 import com.ming.m_blog.vo.*;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 import static com.ming.m_blog.constant.CommonConst.*;
 import static com.ming.m_blog.constant.RedisPrefixConst.*;
@@ -57,7 +55,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Autowired
     private InArticleTagMapper inArticleTagMapper;
     @Autowired
-    private RedisServiceImpl redisService;
+    private RedisService redisService;
     @Autowired
     private HttpSession session;
 
@@ -70,12 +68,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         String categoryName = articleAddVO.getCategoryName();
         // 通过分类名称获取分类id，如果没有当前分类则添加分类
         Category category = null;   // 如果为空说明在保存草稿
-        if (categoryName==null){
-            category = Category
-                    .builder()
-                    .id(null)
-                    .build();
-        }else {
+        if (!StringUtils.isEmpty(categoryName) && !articleAddVO.getStatus().equals(DRAFT.getStatus())){
+            // 说明不是草稿
             category = getCategoryByCateName(categoryName);
         }
 
@@ -83,7 +77,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Article article = Article.builder()
                 .id(articleAddVO.getId())
                 .userId(loginUser.getUserId())
-                .categoryId(category.getId())
+                .categoryId(category != null ? category.getId():null)
                 .title(articleAddVO.getArticleTitle())
                 .content(articleAddVO.getArticleContent())
                 .cover(articleAddVO.getCoverUrl())
@@ -119,10 +113,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         //  通过分页信息查询文章列表
         List<ArticleListInfoDTO> articleListInfoDTOList = articleMapper.getArticleList(adminArticlesVO);
-        // 初始化浏览量和点赞量
+        // 文章浏览量
+        Map<Object, Double> viewCountMap = redisService.zAllScore(ARTICLE_VIEW_COUNT);
+        // 文章点赞量
+        Map<String,Object> likeCountMap = redisService.hGetAll(ARTICLE_LIKE_COUNT);
+        // 初始化点赞量（暂时还没有添加点赞功能）
         articleListInfoDTOList.forEach(item -> {
-            item.setPageViews(0);
-            item.setPageLikes(0);
+            // 浏览量
+            item.setPageViews(viewCountMap.getOrDefault(item.getId(),0.0).intValue());
+            // 点赞量
+            item.setPageLikes((Integer) likeCountMap.getOrDefault(item.getId().toString(),0));
         });
         return new PageResult<ArticleListInfoDTO>(articleListInfoDTOList,articleCount);
     }
@@ -188,6 +188,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public int deleteArticle(List<Integer> articleIdList) {
         return articleMapper.deleteBatchIds(articleIdList);
+    }
+
+    // 彻底删除博客
+    @Override
+    public int realDeleteArticle(List<Integer> articleIdList) {
+        return articleMapper.reallyDelArticleList(articleIdList);
+    }
+
+    // 恢复删除的文章
+    @Override
+    public Integer restoreArticle(List<Integer> articleIdList) {
+        return articleMapper.restoreArticle(articleIdList);
     }
 
     // 修改文章置顶情况
@@ -402,5 +414,4 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             redisService.zIncr(ARTICLE_VIEW_COUNT,articleId, 1.0);
         }
     }
-
 }

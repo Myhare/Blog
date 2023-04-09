@@ -1,11 +1,14 @@
 package com.ming.m_blog.controller;
 
 
+import com.ming.m_blog.annotation.OptLog;
+import com.ming.m_blog.constant.OptTypeConstant;
 import com.ming.m_blog.dto.UserAreaDTO;
 import com.ming.m_blog.dto.UserInfoDTO;
 import com.ming.m_blog.mapper.UserAuthMapper;
 import com.ming.m_blog.service.UserAuthService;
 import com.ming.m_blog.vo.LoginUserVO;
+import com.ming.m_blog.vo.PasswordVO;
 import com.ming.m_blog.vo.RegisterVO;
 import com.ming.m_blog.vo.ResponseResult;
 import io.swagger.annotations.Api;
@@ -70,6 +73,15 @@ public class UserAuthController {
     @GetMapping("/admin/user/area")
     public ResponseResult<List<UserAreaDTO>> getUserArea(Integer type){
         return ResponseResult.ok(userAuthService.getUserAreaDTO(type));
+    }
+
+    @OptLog(optType = OptTypeConstant.UPDATE)
+    @PreAuthorize("hasAuthority('admin')")
+    @ApiOperation("后台修改用户密码")
+    @PostMapping("/admin/updatePassword")
+    public ResponseResult<?> adminUpdatePassword(@RequestBody PasswordVO passwordVO){
+        userAuthService.adminUpdatePassword(passwordVO);
+        return ResponseResult.ok();
     }
 
 }

@@ -4,7 +4,9 @@ import {
   getArticleList,
   deleteArticle,
   changeArticleTop,
-  getArticleById
+  getArticleById,
+  reallyDeleteArticle,
+  restoreArticle
 } from '@/api/article'
 
 const state = {
@@ -58,6 +60,26 @@ const actions = {
         }).catch(err => {
         reject(err);
       })
+    })
+  },
+
+  // 彻底删除指定文章
+  reallyDeleteArticle(context,articleIdList){
+    return new Promise((resolve => {
+      reallyDeleteArticle(articleIdList)
+        .then(res => {
+          resolve(res)
+        })
+    }))
+  },
+
+  // 恢复删除文章
+  restoreArticle(context,articleIdList){
+    return new Promise(resolve => {
+      restoreArticle(articleIdList)
+        .then(res => {
+          resolve(res);
+        })
     })
   },
 

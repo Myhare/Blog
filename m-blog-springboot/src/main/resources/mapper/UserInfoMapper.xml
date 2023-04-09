@@ -39,7 +39,7 @@
         limit #{pageNum},#{pageSize}
         ) ui
         left join user_auth ua on ui.id = ua.user_info_id
-        left join in_user_role iur on iur.user_id=ua.id
+        left join in_user_role iur on iur.user_id=ui.id
         left join role r on iur.role_id = r.id
         <where>
             <if test="keywords != null">

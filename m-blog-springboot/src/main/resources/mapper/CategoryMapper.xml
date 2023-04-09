@@ -9,7 +9,7 @@
         c.update_time updateTime,
         count(a.id) articleCount
         from category c
-        left join article a on c.id = a.category_id
+        left join article a on c.id = a.category_id and a.is_delete = 0
         <where>
             <if test="keywords != null">
                 c.category_name like concat('%',#{keywords},'%')

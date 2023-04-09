@@ -3,7 +3,10 @@ import {
   delCommentList,
   reviewCommentList,
   reallyDelCommentList,
-  restoreCommentList
+  restoreCommentList,
+  messageList,
+  delMessageList,
+  updateMessageReview
 } from '@/api/message'
 
 const state = {
@@ -56,6 +59,36 @@ const actions = {
       restoreCommentList(commentIdList)
         .then(res => {
           resolve(res);
+        })
+    })
+  },
+
+  // 后台查询留言列表
+  messageList(context,queryInfo){
+    return new Promise(resolve => {
+      messageList(queryInfo)
+        .then(res => {
+          resolve(res)
+        })
+    })
+  },
+
+  // 批量删除留言列表
+  delMessageList(context,messageIdList){
+    return new Promise(resolve => {
+      delMessageList(messageIdList)
+        .then(res => {
+          resolve(res)
+        })
+    })
+  },
+
+  // 修改留言审核
+  updateMessageReview(context,param){
+    return new Promise(resolve => {
+      updateMessageReview(param)
+        .then(res => {
+          resolve(res)
         })
     })
   }

@@ -96,7 +96,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         String browser = userAgent.getBrowser().getName();      // 浏览器
         String os = userAgent.getOperatingSystem().getName();   // 操作系统
 
-        // 更新SpringSecurity中UserDetails中的用户登录设备信息
+        // 更新SpringSecurity中UserDetails中的用户登录设备信息,因为是引用类型这里直接修改就行
         loginUser.setIpAddress(ipAddress);
         loginUser.setIpSource(ipSource);
         loginUser.setBrowser(browser);

@@ -16,7 +16,7 @@
         <el-col :span="6">
           <div v-if="commentQueryInfo.isDelete === 0" class="comment-search-left">
             <el-button type="danger" @click="delComment" size="small" plain>批量删除</el-button>
-            <el-button type="success" @click="reviewCommentList" size="small" plain>批量通过</el-button>
+            <el-button type="success" @click="reviewCommentList(null)" size="small" plain>批量通过</el-button>
           </div>
           <div v-else class="comment-search-left">
             <el-button type="danger" @click="reallyDelComment" size="small" plain>批量彻底删除</el-button>
@@ -138,7 +138,7 @@
                   type="success"
                   slot="reference"
                   plain
-                  @click = "reviewCommentList($event,scope.row.id)"
+                  @click = "reviewCommentList(scope.row.id)"
                   v-if="scope.row.isReview===0"
                 >
                   通过
@@ -266,6 +266,9 @@ export default {
       }else {
         commentIdList = this.commentIdList;
       }
+      console.log("当前id："+id);
+      console.log(commentIdList);
+      console.log(this.commentIdList);
       this.$store.dispatch('message/reviewCommentList',commentIdList)
       .then(({data}) => {
         console.log('通过审核成功，data：');

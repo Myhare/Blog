@@ -1,115 +1,223 @@
 export default {
-  "[微笑]": "https://static.talkxj.com/emoji/smile.jpg",
+  "[微笑]": "http://www.static.mingzib.xyz/emoji/smile.png",
 
-  "[笑]": " https://static.talkxj.com/emoji/dx.jpg",
+  "[害羞]": "http://www.static.mingzib.xyz/emoji/shy.png",
 
-  "[呲牙]": "https://static.talkxj.com/emoji/cy.jpg",
+  "[击掌]": "http://www.static.mingzib.xyz/emoji/jz.png",
 
-  "[OK]": "https://static.talkxj.com/emoji/ok.jpg",
+  "[左上]": "http://www.static.mingzib.xyz/emoji/zs.png",
 
-  "[星星眼]": "https://static.talkxj.com/emoji/xxy.jpg",
+  "[握手]": "http://www.static.mingzib.xyz/emoji/ws.png",
 
-  "[哦呼]": "https://static.talkxj.com/emoji/oh.jpg",
+  "[18禁]": "http://www.static.mingzib.xyz/emoji/18ban.png",
 
-  "[嫌弃]": "https://static.talkxj.com/emoji/xq.jpg",
+  "[V5]": "http://www.static.mingzib.xyz/emoji/v5.png",
 
-  "[喜欢]": "https://static.talkxj.com/emoji/xh.jpg",
+  "[爱心]": "http://www.static.mingzib.xyz/emoji/heart.png",
 
-  "[酸了]": "https://static.talkxj.com/emoji/sl.jpg",
+  "[给力]": "http://www.static.mingzib.xyz/emoji/gl.png",
 
-  "[大哭]": "https://static.talkxj.com/emoji/dq.jpg?",
+  "[便便]": "http://www.static.mingzib.xyz/emoji/bb.png",
 
-  "[害羞]": "https://static.talkxj.com/emoji/hx.jpg",
+  "[惊讶]": "http://www.static.mingzib.xyz/emoji/jy.png",
 
-  "[无语]": "https://static.talkxj.com/emoji/wy.jpg",
+  "[调皮1]": "http://www.static.mingzib.xyz/emoji/tp.png",
 
-  "[疑惑]": "https://static.talkxj.com/emoji/yh.jpg",
+  "[礼物]": "http://www.static.mingzib.xyz/emoji/gift.png",
 
-  "[调皮]": "https://static.talkxj.com/emoji/tiaopi.jpg",
+  "[蛋糕]": "http://www.static.mingzib.xyz/emoji/dg.png",
 
-  "[笑哭]": "https://static.talkxj.com/emoji/xiaoku.jpg",
+  "[笑哭]": "http://www.static.mingzib.xyz/emoji/xk.png",
 
-  "[奸笑]": "https://static.talkxj.com/emoji/jianxiao.jpg",
+  "[奸笑]": "http://www.static.mingzib.xyz/emoji/jx.png",
 
-  "[偷笑]": "https://static.talkxj.com/emoji/touxiao.jpg",
+  "[撇嘴]": "http://www.static.mingzib.xyz/emoji/pz.png",
 
-  "[大笑]": "https://static.talkxj.com/emoji/daxiao.jpg",
+  "[困]": "http://www.static.mingzib.xyz/emoji/kun.png",
 
-  "[阴险]": "https://static.talkxj.com/emoji/yinxian.jpg",
+  "[强壮]": "http://www.static.mingzib.xyz/emoji/qiangzhuang.png",
 
-  "[捂脸]": "https://static.talkxj.com/emoji/wulian.jpg",
+  // "[狗头1]": "http://www.static.mingzib.xyz/emoji/dog.png",
 
-  "[呆]": "https://static.talkxj.com/emoji/dai.jpg",
+  "[互粉]": "http://www.static.mingzib.xyz/emoji/hufen.png",
 
-  "[抠鼻]": "https://static.talkxj.com/emoji/koubi.jpg",
+  "[吃饺子]": "http://www.static.mingzib.xyz/emoji/chijiaozi.png",
 
-  "[惊喜]": "https://static.talkxj.com/emoji/jingxi.jpg",
+  "[憨笑]": "http://www.static.mingzib.xyz/emoji/hanxiao.png",
 
-  "[惊讶]": "https://static.talkxj.com/emoji/jingya.jpg",
+  "[嘴唇]": "http://www.static.mingzib.xyz/emoji/zuichun.png",
 
-  "[捂脸哭]": "https://static.talkxj.com/emoji/wulianku.jpg",
+  "[衰]": "http://www.static.mingzib.xyz/emoji/shuai.png",
 
-  "[妙啊]": "https://static.talkxj.com/emoji/miaoa.jpg",
+  "[胡瓜]": "http://www.static.mingzib.xyz/emoji/hugua.png",
 
-  "[狗头]": "https://static.talkxj.com/emoji/goutou.jpg",
+  "[狗头]": "http://www.static.mingzib.xyz/emoji/goutou.png",
 
-  "[滑稽]": "https://static.talkxj.com/emoji/huaji.jpg",
+  "[熊吉]": "http://www.static.mingzib.xyz/emoji/xiongji.png",
 
-  "[吃瓜]": "https://static.talkxj.com/emoji/chigua.jpg",
+  "[晚安]": "http://www.static.mingzib.xyz/emoji/wanan.png",
 
-  "[打call]": "https://static.talkxj.com/emoji/dacall.jpg",
+  "[不失礼貌的微笑]": "http://www.static.mingzib.xyz/emoji/weixiao.png",
 
-  "[点赞]": "https://static.talkxj.com/emoji/dianzan.jpg",
+  "[色]": "http://www.static.mingzib.xyz/emoji/se.png",
 
-  "[鼓掌]": "https://static.talkxj.com/emoji/guzhang.jpg",
+  "[大]": "http://www.static.mingzib.xyz/emoji/da.png",
 
-  "[尴尬]": "https://static.talkxj.com/emoji/ganga.jpg",
+  "[囧]": "http://www.static.mingzib.xyz/emoji/jiong.png",
 
-  "[冷]": "https://static.talkxj.com/emoji/leng.jpg",
+  "[雪人]": "http://www.static.mingzib.xyz/emoji/xueren.png",
 
-  "[灵魂出窍]": "https://static.talkxj.com/emoji/linghunchuqiao.jpg",
+  "[绿帽]": "http://www.static.mingzib.xyz/emoji/lvmao.png",
 
-  "[委屈]": "https://static.talkxj.com/emoji/weiqu.jpg",
+  "[晕]": "http://www.static.mingzib.xyz/emoji/yun.png",
 
-  "[傲娇]": "https://static.talkxj.com/emoji/aojiao.jpg",
+  "[小声说]": "http://www.static.mingzib.xyz/emoji/xiaosheng.png",
 
-  "[疼]": "https://static.talkxj.com/emoji/teng.jpg",
+  "[加油]": "http://www.static.mingzib.xyz/emoji/jiayou.png",
 
-  "[吓]": "https://static.talkxj.com/emoji/xia.jpg?",
+  "[机智]": "http://www.static.mingzib.xyz/emoji/jizhi.png?",
 
-  "[生病]": "https://static.talkxj.com/emoji/shengbing.jpg",
+  "[捂脸]": "http://www.static.mingzib.xyz/emoji/wulian.png",
 
-  "[吐]": "https://static.talkxj.com/emoji/tu.jpg",
+  "[委屈]": "http://www.static.mingzib.xyz/emoji/weiqu.png",
 
-  "[嘘声]": "https://static.talkxj.com/emoji/xusheng.jpg",
+  // "[笑哭2]": "http://www.static.mingzib.xyz/emoji/xiaoku.png",
 
-  "[捂眼]": "https://static.talkxj.com/emoji/wuyan.jpg",
+  "[呲牙]": "http://www.static.mingzib.xyz/emoji/ciya.png",
 
-  "[思考]": "https://static.talkxj.com/emoji/sikao.jpg",
+  "[吐血]": "http://www.static.mingzib.xyz/emoji/tuxue.png",
 
-  "[再见]": "https://static.talkxj.com/emoji/zaijian.jpg",
+  "[发财]": "http://www.static.mingzib.xyz/emoji/facai.png",
 
-  "[翻白眼]": "https://static.talkxj.com/emoji/fanbaiyan.jpg",
+  "[去污渍]": "http://www.static.mingzib.xyz/emoji/quwuzi.png",
 
-  "[哈欠]": "https://static.talkxj.com/emoji/haqian.jpg",
+  "[调皮2]": "http://www.static.mingzib.xyz/emoji/tiaopi.png",
 
-  "[奋斗]": "https://static.talkxj.com/emoji/fengdou.jpg",
+  "[思考]": "http://www.static.mingzib.xyz/emoji/sikao.png",
 
-  "[墨镜]": "https://static.talkxj.com/emoji/mojing.jpg",
+  "[金鱼]": "http://www.static.mingzib.xyz/emoji/jinyu.png",
 
-  "[撇嘴]": "https://static.talkxj.com/emoji/piezui.jpg",
+  "[南]": "http://www.static.mingzib.xyz/emoji/nan.png",
 
-  "[难过]": "https://static.talkxj.com/emoji/nanguo.jpg",
+  "[惊吓]": "http://www.static.mingzib.xyz/emoji/jingxia.png",
 
-  "[抓狂]": "https://static.talkxj.com/emoji/zhuakuang.jpg",
+  "[非常惊吓]": "http://www.static.mingzib.xyz/emoji/feichangjingxia.png",
 
-  "[生气]": "https://static.talkxj.com/emoji/shengqi.jpg",
+  "[咖啡]": "http://www.static.mingzib.xyz/emoji/kafei.png",
 
-  "[爱心]": "https://static.talkxj.com/emoji/aixin.jpg",
+  "[亲嘴]": "http://www.static.mingzib.xyz/emoji/qinzui.png",
 
-  "[胜利]": "https://static.talkxj.com/emoji/shengli.jpg",
+  "[绝]": "http://www.static.mingzib.xyz/emoji/jue.png",
 
-  "[保佑]": "https://static.talkxj.com/emoji/baoyou.jpg",
+  "[扇脸]": "http://www.static.mingzib.xyz/emoji/shanlian.png",
 
-  "[支持]": "https://static.talkxj.com/emoji/zhichi.jpg"
+  "[石化]": "http://www.static.mingzib.xyz/emoji/shihua.png",
+
+  "[舔屏]": "http://www.static.mingzib.xyz/emoji/tianping.png",
+
+  "[耶]": "http://www.static.mingzib.xyz/emoji/ye.png",
+
+  "[摸头]": "http://www.static.mingzib.xyz/emoji/motou.png",
+
+  "[吃瓜]": "http://www.static.mingzib.xyz/emoji/chigua.png",
+
+  "[帅气]": "http://www.static.mingzib.xyz/emoji/shuaiqi.png",
+
+  "[emo]": "http://www.static.mingzib.xyz/emoji/emo.png",
+
+  "[送心]": "http://www.static.mingzib.xyz/emoji/songxin.png",
+
+  "[拿捏]": "http://www.static.mingzib.xyz/emoji/nanie.png",
+
+  "[斜眼]": "http://www.static.mingzib.xyz/emoji/xieyan.png",
+
+  "[流汗]": "http://www.static.mingzib.xyz/emoji/liuhan.png",
+
+  "[震惊]": "http://www.static.mingzib.xyz/emoji/zhenjing.png",
+
+  "[辱骂]": "http://www.static.mingzib.xyz/emoji/ma.png",
+
+  "[哈切]": "http://www.static.mingzib.xyz/emoji/haqie.png",
+
+  "[比耶]": "http://www.static.mingzib.xyz/emoji/biye.png",
+
+  "[吐彩虹]": "http://www.static.mingzib.xyz/emoji/tucaihong.png",
+
+  "[无语]": "http://www.static.mingzib.xyz/emoji/wuyu.png",
+
+  "[抠鼻]": "http://www.static.mingzib.xyz/emoji/koubi.png",
+
+  "[烦躁]": "http://www.static.mingzib.xyz/emoji/fan.png",
+
+  "[生气]": "http://www.static.mingzib.xyz/emoji/shengqi.png",
+
+  "[皱眉]": "http://www.static.mingzib.xyz/emoji/zhoumei.png",
+
+  "[哭哭]": "http://www.static.mingzib.xyz/emoji/kuku.png",
+
+  "[奋斗]": "http://www.static.mingzib.xyz/emoji/fendou.png",
+
+  "[疑问]": "http://www.static.mingzib.xyz/emoji/yiwen.png",
+
+  "[猪]": "http://www.static.mingzib.xyz/emoji/zhu.png",
+
+  "[裂开]": "http://www.static.mingzib.xyz/emoji/liekai.png",
+
+  "[期待]": "http://www.static.mingzib.xyz/emoji/qidai.png",
+
+  "[关注1]": "http://www.static.mingzib.xyz/emoji/guanzhu.png",
+
+  "[关注2]": "http://www.static.mingzib.xyz/emoji/qibuchengsheng.png",
+
+  "[香肠嘴]": "http://www.static.mingzib.xyz/emoji/xiangchangzui.png",
+
+  "[666]": "http://www.static.mingzib.xyz/emoji/666.png",
+
+  "[大笑]": "http://www.static.mingzib.xyz/emoji/daxiao.png",
+
+  "[闭嘴]": "http://www.static.mingzib.xyz/emoji/bizui.png",
+
+  "[比心]": "http://www.static.mingzib.xyz/emoji/bixin.png",
+
+  "[再见]": "http://www.static.mingzib.xyz/emoji/zaijian.png",
+
+  "[鼓掌]": "http://www.static.mingzib.xyz/emoji/guzhang.png",
+
+  "[不开心]": "http://www.static.mingzib.xyz/emoji/bukaixin.png",
+
+  "[点赞]": "http://www.static.mingzib.xyz/emoji/dianzan.png",
+
+  "[酷]": "http://www.static.mingzib.xyz/emoji/ku.png",
+
+  "[痛哭]": "http://www.static.mingzib.xyz/emoji/tongku.png",
+
+  "[锤子]": "http://www.static.mingzib.xyz/emoji/chuizi.png",
+
+  "[厉害]": "http://www.static.mingzib.xyz/emoji/lihai.png",
+
+  "[吐]": "http://www.static.mingzib.xyz/emoji/tu.png",
+
+  "[偷笑]": "http://www.static.mingzib.xyz/emoji/touxiao.png",
+
+  "[诅咒]": "http://www.static.mingzib.xyz/emoji/zuzhou.png",
+
+  "[祈祷]": "http://www.static.mingzib.xyz/emoji/qidao.png",
+
+  "[哭]": "http://www.static.mingzib.xyz/emoji/henku.png",
+
+  "[飞吻]": "http://www.static.mingzib.xyz/emoji/feiwen.png",
+
+  "[加好友]": "http://www.static.mingzib.xyz/emoji/jiahaoyou.png",
+
+  "[YYDS]": "http://www.static.mingzib.xyz/emoji/yyds.png",
+
+  "[可怜]": "http://www.static.mingzib.xyz/emoji/kelian.png",
+
+  "[左边]": "http://www.static.mingzib.xyz/emoji/zuobian.png",
+
+  "[弱爆]": "http://www.static.mingzib.xyz/emoji/ruobao.png",
+
+  "[坏笑]": "http://www.static.mingzib.xyz/emoji/huaixiao.png",
+
+  "[呆无辜]": "http://www.static.mingzib.xyz/emoji/daiwugu.png",
 };

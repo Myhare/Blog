@@ -39,7 +39,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="nickname" label="昵称"></el-table-column>
-        <el-table-column prop="roles" label="角色"></el-table-column>
+        <el-table-column label="角色">
+          <template slot-scope="scope">  <!--scope.row就相当于这一行的所有数据-->
+            <el-tag v-for="tag in scope.row.roles" style="margin: 0.2rem 0.2rem">{{tag}}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="blogCount" label="发布博客数量"></el-table-column>
         <el-table-column prop="createTime" label="账号创建时间" :formatter="dateFormat"></el-table-column>
         <el-table-column prop="lastLoginTime" label="最后登录时间" :formatter="dateFormat"></el-table-column>
