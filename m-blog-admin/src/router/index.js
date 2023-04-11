@@ -15,6 +15,7 @@ import usersRouter from './modules/users'     // 用户列表
 import articleRouter from './modules/article' // 文章管理
 import messageRouter from "@/router/modules/message";  // 消息管理
 import websiteRouter from "@/router/modules/website";   // 网站管理
+import logRouter from "@/router/modules/log";   // 日志管理
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -92,6 +93,7 @@ export const asyncRoutes = [
   articleRouter,
   messageRouter,
   websiteRouter,
+  logRouter,
 
   // 个人中心
   {
