@@ -4,8 +4,10 @@ package com.ming.m_blog.controller;
 import com.ming.m_blog.annotation.OptLog;
 import com.ming.m_blog.constant.OptTypeConstant;
 import com.ming.m_blog.dto.*;
+import com.ming.m_blog.enums.FilePathEnum;
 import com.ming.m_blog.service.ArticleService;
 import com.ming.m_blog.service.FileService;
+import com.ming.m_blog.strategy.context.UploadFileContext;
 import com.ming.m_blog.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,8 +31,9 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
     @Autowired
-    private FileService fileService;
+    private UploadFileContext uploadFileContext;
 
     @ApiOperation("查询首页博客列表")
     @GetMapping("/articles")
@@ -61,8 +64,7 @@ public class ArticleController {
     @PreAuthorize("hasAuthority('sys:admin')")
     @PostMapping("/articleFile")
     public ResponseResult<String> article(MultipartFile file){
-        String fileUrl = fileService.articleFileUpload(file);
-        return ResponseResult.ok(fileUrl);
+        return ResponseResult.ok(uploadFileContext.executeUploadStrategyMap(file, FilePathEnum.ARTICLE.getPath()));
     }
 
     // 查询文章列表

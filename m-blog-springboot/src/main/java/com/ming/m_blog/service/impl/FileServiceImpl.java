@@ -18,7 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 文件上传服务
+ * @deprecated 现在使用策略模式上传文件，可以自己选择上传方法
+ */
 @Service
+@Deprecated
 public class FileServiceImpl implements FileService {
 
     @Autowired

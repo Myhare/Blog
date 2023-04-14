@@ -3,9 +3,7 @@ package com.ming.m_blog.utils;
 import java.util.UUID;
 
 /**
- * @author wu
- * @version 1.0
- * @date 2020/11/24/024
+ * UUID工具类
  */
 public class UUIDUtils {
 

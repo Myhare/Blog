@@ -6,10 +6,12 @@ import com.ming.m_blog.dto.UserAreaDTO;
 import com.ming.m_blog.dto.UserDetailDTO;
 import com.ming.m_blog.dto.UserListDTO;
 import com.ming.m_blog.dto.UserOnlineDTO;
+import com.ming.m_blog.enums.FilePathEnum;
 import com.ming.m_blog.exception.ReRuntimeException;
 import com.ming.m_blog.service.FileService;
 import com.ming.m_blog.service.UserAuthService;
 import com.ming.m_blog.service.UserInfoService;
+import com.ming.m_blog.strategy.context.UploadFileContext;
 import com.ming.m_blog.utils.UserUtils;
 import com.ming.m_blog.vo.*;
 import io.swagger.annotations.Api;
@@ -37,7 +39,7 @@ public class UserInfoController {
     @Autowired
     private UserAuthService userAuthService;
     @Autowired
-    private FileService fileService;
+    private UploadFileContext uploadFileContext;
 
     // 获取用户角色
     @ApiOperation("通过token获取用户简单信息")
@@ -92,8 +94,7 @@ public class UserInfoController {
     @ApiImplicitParam(name = "file", value = "用户头像", required = true, dataType = "MultipartFile")
     @PostMapping("/user/avatar")
     public ResponseResult<String> headFileUpload(MultipartFile file){
-        // System.out.println("成功进入方法");
-        return ResponseResult.ok(fileService.avatarFileUpload(file));
+        return ResponseResult.ok(uploadFileContext.executeUploadStrategyMap(file, FilePathEnum.ARTICLE.getPath()));
     }
 
 

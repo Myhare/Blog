@@ -129,12 +129,6 @@ public class BlogServiceImpl implements BlogService {
         redisService.del(WEBSITE_CONFIG);
     }
 
-    // 网站图片上传
-    @Override
-    public String websiteImageUpload(MultipartFile websiteIconFile) {
-        // 返回获取文件路径
-        return FileUtils.uploadFile(websiteIconFile,FilePathEnum.ICON.getPath());
-    }
 
     // 更新用户访问信息
     @Override

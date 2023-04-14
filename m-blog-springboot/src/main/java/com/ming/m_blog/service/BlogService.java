@@ -33,13 +33,6 @@ public interface BlogService {
     void updateWebsiteConfig(WebsiteConfigVO websiteConfigVO);
 
     /**
-     * 网站图标图片上传
-     * @param websiteIconFile  上传的图片
-     * @return                 访问路径
-     */
-    String websiteImageUpload(MultipartFile websiteIconFile);
-
-    /**
      * 更新用户登录信息
      */
     void report();

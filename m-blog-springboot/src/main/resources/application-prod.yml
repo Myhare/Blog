@@ -88,7 +88,21 @@ gravatar:
 
 # 上传文件
 upload:
-  # nginx映射本地文件位置
-  url: 
-  # 本地文件存储路径
-  path: /www/blog/uploadImg/
+  # 上传文件模式
+  mode: qiniu
+  # 本地上传
+  local:
+    # nginx映射本地文件位置
+    url: 
+    # 本地文件存储路径
+    path: 
+  # 七牛云存储
+  qiniu:
+    # 域名前缀
+    prefix: 
+    # 公共密钥
+    accessKey: 
+    # 私钥
+    secretKey: 
+    # 空间名
+    bucket: 

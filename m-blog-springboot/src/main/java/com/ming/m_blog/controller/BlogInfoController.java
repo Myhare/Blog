@@ -4,8 +4,10 @@ import com.ming.m_blog.annotation.OptLog;
 import com.ming.m_blog.constant.OptTypeConstant;
 import com.ming.m_blog.dto.BlogBackStatisticsDTO;
 import com.ming.m_blog.dto.BlogInfoDTO;
+import com.ming.m_blog.enums.FilePathEnum;
 import com.ming.m_blog.service.BlogService;
 import com.ming.m_blog.service.FileService;
+import com.ming.m_blog.strategy.context.UploadFileContext;
 import com.ming.m_blog.vo.ResponseResult;
 import com.ming.m_blog.vo.WebsiteConfigVO;
 import io.swagger.annotations.Api;
@@ -24,6 +26,8 @@ public class BlogInfoController {
 
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private UploadFileContext uploadFileContext;
 
     @ApiOperation("获取博客基本信息")
     @GetMapping("/")
@@ -63,6 +67,6 @@ public class BlogInfoController {
     @PreAuthorize("hasAuthority('sys:admin')")
     @PostMapping("/admin/config/image")
     public ResponseResult<String> updateWebsiteImage(MultipartFile file){
-        return ResponseResult.ok(blogService.websiteImageUpload(file));
+        return ResponseResult.ok(uploadFileContext.executeUploadStrategyMap(file, FilePathEnum.ICON.getPath()));
     }
 }
