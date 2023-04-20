@@ -48,7 +48,7 @@ const routes = [
       title: '归档'
     }
   },
-   // 个人信息
+  // 个人信息
   {
     path: '/user',
     component: () => import('@/views/user/User'),
@@ -63,6 +63,11 @@ const routes = [
     meta: {
       title: "留言板"
     }
+  },
+    // 第三方去登录中间界面
+  {
+    path: "/oauth/login/qq",
+    component: () => import('@/components/OauthLogin')
   }
 
 ]

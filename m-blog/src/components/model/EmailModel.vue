@@ -61,10 +61,10 @@ export default {
         return that.$toast({type: "error",message: "已经绑定当前邮箱"})
       }
       // eslint-disable-next-line no-undef
-      var captcha = new TencentCaptcha(this.config.TENCENT_CAPTCHA, function(
-        res
-      ) {
-        if (res.ret === 0) {
+      // var captcha = new TencentCaptcha(this.config.TENCENT_CAPTCHA, function(
+      //   res
+      // ) {
+      //   if (res.ret === 0) {
           //发送邮件
           that.countDown();
           that.$axios
@@ -80,8 +80,8 @@ export default {
                   that.$toast({ type: "error", message: data.message });
                 }
               });
-        }
-      });
+      //   }
+      // });
       // 显示验证码
       captcha.show();
     },

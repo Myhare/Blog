@@ -1,16 +1,16 @@
 package com.ming.m_blog.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.ming.m_blog.annotation.OptLog;
 import com.ming.m_blog.constant.OptTypeConstant;
 import com.ming.m_blog.dto.UserAreaDTO;
 import com.ming.m_blog.dto.UserInfoDTO;
+import com.ming.m_blog.enums.LoginTypeEnum;
 import com.ming.m_blog.mapper.UserAuthMapper;
 import com.ming.m_blog.service.UserAuthService;
-import com.ming.m_blog.vo.LoginUserVO;
-import com.ming.m_blog.vo.PasswordVO;
-import com.ming.m_blog.vo.RegisterVO;
-import com.ming.m_blog.vo.ResponseResult;
+import com.ming.m_blog.strategy.context.SocialLoginStrategyContext;
+import com.ming.m_blog.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
@@ -37,6 +37,9 @@ public class UserAuthController {
 
     @Autowired
     private UserAuthService userAuthService;
+
+    @Autowired
+    private SocialLoginStrategyContext socialLoginStrategyContext;
 
     @ApiOperation("用户注册")
     @PostMapping("/register")
@@ -82,6 +85,14 @@ public class UserAuthController {
     public ResponseResult<?> adminUpdatePassword(@RequestBody PasswordVO passwordVO){
         userAuthService.adminUpdatePassword(passwordVO);
         return ResponseResult.ok();
+    }
+
+    @ApiOperation("QQ登录")
+    @PostMapping("/oauth/qq")
+    public ResponseResult<UserInfoDTO> qqLogin(@RequestBody QQLoginVO qqLoginVO){
+        // 第三方QQ登录
+        UserInfoDTO userInfoDTO = socialLoginStrategyContext.executeLoginStrategy(JSON.toJSONString(qqLoginVO), LoginTypeEnum.QQ);
+        return ResponseResult.ok(userInfoDTO);
     }
 
 }

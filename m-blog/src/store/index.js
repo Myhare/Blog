@@ -84,6 +84,10 @@ export default new Vuex.Store({
     // 修改用户绑定邮箱
     CHANGE_EMAIL(state, email){
       state.email = email
+    },
+    // 保存登录路径
+    SAVE_LOGIN_URL(state, url){
+      state.loginUrl = url;
     }
   },
   actions: {

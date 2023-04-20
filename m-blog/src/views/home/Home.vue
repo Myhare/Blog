@@ -309,7 +309,7 @@ export default {
       str += day.getSeconds() + "秒";
       this.time = str;
     },
-    // 无限查询博客数据
+    // 无限查询博客数据infiniteHandler
     infiniteHandler($state) {
       let md = require("markdown-it")();
       // console.log('当前页面current:'+this.current);

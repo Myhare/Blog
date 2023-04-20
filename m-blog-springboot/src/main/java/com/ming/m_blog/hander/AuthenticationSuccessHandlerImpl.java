@@ -104,14 +104,12 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
         // 更新数据库中用户的信息
         Integer userId = loginUser.getUserId();
-        Date loginTime = loginUser.getLoginTime();
         UserAuth userAuth = UserAuth.builder()
                 .id(userId)
                 .ipAddress(ipAddress)
                 .ipSource(ipSource)
-                .loginTime(loginTime)
+                .loginTime(new Date())
                 .build();
-        userAuth.setLoginTime(loginTime);
         userAuthMapper.updateById(userAuth);
     }
 

@@ -64,19 +64,19 @@
                 :rows="5"
               />
             </el-form-item>
-<!--            <el-form-item label="备案号">-->
-<!--              <el-input-->
-<!--                v-model="websiteConfigForm.websiteRecordNo"-->
-<!--                size="small"-->
-<!--                style="width:400px"-->
-<!--              />-->
-<!--            </el-form-item>-->
-<!--            <el-form-item label="第三方登录">-->
-<!--              <el-checkbox-group v-model="websiteConfigForm.socialLoginList">-->
-<!--                <el-checkbox label="qq">QQ</el-checkbox>-->
-<!--                <el-checkbox label="weibo">微博</el-checkbox>-->
-<!--              </el-checkbox-group>-->
-<!--            </el-form-item>-->
+            <el-form-item label="备案号">
+              <el-input
+                v-model="websiteConfigForm.websiteRecordNo"
+                size="small"
+                style="width:400px"
+              />
+            </el-form-item>
+            <el-form-item label="第三方登录">
+              <el-checkbox-group v-model="websiteConfigForm.socialLoginList">
+                <el-checkbox label="qq">QQ</el-checkbox>
+                <el-checkbox label="weibo">微博</el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
             <el-button
               type="primary"
               size="medium"

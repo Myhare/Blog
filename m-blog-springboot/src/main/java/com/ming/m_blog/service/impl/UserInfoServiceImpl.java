@@ -179,6 +179,13 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         if (!userEmailVO.getCode().equals(redisService.get(redisKey).toString())){
             throw new ReRuntimeException("邮箱验证错误");
         }
+        // 判断要修改的邮箱是否已经被绑定了
+        Integer count = userInfoMapper.selectCount(new LambdaQueryWrapper<UserInfo>()
+                .eq(UserInfo::getEmail, userEmailVO.getEmail())
+        );
+        if (count > 0){
+            throw new ReRuntimeException("邮箱已经被绑定了");
+        }
 
         // 更新用户绑定邮箱
         Integer userInfoId = UserUtils.getLoginUserInfoId();

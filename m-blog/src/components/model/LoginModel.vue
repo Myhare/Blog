@@ -39,25 +39,25 @@
           <span @click="openRegister">立即注册</span>
           <span @click="openForget" class="float-right">忘记密码?</span>
         </div>
-<!--        <div v-if="socialLoginList.length > 0">-->
-<!--          <div class="social-login-title">社交账号登录</div>-->
-<!--          <div class="social-login-wrapper">-->
-<!--            &lt;!&ndash; 微博登录 &ndash;&gt;-->
-<!--            <a-->
-<!--              v-if="showLogin('weibo')"-->
-<!--              class="mr-3 iconfont iconweibo"-->
-<!--              style="color:#e05244"-->
-<!--              @click="weiboLogin"-->
-<!--            />-->
-<!--            &lt;!&ndash; qq登录 &ndash;&gt;-->
-<!--            <a-->
-<!--              v-if="showLogin('qq')"-->
-<!--              class="iconfont iconqq"-->
-<!--              style="color:#00AAEE"-->
-<!--              @click="qqLogin"-->
-<!--            />-->
-<!--          </div>-->
-<!--        </div>-->
+        <div v-if="socialLoginList.length > 0">
+          <div class="social-login-title">社交账号登录</div>
+          <div class="social-login-wrapper">
+            <!-- 微博登录 -->
+            <a
+              v-if="showLogin('weibo')"
+              class="mr-3 iconfont iconweibo"
+              style="color:#e05244"
+              @click="weiboLogin"
+            />
+            <!-- qq登录 -->
+            <a
+              v-if="showLogin('qq')"
+              class="iconfont iconqq"
+              style="color:#00AAEE"
+              @click="qqLogin"
+            />
+          </div>
+        </div>
       </div>
     </v-card>
   </v-dialog>
@@ -90,8 +90,8 @@ export default {
     },
     // 社交账号列表
     socialLoginList() {
-      return [];
-      // return this.$store.state.blogInfo.websiteConfig.socialLoginList;
+      // return [];
+      return this.$store.state.blogInfo.websiteConfig.socialLoginList;
     },
     showLogin() {
       return function(type) {
@@ -155,7 +155,7 @@ export default {
     },
     qqLogin() {
       //保留当前路径
-      this.$store.commit("saveLoginUrl", this.$route.path);
+      this.$store.commit("SAVE_LOGIN_URL", this.$route.path);
       if (
         navigator.userAgent.match(
           /(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i
@@ -167,6 +167,7 @@ export default {
           redirectURI: this.config.QQ_REDIRECT_URI
         });
       } else {
+        // 电脑登录
         window.open(
           "https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=" +
             +this.config.QQ_APP_ID +

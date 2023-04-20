@@ -97,7 +97,7 @@ public class WebsiteConfigVO {
     /**
      * 社交url列表
      */
-    @ApiModelProperty(name = "isSocialList", value = "isSocialList", required = true, dataType = "Integer")
+    @ApiModelProperty(name = "isSocialList", value = "社交url列表", required = true, dataType = "Integer")
     private List<String> socialUrlList;
 
     /**
@@ -117,4 +117,18 @@ public class WebsiteConfigVO {
      */
     @ApiModelProperty(name = "gitee", value = "我的gitee", required = true, dataType = "String")
     private String gitee;
+
+
+    /**
+     * 网站备案号
+     */
+    @ApiModelProperty(name = "websiteRecordNo", value = "网站备案号", required = true, dataType = "String")
+    private String websiteRecordNo;
+
+    /**
+     * 第三方登录开启列表
+     */
+    @ApiModelProperty(name = "socialLoginList", value = "第三方登录开启列表", required = true, dataType = "String")
+    private List<String> socialLoginList;
+
 }

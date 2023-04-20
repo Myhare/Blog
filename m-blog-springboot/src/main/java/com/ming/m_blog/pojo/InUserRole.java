@@ -32,7 +32,7 @@ public class InUserRole implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "用户id")
+    @ApiModelProperty(value = "userInfo的id")
     private Integer userId;
 
     @ApiModelProperty(value = "角色id")
