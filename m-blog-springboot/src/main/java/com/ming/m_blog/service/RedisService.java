@@ -303,6 +303,7 @@ public interface RedisService {
 
     /**
      * 获取List结构中的属性
+     * 查询所有列表数据(key,0,-1) end为0/-1表示查询所有数据
      *
      * @param key   key
      * @param start 开始

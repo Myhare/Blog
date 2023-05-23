@@ -38,8 +38,6 @@ public class UserInfoController {
     private UserInfoService userInfoService;
     @Autowired
     private UserAuthService userAuthService;
-    @Autowired
-    private UploadFileContext uploadFileContext;
 
     // 获取用户角色
     @ApiOperation("通过token获取用户简单信息")
@@ -94,7 +92,7 @@ public class UserInfoController {
     @ApiImplicitParam(name = "file", value = "用户头像", required = true, dataType = "MultipartFile")
     @PostMapping("/user/avatar")
     public ResponseResult<String> headFileUpload(MultipartFile file){
-        return ResponseResult.ok(uploadFileContext.executeUploadStrategyMap(file, FilePathEnum.ARTICLE.getPath()));
+        return ResponseResult.ok(userInfoService.updateUserAvatar(file));
     }
 
 

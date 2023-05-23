@@ -25,6 +25,14 @@ export function getPageList(){
   })
 }
 
+// 删除网站页面
+export function delPage(pageId){
+  return request({
+    url: `/api/admin/pages/${pageId}`,
+    method: 'delete'
+  })
+}
+
 // 更新页面信息
 export function updatePageInfo(page){
   return request({

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 上传模式对应
+ * 上传模式枚举
  */
 @Getter
 @AllArgsConstructor

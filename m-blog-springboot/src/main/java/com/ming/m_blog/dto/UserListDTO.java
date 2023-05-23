@@ -17,7 +17,7 @@ import java.util.List;
 public class UserListDTO {
 
     /**
-     * 用户id
+     * 用户Authid
      */
     private Integer userId;
 

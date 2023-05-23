@@ -1,9 +1,6 @@
 package com.ming.m_blog.mapper;
 
-import com.ming.m_blog.dto.CommentDTO;
-import com.ming.m_blog.dto.CommentListDTO;
-import com.ming.m_blog.dto.ReplyCountDTO;
-import com.ming.m_blog.dto.ReplyDTO;
+import com.ming.m_blog.dto.*;
 import com.ming.m_blog.pojo.Comment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ming.m_blog.vo.AdminCommentsVO;
@@ -86,6 +83,11 @@ public interface CommentMapper extends BaseMapper<Comment> {
      */
     int restoreCommentList(@Param("commentIdList") List<Integer> commentIdList);
 
+    /**
+     * 通过主题id查看评论数量
+     * @param talkIdList 查询结果
+     */
+    List<CommentCountDTO> listCommentCountByTopicIds(@Param("topicIdList") List<Integer> topicIdList);
 }
 
 

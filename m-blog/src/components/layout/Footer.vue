@@ -2,8 +2,13 @@
   <v-footer app padless absolute v-if="!this.isMessage">
     <div class="footer-wrap">
       <div>
-        {{ new Date().getFullYear() }}
+        ©{{ blogInfo.websiteConfig.websiteCreateTime | year }} -
+        {{ new Date().getFullYear() }} By
+        {{ blogInfo.websiteConfig.websiteAuthor }}
       </div>
+      <a href="https://beian.miit.gov.cn/" target="_blank">
+        {{ blogInfo.websiteConfig.websiteRecordNo }}
+      </a>
     </div>
   </v-footer>
 </template>

@@ -4,7 +4,8 @@ import {
   getPageList,
   updatePageInfo,
   getBackStatistics,
-  getUserAreaStatistics
+  getUserAreaStatistics,
+  delPage
 } from '@/api/website'
 
 const state = {
@@ -46,6 +47,16 @@ const actions = {
   updatePageInfo(context,page){
     return new Promise(resolve => {
       updatePageInfo(page)
+        .then(res => {
+          resolve(res);
+        })
+    })
+  },
+
+  // 删除页面信息
+  delPage(context,pageId){
+    return new Promise(resolve => {
+      delPage(pageId)
         .then(res => {
           resolve(res);
         })

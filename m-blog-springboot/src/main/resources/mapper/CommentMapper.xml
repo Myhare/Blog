@@ -52,6 +52,7 @@
                 and is_review = #{commentsVO.review}
             </if>
         </where>
+        order by create_time desc
         limit #{commentsVO.pageNum},#{commentsVO.pageSize}
         ) c
         left join user_auth ua on ua.id = c.user_id
@@ -176,6 +177,24 @@
             c.is_review = 1
         order by c.id desc
         limit #{current},#{size}
+    </select>
+
+    <!--通过主题id查看评论数量-->
+    <select id="listCommentCountByTopicIds" resultType="com.ming.m_blog.dto.CommentCountDTO">
+        SELECT
+        topic_id as id,
+        COUNT( 1 ) AS comment_count
+        FROM
+        comment
+        WHERE
+        topic_id IN
+        <foreach open="(" collection="topicIdList" item="topicId" separator="," close=")">
+            #{topicId}
+        </foreach>
+        AND
+        parent_id IS NULL
+        GROUP BY
+        topic_id
     </select>
 
     <!--查询后台评论列表-->

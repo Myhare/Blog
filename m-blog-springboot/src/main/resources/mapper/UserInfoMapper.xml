@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ming.m_blog.mapper.UserInfoMapper">
 
+    <update id="updateUserDelState">
+        update user_info ui
+        set ui.is_delete = #{userInfo.isDelete}
+        where ui.id = #{userInfo.id}
+    </update>
 
     <select id="selectRoleByUserId" resultType="java.lang.String">
         select r.role_name

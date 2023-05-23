@@ -8,7 +8,7 @@
             left join in_role_power irp on p.id = irp.power_id
             left join role r on irp.role_id = r.id
             left join in_user_role iur on r.id = iur.role_id
-            left join user_auth ua on ua.id = iur.user_id
-        where user_id = #{userId};
+            left join user_info ui on ui.id = iur.user_id
+        where ui.id = #{userId};
     </select>
 </mapper>

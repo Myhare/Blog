@@ -8,6 +8,7 @@ import com.ming.m_blog.dto.UserAreaDTO;
 import com.ming.m_blog.dto.UserDetailDTO;
 import com.ming.m_blog.dto.UserListDTO;
 import com.ming.m_blog.dto.UserOnlineDTO;
+import com.ming.m_blog.enums.FilePathEnum;
 import com.ming.m_blog.exception.ReRuntimeException;
 import com.ming.m_blog.mapper.UserAuthMapper;
 import com.ming.m_blog.pojo.Page;
@@ -17,6 +18,7 @@ import com.ming.m_blog.mapper.UserInfoMapper;
 import com.ming.m_blog.service.RedisService;
 import com.ming.m_blog.service.UserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ming.m_blog.strategy.context.UploadFileContext;
 import com.ming.m_blog.utils.CommonUtils;
 import com.ming.m_blog.utils.JwtUtil;
 import com.ming.m_blog.utils.PageUtils;
@@ -28,6 +30,7 @@ import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -53,6 +56,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     private RedisService redisService;
     @Autowired
     private SessionRegistry sessionRegistry;
+
+    @Autowired
+    private UploadFileContext uploadFileContext;
 
     // 获取用户角色
     @Override
@@ -194,5 +200,19 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
                 .email(userEmailVO.getEmail())
                 .build();
         return userInfoMapper.updateById(userInfo);
+    }
+
+    // 修改用户头像
+    @Override
+    public String updateUserAvatar(MultipartFile file) {
+        // 提前获取用户信息，如果用户没登录就会报错,防止消耗服务器资源
+        UserInfo userInfo = UserInfo.builder()
+                .id(UserUtils.getLoginUserInfoId())
+                .build();
+        String avatarUrl = uploadFileContext.executeUploadStrategyMap(file, FilePathEnum.ARTICLE.getPath());
+        // 更新数据库
+        userInfo.setAvatar(avatarUrl);
+        userInfoMapper.updateById(userInfo);
+        return avatarUrl;
     }
 }

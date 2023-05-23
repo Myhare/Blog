@@ -77,5 +77,29 @@ public class RedisPrefixConst {
      */
     public static final String REGISTER_CODE = "register_code:";
 
+    /**
+     * 搜索图片缓存
+     * 前缀：搜索关键词
+     * 存储搜索的结果
+     */
+    public static final String SEARCH_PICTURE = "search_picture:";
+
+    /**
+     * 页面封面
+     * List<String>
+     */
+    public static final String PAGE_COVER = "page_cover";
+
+    /**
+     * 说说点赞量
+     * Hash格式(说说id: 点赞量)
+     */
+    public static final String TALK_LIKE_COUNT = "talk_like_count";
+
+    /**
+     * 用户点赞说说几个
+     * set格式
+     */
+    public static final String TALK_USER_LIKE = "talk_user_like:";
 
 }

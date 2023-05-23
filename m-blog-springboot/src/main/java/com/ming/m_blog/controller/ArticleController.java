@@ -5,6 +5,7 @@ import com.ming.m_blog.annotation.OptLog;
 import com.ming.m_blog.constant.OptTypeConstant;
 import com.ming.m_blog.dto.*;
 import com.ming.m_blog.enums.FilePathEnum;
+import com.ming.m_blog.exception.ReRuntimeException;
 import com.ming.m_blog.service.ArticleService;
 import com.ming.m_blog.service.FileService;
 import com.ming.m_blog.strategy.context.UploadFileContext;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 博客信息控制器
@@ -44,6 +46,9 @@ public class ArticleController {
     @ApiOperation("查询博客详细信息")
     @GetMapping("/articles/{articleId}")
     public ResponseResult<ArticleDTO> getArticle(@PathVariable Integer articleId){
+        if (Objects.isNull(articleId)){
+            throw new ReRuntimeException("文章id为空");
+        }
         return ResponseResult.ok(articleService.getArticle(articleId));
     }
 

@@ -7,6 +7,7 @@ import com.ming.m_blog.pojo.Page;
 import com.ming.m_blog.pojo.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ming.m_blog.vo.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -77,5 +78,12 @@ public interface UserInfoService extends IService<UserInfo> {
      */
     int changeUserEmails(UserEmailVO userEmailVO);
 
+
+    /**
+     * 更新用户头像
+     * @param multipartFile 头像文件
+     * @return              上传后的访问路径
+     */
+    String updateUserAvatar(MultipartFile file);
 }
 

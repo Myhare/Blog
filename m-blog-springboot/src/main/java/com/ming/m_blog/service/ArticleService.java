@@ -93,4 +93,5 @@ public interface ArticleService extends IService<Article> {
      * @return              影响行数
      */
     Integer restoreArticle(List<Integer> articleIdList);
+
 }

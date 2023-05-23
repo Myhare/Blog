@@ -22,15 +22,15 @@
         </router-link>
       </div>
       <div class="float-right nav-title">
-        <!--        <div class="menus-item">-->
-        <!--          <a class="menu-btn" @click="openSearch">-->
-        <!--            <i class="iconfont iconsousuo" /> 搜索-->
-        <!--          </a>-->
-        <!--        </div>-->
         <div class="menus-item">
           <router-link class="menu-btn" to="/">
             <i class="iconfont iconzhuye" /> 首页
           </router-link>
+        </div>
+        <div class="menus-item">
+          <a class="menu-btn" @click="openSearch">
+            <i class="iconfont iconsousuo" /> 搜索
+          </a>
         </div>
         <div class="menus-item">
           <a class="menu-btn">
@@ -55,7 +55,7 @@
             </li>
             <li>
               <button @click="toAdmin">
-                <i class="iconfont iconbiaoqian" /> 跳转到后台
+                <i class="iconfont icontuichu" /> 跳转到后台
               </button>
             </li>
           </ul>
@@ -75,39 +75,39 @@
             <i class="iconfont iconbiaoqian" /> 标签
           </router-link>
         </div>
-        <!--        <div class="menus-item">-->
-        <!--          <a class="menu-btn">-->
-        <!--            <i class="iconfont iconqita" /> 娱乐-->
-        <!--            <i class="iconfont iconxiangxia2 expand" />-->
-        <!--          </a>-->
-        <!--          <ul class="menus-submenu">-->
-        <!--            <li>-->
-        <!--              <router-link to="/albums">-->
-        <!--                <i class="iconfont iconxiangce1" /> 相册-->
-        <!--              </router-link>-->
-        <!--            </li>-->
-        <!--            <li>-->
-        <!--              <router-link to="/talks">-->
-        <!--                <i class="iconfont iconpinglun" /> 说说-->
-        <!--              </router-link>-->
-        <!--            </li>-->
-        <!--          </ul>-->
-        <!--        </div>-->
-        <!--        <div class="menus-item">-->
-        <!--          <router-link class="menu-btn" to="/links">-->
-        <!--            <i class="iconfont iconlianjie" /> 友链-->
-        <!--          </router-link>-->
-        <!--        </div>-->
-        <!--        <div class="menus-item">-->
-        <!--          <router-link class="menu-btn" to="/about">-->
-        <!--            <i class="iconfont iconzhifeiji" /> 关于-->
-        <!--          </router-link>-->
-        <!--        </div>-->
-                <div class="menus-item">
-                  <router-link class="menu-btn" to="/message">
-                    <i class="iconfont iconpinglunzu" /> 留言
-                  </router-link>
-                </div>
+        <div class="menus-item">
+          <a class="menu-btn">
+            <i class="iconfont iconqita" /> 娱乐
+            <i class="iconfont iconxiangxia2 expand" />
+          </a>
+          <ul class="menus-submenu">
+<!--            <li>-->
+<!--              <router-link to="/albums">-->
+<!--                <i class="iconfont iconxiangce1" /> 相册-->
+<!--              </router-link>-->
+<!--            </li>-->
+            <li>
+              <router-link to="/talks">
+                <i class="iconfont iconpinglun" /> 说说
+              </router-link>
+            </li>
+          </ul>
+        </div>
+<!--        <div class="menus-item">-->
+<!--          <router-link class="menu-btn" to="/links">-->
+<!--            <i class="iconfont iconlianjie" /> 友链-->
+<!--          </router-link>-->
+<!--        </div>-->
+<!--        <div class="menus-item">-->
+<!--          <router-link class="menu-btn" to="/about">-->
+<!--            <i class="iconfont iconzhifeiji" /> 关于-->
+<!--          </router-link>-->
+<!--        </div>-->
+        <div class="menus-item">
+          <router-link class="menu-btn" to="/message">
+            <i class="iconfont iconpinglunzu" /> 留言
+          </router-link>
+        </div>
         <div class="menus-item">
           <a
               class="menu-btn"

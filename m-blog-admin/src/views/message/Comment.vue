@@ -78,18 +78,24 @@
           <el-table-column
             label="评论对象">
             <template slot-scope="scope">
-                {{scope.row.replyNickname?scope.row.replyNickname:'无'}}
+              {{scope.row.replyNickname ? scope.row.replyNickname : '无'}}
             </template>
           </el-table-column>
           <!--文章标签-->
           <el-table-column
-            prop="title"
-            label="文章标题">
+            label="文章标题"
+            align="center"
+          >
+            <template slot-scope="scope">
+              {{scope.row.title ? scope.row.title : '无'}}
+            </template>
           </el-table-column>
           <!--评论内容-->
           <el-table-column
-            prop="content"
             label="评论内容">
+            <template slot-scope="scope">
+              <span v-html="scope.row.content" class="comment-content" />
+            </template>
           </el-table-column>
           <!--评论时间-->
           <el-table-column
@@ -270,13 +276,13 @@ export default {
       console.log(commentIdList);
       console.log(this.commentIdList);
       this.$store.dispatch('message/reviewCommentList',commentIdList)
-      .then(({data}) => {
-        console.log('通过审核成功，data：');
-        console.log(data);
-        this.$message.success('通过审核');
-        // 重新获取评论列表
-        this.getCommentList();
-      })
+        .then(({data}) => {
+          console.log('通过审核成功，data：');
+          console.log(data);
+          this.$message.success('通过审核');
+          // 重新获取评论列表
+          this.getCommentList();
+        })
     },
     // 删除评论列表
     delComment(event,commentId){
@@ -463,6 +469,10 @@ export default {
       }
     }
   }
+}
+
+.comment-content{
+  display: inline-block;
 }
 
 </style>

@@ -13,7 +13,7 @@
     <!-- 返回顶部 -->
     <BackTop></BackTop>
     <!-- 搜索模态框 -->
-<!--    <searchModel></searchModel>-->
+    <searchModel></searchModel>
     <!-- 登录模态框 -->
     <LoginModel></LoginModel>
     <!-- 注册模态框 -->

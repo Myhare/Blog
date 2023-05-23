@@ -17,6 +17,7 @@ import com.ming.m_blog.pojo.Tag;
 import com.ming.m_blog.service.ArticleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ming.m_blog.service.RedisService;
+import com.ming.m_blog.strategy.context.SearchStrategyContext;
 import com.ming.m_blog.utils.BeanCopyUtils;
 import com.ming.m_blog.utils.CommonUtils;
 import com.ming.m_blog.utils.PageUtils;
@@ -414,4 +415,5 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             redisService.zIncr(ARTICLE_VIEW_COUNT,articleId, 1.0);
         }
     }
+
 }

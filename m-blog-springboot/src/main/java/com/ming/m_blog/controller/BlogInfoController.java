@@ -1,5 +1,6 @@
 package com.ming.m_blog.controller;
 
+import com.ming.m_blog.annotation.AccessLimit;
 import com.ming.m_blog.annotation.OptLog;
 import com.ming.m_blog.constant.OptTypeConstant;
 import com.ming.m_blog.dto.BlogBackStatisticsDTO;
@@ -8,7 +9,9 @@ import com.ming.m_blog.enums.FilePathEnum;
 import com.ming.m_blog.service.BlogService;
 import com.ming.m_blog.service.FileService;
 import com.ming.m_blog.strategy.context.UploadFileContext;
+import com.ming.m_blog.vo.QueryInfoVO;
 import com.ming.m_blog.vo.ResponseResult;
+import com.ming.m_blog.vo.SearchVO;
 import com.ming.m_blog.vo.WebsiteConfigVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -69,4 +72,13 @@ public class BlogInfoController {
     public ResponseResult<String> updateWebsiteImage(MultipartFile file){
         return ResponseResult.ok(uploadFileContext.executeUploadStrategyMap(file, FilePathEnum.ICON.getPath()));
     }
+
+    @ApiOperation("博客全局搜索")
+    @GetMapping("/blog/search")
+    @AccessLimit(seconds = 1,maxCount = 1,message = "服务器原因对搜索请求进行限流，请稍后再试~~~")
+    public ResponseResult<SearchVO> searchList(QueryInfoVO queryInfoVO){
+        SearchVO searchVO = blogService.blogSearchList(queryInfoVO);
+        return ResponseResult.ok(searchVO);
+    }
+
 }

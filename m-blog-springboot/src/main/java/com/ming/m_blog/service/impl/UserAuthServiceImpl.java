@@ -101,7 +101,7 @@ public class UserAuthServiceImpl extends ServiceImpl<UserAuthMapper, UserAuth> i
                 .id(userInfoId)
                 .isDelete(isDelete)
                 .build();
-        return userInfoMapper.updateById(userInfo);
+        return userInfoMapper.updateUserDelState(userInfo);
     }
 
     // 发送邮件

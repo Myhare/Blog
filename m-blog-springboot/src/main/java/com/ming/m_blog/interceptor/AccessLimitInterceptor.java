@@ -2,6 +2,7 @@ package com.ming.m_blog.interceptor;
 
 import com.ming.m_blog.constant.RedisPrefixConst;
 import com.ming.m_blog.annotation.AccessLimit;
+import com.ming.m_blog.exception.ReRuntimeException;
 import com.ming.m_blog.service.RedisService;
 import com.ming.m_blog.utils.WebUtils;
 import com.ming.m_blog.vo.ResponseResult;
@@ -32,6 +33,7 @@ public class AccessLimitInterceptor extends HandlerInterceptorAdapter {
             if(accessLimit != null){
                 int seconds = accessLimit.seconds();  // 多少秒
                 int maxCount = accessLimit.maxCount();  // 最大访问数
+                String message = accessLimit.message();
 
                 //从redis中获取用户访问的次数
                 String ip = request.getHeader("x-forwarded-for");      // 有可能ip是代理的
@@ -49,8 +51,9 @@ public class AccessLimitInterceptor extends HandlerInterceptorAdapter {
                 Long count = redisService.incrExpire(redisKey,seconds);
                 if (count>maxCount){
                     // 说明超过了限制，向前端发送提示信息
-                    WebUtils.renderResult(response, ResponseResult.fail("请求过于频繁"));
-                    return false;
+                    // WebUtils.renderResult(response, ResponseResult.fail("请求过于频繁"));
+                    throw new ReRuntimeException(message);
+                    // return false;
                 }
             }
         }

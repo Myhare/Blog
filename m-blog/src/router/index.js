@@ -64,10 +64,25 @@ const routes = [
       title: "留言板"
     }
   },
-    // 第三方去登录中间界面
+  // 第三方去登录中间界面
   {
     path: "/oauth/login/qq",
     component: () => import('@/components/OauthLogin')
+  },
+  {
+    path: "/talks",
+    component: () => import('@/views/talk/Talk'),
+    meta: {
+      title: '说说'
+    }
+  },
+  {
+    name: 'talks',
+    path: "/talks/:id",
+    component: () => import('@/views/talk/TalkInfo'),
+    meta: {
+      title: '说说'
+    }
   }
 
 ]

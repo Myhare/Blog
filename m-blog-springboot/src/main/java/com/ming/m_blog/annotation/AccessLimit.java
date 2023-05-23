@@ -19,4 +19,8 @@ public @interface AccessLimit {
      */
     int maxCount();
 
+    /**
+     * 提示信息
+     */
+    String message() default "请求过于频繁";
 }

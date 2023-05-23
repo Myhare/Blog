@@ -23,7 +23,12 @@ public enum FilePathEnum {
     /**
      * 配置网站配置信息路径
      */
-    ICON("configImage/","网站配置图片路径");
+    ICON("configImage/","网站配置图片路径"),
+
+    /**
+     * 说说图片路径
+     */
+    TALK("talk/", "说说图片路径");
 
     /**
      * 路径

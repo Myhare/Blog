@@ -2,6 +2,8 @@ package com.ming.m_blog.service;
 
 import com.ming.m_blog.dto.BlogBackStatisticsDTO;
 import com.ming.m_blog.dto.BlogInfoDTO;
+import com.ming.m_blog.vo.QueryInfoVO;
+import com.ming.m_blog.vo.SearchVO;
 import com.ming.m_blog.vo.WebsiteConfigVO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,5 +38,12 @@ public interface BlogService {
      * 更新用户登录信息
      */
     void report();
+
+    /**
+     * 全局搜索文章
+     * @param queryInfoVO
+     * @return
+     */
+    SearchVO blogSearchList(QueryInfoVO queryInfoVO);
 
 }

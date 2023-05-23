@@ -84,9 +84,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * @return         封装结果
      */
     public UserDetailDTO convertUserDetail(UserAuth userAuth, UserInfo userInfo){
-        Integer userInfoId = userAuth.getUserInfoId();
 
-        Integer userId = userAuth.getUserInfoId();
+        Integer userId = userAuth.getId();
         // 获取用户角色
         List<String> roleList = userInfoMapper.selectRoleByUserId(userId);
         // 获取权限信息
@@ -94,6 +93,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         // 获取用户点赞评论列表
         Set<Object> commentLikeSet = redisService.sMembers(COMMENT_USER_LIKE + userId);
+
+        // 获取用户点赞说说列表
+        Set<Object> talkLikeSet = redisService.sMembers(TALK_USER_LIKE + userInfo.getIntro());
 
         return UserDetailDTO
                 .builder()
@@ -110,6 +112,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .roleList(roleList)
                 .powerList(powerList)
                 .commentLikeSet(commentLikeSet) // 文章点赞集合
+                .talkLikeSet(talkLikeSet)  // 说说点赞集合
                 .loginTime(new Date())
                 .build();
     }
@@ -132,18 +135,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         UserInfo userInfo = userInfoMapper.selectById(userAuth.getUserInfoId());
 
-        Integer userId = userAuth.getUserInfoId();
+        // 获取用户账号信息id
+        Integer userAuthId = userAuth.getId();
         // 获取用户角色
-        List<String> roleList = userInfoMapper.selectRoleByUserId(userId);
+        List<String> roleList = userInfoMapper.selectRoleByUserId(userAuthId);
         // 获取权限信息
-        List<String> powerList = userAuthMapper.selectPowerByUserId(Integer.toString(userId));
+        List<String> powerList = userAuthMapper.selectPowerByUserId(Integer.toString(userAuthId));
 
         // 获取用户点赞评论列表
-        Set<Object> commentLikeSet = redisService.sMembers(COMMENT_USER_LIKE + userId);
+        Set<Object> commentLikeSet = redisService.sMembers(COMMENT_USER_LIKE + userAuthId);
 
         return UserDetailDTO
                 .builder()
-                .userId(userId)
+                .userId(userAuthId)
                 .userInfoId(userInfo.getId())
                 .loginType(userAuth.getLoginType())
                 .email(userInfo.getEmail())

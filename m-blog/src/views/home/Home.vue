@@ -49,9 +49,9 @@
       <!--文章列表-->
       <v-col md="9" cols="12">
         <!-- 说说轮播 -->
-        <!--        <v-card class="animated zoomIn" v-if="talkList.length > 0">-->
-        <!--          <Swiper :list="talkList" />-->
-        <!--        </v-card>-->
+        <v-card class="animated zoomIn" v-if="talkList.length > 0">
+          <Swiper :list="talkList" />
+        </v-card>
         <v-card
             class="animated zoomIn article-card"
             style="border-radius: 12px 8px 8px 12px"
@@ -240,7 +240,8 @@ export default {
   created() {
     // console.log(this.blogInfo);
     this.init();
-    // this.listHomeTalks();
+    // 查询说说列表
+    this.listHomeTalks();
     this.timer = setInterval(this.runTime, 1000);
   },
   data: function() {
@@ -278,9 +279,9 @@ export default {
     },
     // 查询说说列表
     listHomeTalks() {
-      // this.axios.get("/api/home/talks").then(({ data }) => {
-      //   this.talkList = data.data;
-      // });
+      this.$axios.get("/api/home/talks").then(({ data }) => {
+        this.talkList = data.data;
+      });
     },
     initTyped(input, fn, hooks) {
       const obj = this.obj;

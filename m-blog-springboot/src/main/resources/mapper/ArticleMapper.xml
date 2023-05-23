@@ -4,7 +4,7 @@
 
     <!--批量恢复已经删除的文章-->
     <update id="restoreArticle">
-        update blog.article
+        update article
         set article.is_delete = 0
         where id in
         <foreach open="(" collection="articleIdList" item="articleId" separator="," close=")">
@@ -14,7 +14,7 @@
 
     <!--批量彻底删除文章列表-->
     <delete id="reallyDelArticleList">
-        delete from blog.article
+        delete from article
         where id in
         <foreach open="(" collection="articleIdList" item="articleId" separator="," close=")">
             #{articleId}

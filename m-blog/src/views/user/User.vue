@@ -38,7 +38,7 @@
               label="简介"
               placeholder="介绍下自己吧"
           />
-          <div v-if="loginType !== 0" class="mt-7 binding">
+          <div v-if="loginType !== 1" class="mt-7 binding">
             <v-text-field
                 disabled
                 v-model="email"
@@ -85,6 +85,7 @@ export default {
         }
       });
     },
+    // 修改用户头像
     uploadAvatar(data) {
       if (data.flag) {
         this.$store.commit("updateAvatar", data.data);
@@ -109,7 +110,7 @@ export default {
       var cover = "";
       let flag = true;
       this.$store.state.blogInfo.pageList.forEach(item => {
-        if (item.pageLabel == "user") {
+        if (item.pageLabel === "user") {
           cover = item.pageCover;
           flag = false;
         }

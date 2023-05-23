@@ -216,23 +216,22 @@ export default {
       }
     },
     deletePage() {
-      this.axios
-        .delete("/api/admin/pages/" + this.pageForum.id)
-        .then(({ data }) => {
-          if (data.flag) {
-            this.$notify.success({
-              title: "成功",
-              message: data.message
-            });
-            this.listPages();
-          } else {
-            this.$notify.error({
-              title: "失败",
-              message: data.message
-            });
-          }
-          this.isdeletePage = false;
-        });
+      this.$store.dispatch('website/delPage',this.pageForum.id)
+      .then(data => {
+        if (data.flag) {
+          this.$notify.success({
+            title: "成功",
+            message: data.message
+          });
+          this.listPages();
+        } else {
+          this.$notify.error({
+            title: "失败",
+            message: data.message
+          });
+        }
+        this.isdeletePage = false;
+      })
     }
   }
 };

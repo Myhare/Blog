@@ -69,4 +69,9 @@ public class UserInfoDTO {
      * 用户评论点赞列表
      */
     private Set<Object> commentLikeSet;
+
+    /**
+     * 用户说说点赞集合
+     */
+    private Set<Object> talkLikeSet;
 }

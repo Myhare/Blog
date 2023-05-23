@@ -31,4 +31,10 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
      */
     List<UserListDTO> selectUserList(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize, @Param("keywords") String keywords);
 
+    /**
+     * 修改用户是否封禁状态
+     * @param userInfo 用户信息id
+     * @return         影响行数
+     */
+    int updateUserDelState(@Param("userInfo") UserInfo userInfo);
 }

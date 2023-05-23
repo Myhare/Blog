@@ -1,5 +1,6 @@
 package com.ming.m_blog.strategy.impl;
 
+import com.ming.m_blog.exception.ReRuntimeException;
 import com.ming.m_blog.strategy.UploadStrategy;
 import com.ming.m_blog.utils.FileUtils;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 /**
  * 上传文件抽象模板
@@ -16,6 +18,9 @@ public abstract class AbstractUploadStrategyImpl implements UploadStrategy {
 
     @Override
     public String uploadFile(MultipartFile multipartFile, String path) {
+        if (Objects.isNull(multipartFile)){
+            throw new ReRuntimeException("上传文件为空");
+        }
         // 上传文件
         try {
             // 生成md5名称

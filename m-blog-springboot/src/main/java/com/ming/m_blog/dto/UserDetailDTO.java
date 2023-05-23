@@ -112,6 +112,11 @@ public class UserDetailDTO implements UserDetails {
     private Set<Object> commentLikeSet;
 
     /**
+     * 用户说说点赞列表
+     */
+    private Set<Object> talkLikeSet;
+
+    /**
      * 最近登录时间
      */
     private Date loginTime;

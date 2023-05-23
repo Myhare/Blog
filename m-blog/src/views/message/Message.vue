@@ -23,41 +23,41 @@
       </div>
       <!-- 弹幕列表 -->
       <div class="barrage-container">
-        <template>
-          <div>
-            <vue-danmaku ref="danmaku" v-model="barrageList" style="width: 1550px; height: 1550px" use-slot :speeds="200" :channels="5">
-              <!-- 弹幕插槽（vue 2.6.0 及以上版本可使用 v-slot:dm="{ index, danmu }"语法） -->
-              <template slot="dm" slot-scope="{ index, danmu }">
-                  <span class="barrage-items">
-                    <img
-                        :src="danmu.avatar"
+<!--        <template>-->
+<!--          <div>-->
+<!--            <vue-danmaku ref="danmaku" v-model="barrageList" style="width: 1550px; height: 1550px" use-slot :speeds="200" :channels="5">-->
+<!--              &lt;!&ndash; 弹幕插槽（vue 2.6.0 及以上版本可使用 v-slot:dm="{ index, danmu }"语法） &ndash;&gt;-->
+<!--              <template slot="dm" slot-scope="{ index, danmu }">-->
+<!--                  <span class="barrage-items">-->
+<!--                    <img-->
+<!--                        :src="danmu.avatar"-->
+<!--                        width="30"-->
+<!--                        height="30"-->
+<!--                        style="border-radius:50%"-->
+<!--                    />-->
+<!--                    <span class="ml-2">{{ danmu.nickname }} :</span>-->
+<!--                    <span class="ml-2">{{ danmu.messageContent }}</span>-->
+<!--                  </span>-->
+<!--              </template>-->
+<!--              &lt;!&ndash; 容器插槽 &ndash;&gt;-->
+<!--              <div></div>-->
+<!--            </vue-danmaku>-->
+<!--          </div>-->
+<!--        </template>-->
+                <vue-baberrage :barrageList="barrageList">
+                  <template v-slot:default="slotProps">
+                    <span class="barrage-items">
+                      <img
+                        :src="slotProps.item.avatar"
                         width="30"
                         height="30"
                         style="border-radius:50%"
-                    />
-                    <span class="ml-2">{{ danmu.nickname }} :</span>
-                    <span class="ml-2">{{ danmu.messageContent }}</span>
-                  </span>
-              </template>
-              <!-- 容器插槽 -->
-              <div></div>
-            </vue-danmaku>
-          </div>
-        </template>
-        <!--        <vue-baberrage :barrageList="barrageList">-->
-        <!--          <template v-slot:default="slotProps">-->
-        <!--            <span class="barrage-items">-->
-        <!--              <img-->
-        <!--                :src="slotProps.item.avatar"-->
-        <!--                width="30"-->
-        <!--                height="30"-->
-        <!--                style="border-radius:50%"-->
-        <!--              />-->
-        <!--              <span class="ml-2">{{ slotProps.item.nickname }} :</span>-->
-        <!--              <span class="ml-2">{{ slotProps.item.messageContent }}</span>-->
-        <!--            </span>-->
-        <!--          </template>-->
-        <!--        </vue-baberrage>-->
+                      />
+                      <span class="ml-2">{{ slotProps.item.nickname }} :</span>
+                      <span class="ml-2">{{ slotProps.item.messageContent }}</span>
+                    </span>
+                  </template>
+                </vue-baberrage>
       </div>
     </div>
   </div>

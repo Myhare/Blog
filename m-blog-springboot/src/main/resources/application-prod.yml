@@ -50,6 +50,10 @@ spring:
           enabled: true
           max-attempts: 3 #最大重试次数
           initial-interval: 3000 #重试间隔时间（单位毫秒）
+  # elasticSearch
+  elasticsearch:
+    rest:
+      uris: 你的elastic服务器ip:9200
   # 邮箱配置
   mail:
     host: smtp.qq.com
@@ -85,6 +89,11 @@ mybatis-plus:
 
 gravatar:
   qqEmail: 
+
+# 搜索文章模式
+search:
+  mode: mysql
+#  mode: elasticSearch
 
 # 第三方QQ登录
 qq:

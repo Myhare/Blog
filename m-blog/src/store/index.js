@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    searchFlag: false,
+    searchFlag: false,   // 是否打开搜索对话框
     registerFlag: false,
     forgetFlag: false,
     emailFlag: false,
@@ -21,7 +21,7 @@ export default new Vuex.Store({
     email: null,
     articleLikeSet: [],   // 文章点赞集合
     commentLikeSet: [],   // 评论点赞集合
-    talkLikeSet: [],
+    talkLikeSet: [],      // 说说点赞集合
     loginFlag: false, // 是否打开登录对话框
     blogInfo:{}, // 博客信息
   },
@@ -43,7 +43,7 @@ export default new Vuex.Store({
       state.webSite = user.webSite;   // 未完成
       state.articleLikeSet = user.articleLikeSet ? user.articleLikeSet : [];  // 用户文章点赞列表(未完成)
       state.commentLikeSet = user.commentLikeSet ? user.commentLikeSet : [];  // 用户评论点赞列表
-      state.talkLikeSet = user.talkLikeSet ? user.talkLikeSet : [];           // 未完成
+      state.talkLikeSet = user.talkLikeSet ? user.talkLikeSet : [];
       state.email = user.email;
       state.loginType = user.loginType; // 登录类型
     },
@@ -56,7 +56,7 @@ export default new Vuex.Store({
       state.webSite = null;   // 未完成
       state.articleLikeSet = [];    // 未完成
       state.commentLikeSet = [];    // 评论点赞集合
-      state.talkLikeSet = [];       // 未完成
+      state.talkLikeSet = [];       // 说说点赞集合
       state.email = null;
       state.loginType = null; // 登录类型
     },
@@ -70,9 +70,19 @@ export default new Vuex.Store({
     COMMENT_LIKE(state,commentId){
       var commentLikeSet = state.commentLikeSet;
       if (commentLikeSet.indexOf(commentId) !== -1) {
-        commentLikeSet.splice(commentLikeSet.indexOf(commentId), 1);
+        commentLikeSet.splice(commentLikeSet.indexOf(commentId), 1); // splice(要修改的数组下标,要删除的元素数量)
       } else {
         commentLikeSet.push(commentId);
+      }
+    },
+    // 说说点赞
+    TALK_LIKE(state, talkId){
+      var talkLikeSet = state.talkLikeSet;
+      if (talkLikeSet.indexOf(talkId) !== -1){
+        // 取消点赞
+        talkLikeSet.splice(talkLikeSet.indexOf(talkId), 1);
+      }else {
+        talkLikeSet.push(talkId)
       }
     },
     // 修改登录用户信息
