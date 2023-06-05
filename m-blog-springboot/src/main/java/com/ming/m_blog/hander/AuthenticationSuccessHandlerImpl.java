@@ -1,14 +1,10 @@
 package com.ming.m_blog.hander;
 
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.ming.m_blog.constant.RedisPrefixConst;
-import com.ming.m_blog.dto.UserDetailDTO;
-import com.ming.m_blog.dto.UserInfoDTO;
+import com.ming.m_blog.dto.user.UserDetailDTO;
+import com.ming.m_blog.dto.user.UserInfoDTO;
 import com.ming.m_blog.mapper.UserAuthMapper;
-import com.ming.m_blog.mapper.UserInfoMapper;
 import com.ming.m_blog.pojo.UserAuth;
 import com.ming.m_blog.service.RedisService;
 import com.ming.m_blog.utils.BeanCopyUtils;
@@ -19,9 +15,7 @@ import com.ming.m_blog.vo.ResponseResult;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;

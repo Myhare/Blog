@@ -3,11 +3,10 @@ package com.ming.m_blog.controller;
 import com.ming.m_blog.annotation.AccessLimit;
 import com.ming.m_blog.annotation.OptLog;
 import com.ming.m_blog.constant.OptTypeConstant;
-import com.ming.m_blog.dto.BlogBackStatisticsDTO;
-import com.ming.m_blog.dto.BlogInfoDTO;
+import com.ming.m_blog.dto.blogInfo.BlogBackStatisticsDTO;
+import com.ming.m_blog.dto.blogInfo.BlogInfoDTO;
 import com.ming.m_blog.enums.FilePathEnum;
 import com.ming.m_blog.service.BlogService;
-import com.ming.m_blog.service.FileService;
 import com.ming.m_blog.strategy.context.UploadFileContext;
 import com.ming.m_blog.vo.QueryInfoVO;
 import com.ming.m_blog.vo.ResponseResult;
@@ -75,7 +74,7 @@ public class BlogInfoController {
 
     @ApiOperation("博客全局搜索")
     @GetMapping("/blog/search")
-    @AccessLimit(seconds = 1,maxCount = 1,message = "服务器原因对搜索请求进行限流，请稍后再试~~~")
+    @AccessLimit(seconds = 1,maxCount = 3,message = "服务器原因对搜索请求进行限流，请稍后再试~~~")
     public ResponseResult<SearchVO> searchList(QueryInfoVO queryInfoVO){
         SearchVO searchVO = blogService.blogSearchList(queryInfoVO);
         return ResponseResult.ok(searchVO);

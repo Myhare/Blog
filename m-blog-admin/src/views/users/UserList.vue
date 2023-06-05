@@ -65,7 +65,7 @@
           @size-change="pageSizeChange"
           @current-change="pageCurrentChange"
           :current-page="queryInfo.pageNum"
-          :page-sizes="[1,2,5,10,20]"
+          :page-sizes="[5,10,20]"
           :page-size="queryInfo.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="userCount">
@@ -88,7 +88,7 @@ export default {
       userList: [],  // 用户列表数据
       queryInfo: {
         pageNum: 1,         // 当前的页数
-        pageSize: 2,        // 一页显示的大小
+        pageSize: 5,        // 一页显示的大小
         keywords: ''        // 查询条件
       },
     }

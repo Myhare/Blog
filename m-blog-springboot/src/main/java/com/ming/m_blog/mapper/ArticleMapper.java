@@ -1,10 +1,9 @@
 package com.ming.m_blog.mapper;
 
-import com.ming.m_blog.dto.*;
+import com.ming.m_blog.dto.article.*;
 import com.ming.m_blog.pojo.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ming.m_blog.vo.AdminArticlesVO;
-import com.ming.m_blog.vo.ArticleAddVO;
 import com.ming.m_blog.vo.ArticleListConditionVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

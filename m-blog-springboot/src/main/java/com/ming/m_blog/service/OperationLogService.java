@@ -1,6 +1,6 @@
 package com.ming.m_blog.service;
 
-import com.ming.m_blog.dto.OperationLogDTO;
+import com.ming.m_blog.dto.log.OperationLogDTO;
 import com.ming.m_blog.pojo.OperationLog;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ming.m_blog.vo.PageResult;

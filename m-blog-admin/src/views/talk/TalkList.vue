@@ -1,7 +1,7 @@
 <template>
   <div style="padding: 20px">
     <el-card class="main-card">
-      <div class="title">{{ this.$route.name }}</div>
+      <div class="title">{{ this.$route.meta.title }}</div>
       <!-- 说说状态 -->
       <div class="status-menu">
         <span>状态</span>
@@ -145,23 +145,6 @@ export default {
         });
         this.count = data.count;
       })
-      // this.axios
-      //   .get("/api/admin/talks", {
-      //     params: {
-      //       current: this.current,
-      //       size: this.size,
-      //       status: this.status
-      //     }
-      //   })
-      //   .then(({ data }) => {
-      //     this.talkList = data.data.recordList;
-      //     this.talkList.forEach(item => {
-      //       if (item.imgList) {
-      //         this.previewList.push(...item.imgList);
-      //       }
-      //     });
-      //     this.count = data.data.count;
-      //   });
     },
     sizeChange(size) {
       this.previewList = [];

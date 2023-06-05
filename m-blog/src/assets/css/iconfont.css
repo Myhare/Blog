@@ -179,3 +179,15 @@
   content: "\e633";
 }
 
+
+@font-face {
+  font-family: "iconfont"; /* Project id 4093788 */
+  src: url('//at.alicdn.com/t/c/font_4093788_rbfgymnk259.woff2?t=1685410491609') format('woff2'),
+  url('//at.alicdn.com/t/c/font_4093788_rbfgymnk259.woff?t=1685410491609') format('woff'),
+  url('//at.alicdn.com/t/c/font_4093788_rbfgymnk259.ttf?t=1685410491609') format('truetype');
+}
+
+.icon-chatgpt:before {
+  content: "\e6bf";
+}
+

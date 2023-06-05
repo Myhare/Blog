@@ -1,11 +1,10 @@
 package com.ming.m_blog.service;
 
-import com.ming.m_blog.dto.BlogBackStatisticsDTO;
-import com.ming.m_blog.dto.BlogInfoDTO;
+import com.ming.m_blog.dto.blogInfo.BlogBackStatisticsDTO;
+import com.ming.m_blog.dto.blogInfo.BlogInfoDTO;
 import com.ming.m_blog.vo.QueryInfoVO;
 import com.ming.m_blog.vo.SearchVO;
 import com.ming.m_blog.vo.WebsiteConfigVO;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 博客服务

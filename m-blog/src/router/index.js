@@ -81,7 +81,15 @@ const routes = [
     path: "/talks/:id",
     component: () => import('@/views/talk/TalkInfo'),
     meta: {
-      title: '说说'
+      title: '说说信息'
+    }
+  },
+  {
+    name: 'links',
+    path: "/links",
+    component: () => import('@/views/friendLink/Link'),
+    meta: {
+      title: '友情链接'
     }
   }
 

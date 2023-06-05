@@ -60,21 +60,21 @@
             </li>
           </ul>
         </div>
-        <div class="menus-item">
-          <router-link class="menu-btn" to="/archives">
-            <i class="iconfont iconguidang" /> 归档
-          </router-link>
-        </div>
-        <div class="menus-item">
-          <router-link class="menu-btn" to="/categories">
-            <i class="iconfont iconfenlei" /> 分类
-          </router-link>
-        </div>
-        <div class="menus-item">
-          <router-link class="menu-btn" to="/tags">
-            <i class="iconfont iconbiaoqian" /> 标签
-          </router-link>
-        </div>
+<!--        <div class="menus-item">-->
+<!--          <router-link class="menu-btn" to="/archives">-->
+<!--            <i class="iconfont iconguidang" /> 归档-->
+<!--          </router-link>-->
+<!--        </div>-->
+<!--        <div class="menus-item">-->
+<!--          <router-link class="menu-btn" to="/categories">-->
+<!--            <i class="iconfont iconfenlei" /> 分类-->
+<!--          </router-link>-->
+<!--        </div>-->
+<!--        <div class="menus-item">-->
+<!--          <router-link class="menu-btn" to="/tags">-->
+<!--            <i class="iconfont iconbiaoqian" /> 标签-->
+<!--          </router-link>-->
+<!--        </div>-->
         <div class="menus-item">
           <a class="menu-btn">
             <i class="iconfont iconqita" /> 娱乐
@@ -91,13 +91,18 @@
                 <i class="iconfont iconpinglun" /> 说说
               </router-link>
             </li>
+            <li>
+              <button @click="openGpt">
+                <i class="iconfont icon-chatgpt" /> chatGPT
+              </button>
+            </li>
           </ul>
         </div>
-<!--        <div class="menus-item">-->
-<!--          <router-link class="menu-btn" to="/links">-->
-<!--            <i class="iconfont iconlianjie" /> 友链-->
-<!--          </router-link>-->
-<!--        </div>-->
+        <div class="menus-item">
+          <router-link class="menu-btn" to="/links">
+            <i class="iconfont iconlianjie" /> 友链
+          </router-link>
+        </div>
 <!--        <div class="menus-item">-->
 <!--          <router-link class="menu-btn" to="/about">-->
 <!--            <i class="iconfont iconzhifeiji" /> 关于-->
@@ -174,6 +179,14 @@ export default {
     openLogin() {
       this.$store.state.loginFlag = true;
       // console.log(this.$store.state.loginFlag);
+    },
+    // 打开GPT
+    openGpt(){
+      // 判断管理员是否开启chatGPT
+      if (this.$store.state.blogInfo.websiteConfig.isChatGpt !== 1) {
+        this.$toast({type: "warnning", message: "管理员未打开chatGPT-_-"})
+      }
+      this.$store.state.gptFlag = true;
     },
     logout() {
       //如果在个人中心则跳回上一页

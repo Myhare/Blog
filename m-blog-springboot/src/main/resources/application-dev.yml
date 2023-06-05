@@ -98,8 +98,8 @@ qq:
 
 # 搜索文章模式
 search:
-#  mode: mysql
-  mode: elasticSearch
+  mode: mysql
+#  mode: elasticSearch
 
 # 上传文件
 upload:

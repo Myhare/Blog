@@ -1,7 +1,7 @@
 package com.ming.m_blog.service;
 
-import com.ming.m_blog.dto.TagListDTO;
-import com.ming.m_blog.dto.TagSimpleDTO;
+import com.ming.m_blog.dto.talk.TagListDTO;
+import com.ming.m_blog.dto.tag.TagSimpleDTO;
 import com.ming.m_blog.pojo.Tag;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ming.m_blog.vo.PageResult;

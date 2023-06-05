@@ -1,7 +1,7 @@
 package com.ming.m_blog.service;
 
-import com.ming.m_blog.dto.MessageBackDTO;
-import com.ming.m_blog.dto.MessageDTO;
+import com.ming.m_blog.dto.message.MessageBackDTO;
+import com.ming.m_blog.dto.message.MessageDTO;
 import com.ming.m_blog.pojo.Message;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ming.m_blog.vo.MessageVO;

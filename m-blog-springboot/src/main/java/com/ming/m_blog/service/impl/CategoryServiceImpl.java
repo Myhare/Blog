@@ -1,9 +1,9 @@
 package com.ming.m_blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.ming.m_blog.dto.CategoryDTO;
-import com.ming.m_blog.dto.CategoryListDTO;
-import com.ming.m_blog.dto.CategorySimpleDTO;
+import com.ming.m_blog.dto.category.CategoryDTO;
+import com.ming.m_blog.dto.category.CategoryListDTO;
+import com.ming.m_blog.dto.category.CategorySimpleDTO;
 import com.ming.m_blog.exception.ReRuntimeException;
 import com.ming.m_blog.mapper.ArticleMapper;
 import com.ming.m_blog.pojo.Article;
@@ -12,7 +12,6 @@ import com.ming.m_blog.mapper.CategoryMapper;
 import com.ming.m_blog.service.CategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ming.m_blog.utils.BeanCopyUtils;
-import com.ming.m_blog.utils.UserUtils;
 import com.ming.m_blog.vo.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

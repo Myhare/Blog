@@ -171,6 +171,26 @@
                 </el-form-item>
               </el-col>
             </el-row>
+            <el-row style="width:600px">
+              <el-col :md="12">
+                <el-form-item label="GPT头像">
+                  <el-upload
+                    class="avatar-uploader"
+                    action="/api/admin/config/image"
+                    :show-file-list="false"
+                    :before-upload="imageCompress"
+                    :on-success="handleGptAvatarSuccess"
+                  >
+                    <img
+                      v-if="websiteConfigForm.chatGptAvatar"
+                      :src="websiteConfigForm.chatGptAvatar"
+                      class="avatar"
+                    />
+                    <i v-else class="el-icon-plus avatar-uploader-icon" />
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+            </el-row>
             <el-form-item label="邮箱通知">
               <el-radio-group v-model="websiteConfigForm.isEmailNotice">
                 <el-radio :label="0">关闭</el-radio>
@@ -185,6 +205,12 @@
             </el-form-item>
             <el-form-item label="留言审核">
               <el-radio-group v-model="websiteConfigForm.isMessageReview">
+                <el-radio :label="0">关闭</el-radio>
+                <el-radio :label="1">开启</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="聊天助手">
+              <el-radio-group v-model="websiteConfigForm.isChatGpt">
                 <el-radio :label="0">关闭</el-radio>
                 <el-radio :label="1">开启</el-radio>
               </el-radio-group>
@@ -293,6 +319,8 @@ export default {
         gitee: "",
         userAvatar: "",
         touristAvatar: "",
+        chatGptAvatar: "",
+        isChatGpt: 1,
         isReward: 1,
         weiXinQRCode: "",
         alipayQRCode: "",
@@ -342,6 +370,18 @@ export default {
       console.log('修改站主头像成功，response：');
       console.log(response);
       this.websiteConfigForm.userAvatar = response.data;
+    },
+    // 上传chatGPT头像
+    handleGptAvatarSuccess(response) {
+      if (response.code !== 20000){
+        return this.$notify({
+          title: '失败',
+          message: response.message
+        })
+      }
+      console.log('修改chatGPT头像成功，response：');
+      console.log(response);
+      this.websiteConfigForm.chatGptAvatar = response.data;
     },
     handleTouristAvatarSuccess(response) {
       this.websiteConfigForm.touristAvatar = response.data;

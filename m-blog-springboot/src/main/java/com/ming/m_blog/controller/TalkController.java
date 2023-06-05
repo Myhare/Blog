@@ -1,11 +1,8 @@
 package com.ming.m_blog.controller;
 
-import com.ming.m_blog.dto.TalkBackDTO;
-import com.ming.m_blog.dto.TalkDTO;
+import com.ming.m_blog.dto.talk.TalkBackDTO;
+import com.ming.m_blog.dto.talk.TalkDTO;
 import com.ming.m_blog.enums.FilePathEnum;
-import com.ming.m_blog.enums.UploadFileModelEnum;
-import com.ming.m_blog.pojo.Page;
-import com.ming.m_blog.pojo.Talk;
 import com.ming.m_blog.service.CommentService;
 import com.ming.m_blog.service.TalkService;
 import com.ming.m_blog.strategy.context.UploadFileContext;

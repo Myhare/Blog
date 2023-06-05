@@ -1,7 +1,7 @@
 package com.ming.m_blog.service;
 
-import com.ming.m_blog.dto.TalkBackDTO;
-import com.ming.m_blog.dto.TalkDTO;
+import com.ming.m_blog.dto.talk.TalkBackDTO;
+import com.ming.m_blog.dto.talk.TalkDTO;
 import com.ming.m_blog.pojo.Talk;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ming.m_blog.vo.PageResult;

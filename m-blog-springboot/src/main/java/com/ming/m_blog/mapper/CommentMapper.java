@@ -1,13 +1,11 @@
 package com.ming.m_blog.mapper;
 
-import com.ming.m_blog.dto.*;
+import com.ming.m_blog.dto.comment.*;
 import com.ming.m_blog.pojo.Comment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ming.m_blog.vo.AdminCommentsVO;
 import com.ming.m_blog.vo.CommentsVO;
-import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.ming.m_blog.service;
 
-import com.ming.m_blog.dto.UniqueViewDTO;
+import com.ming.m_blog.dto.blogInfo.UniqueViewDTO;
 import com.ming.m_blog.pojo.UniqueView;
 import com.baomidou.mybatisplus.extension.service.IService;
 

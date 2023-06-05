@@ -1,9 +1,9 @@
 package com.ming.m_blog.controller;
 
 
-import com.ming.m_blog.dto.CommentDTO;
-import com.ming.m_blog.dto.CommentListDTO;
-import com.ming.m_blog.dto.ReplyDTO;
+import com.ming.m_blog.dto.comment.CommentDTO;
+import com.ming.m_blog.dto.comment.CommentListDTO;
+import com.ming.m_blog.dto.comment.ReplyDTO;
 import com.ming.m_blog.annotation.AccessLimit;
 import com.ming.m_blog.service.CommentService;
 import com.ming.m_blog.vo.CommentsVO;

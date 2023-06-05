@@ -1,8 +1,8 @@
 package com.ming.m_blog.service;
 
-import com.ming.m_blog.dto.CommentDTO;
-import com.ming.m_blog.dto.CommentListDTO;
-import com.ming.m_blog.dto.ReplyDTO;
+import com.ming.m_blog.dto.comment.CommentDTO;
+import com.ming.m_blog.dto.comment.CommentListDTO;
+import com.ming.m_blog.dto.comment.ReplyDTO;
 import com.ming.m_blog.pojo.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ming.m_blog.vo.CommentsVO;

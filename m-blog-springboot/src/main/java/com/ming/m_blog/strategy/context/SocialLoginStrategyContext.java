@@ -1,6 +1,6 @@
 package com.ming.m_blog.strategy.context;
 
-import com.ming.m_blog.dto.UserInfoDTO;
+import com.ming.m_blog.dto.user.UserInfoDTO;
 import com.ming.m_blog.enums.LoginTypeEnum;
 import com.ming.m_blog.strategy.LoginStrategy;
 import org.springframework.beans.factory.annotation.Autowired;

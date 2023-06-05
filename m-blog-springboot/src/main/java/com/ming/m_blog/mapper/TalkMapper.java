@@ -1,10 +1,9 @@
 package com.ming.m_blog.mapper;
 
-import com.ming.m_blog.dto.TalkBackDTO;
-import com.ming.m_blog.dto.TalkDTO;
+import com.ming.m_blog.dto.talk.TalkBackDTO;
+import com.ming.m_blog.dto.talk.TalkDTO;
 import com.ming.m_blog.pojo.Talk;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.ming.m_blog.vo.QueryInfoVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

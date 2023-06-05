@@ -1,6 +1,6 @@
 package com.ming.m_blog.controller;
 
-import com.ming.m_blog.dto.OperationLogDTO;
+import com.ming.m_blog.dto.log.OperationLogDTO;
 import com.ming.m_blog.service.OperationLogService;
 import com.ming.m_blog.vo.PageResult;
 import com.ming.m_blog.vo.QueryInfoVO;

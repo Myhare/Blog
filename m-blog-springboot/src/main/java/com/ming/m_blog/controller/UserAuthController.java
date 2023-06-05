@@ -4,23 +4,20 @@ package com.ming.m_blog.controller;
 import com.alibaba.fastjson.JSON;
 import com.ming.m_blog.annotation.OptLog;
 import com.ming.m_blog.constant.OptTypeConstant;
-import com.ming.m_blog.dto.UserAreaDTO;
-import com.ming.m_blog.dto.UserInfoDTO;
+import com.ming.m_blog.dto.user.UserAreaDTO;
+import com.ming.m_blog.dto.user.UserInfoDTO;
 import com.ming.m_blog.enums.LoginTypeEnum;
-import com.ming.m_blog.mapper.UserAuthMapper;
 import com.ming.m_blog.service.UserAuthService;
 import com.ming.m_blog.strategy.context.SocialLoginStrategyContext;
 import com.ming.m_blog.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**

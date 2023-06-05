@@ -1,9 +1,7 @@
 package com.ming.m_blog.service;
 
-import com.ming.m_blog.dto.UserAreaDTO;
-import com.ming.m_blog.dto.UserListDTO;
-import com.ming.m_blog.dto.UserOnlineDTO;
-import com.ming.m_blog.pojo.Page;
+import com.ming.m_blog.dto.user.UserListDTO;
+import com.ming.m_blog.dto.user.UserOnlineDTO;
 import com.ming.m_blog.pojo.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ming.m_blog.vo.*;

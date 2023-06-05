@@ -3,7 +3,7 @@ package com.ming.m_blog.service.impl;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import com.ming.m_blog.constant.RedisPrefixConst;
-import com.ming.m_blog.dto.UniqueViewDTO;
+import com.ming.m_blog.dto.blogInfo.UniqueViewDTO;
 import com.ming.m_blog.pojo.UniqueView;
 import com.ming.m_blog.mapper.UniqueViewMapper;
 import com.ming.m_blog.service.RedisService;

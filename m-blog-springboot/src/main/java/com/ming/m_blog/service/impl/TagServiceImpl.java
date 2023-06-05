@@ -1,8 +1,8 @@
 package com.ming.m_blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.ming.m_blog.dto.TagListDTO;
-import com.ming.m_blog.dto.TagSimpleDTO;
+import com.ming.m_blog.dto.talk.TagListDTO;
+import com.ming.m_blog.dto.tag.TagSimpleDTO;
 import com.ming.m_blog.pojo.Tag;
 import com.ming.m_blog.mapper.TagMapper;
 import com.ming.m_blog.service.TagService;
@@ -12,7 +12,6 @@ import com.ming.m_blog.vo.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.HTML;
 import java.util.List;
 import java.util.stream.Collectors;
 

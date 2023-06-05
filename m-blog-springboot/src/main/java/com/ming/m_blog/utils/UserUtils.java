@@ -1,6 +1,6 @@
 package com.ming.m_blog.utils;
 
-import com.ming.m_blog.dto.UserDetailDTO;
+import com.ming.m_blog.dto.user.UserDetailDTO;
 import com.ming.m_blog.exception.ReRuntimeException;
 import org.springframework.security.core.context.SecurityContextHolder;
 

@@ -2,7 +2,7 @@ package com.ming.m_blog.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.ming.m_blog.annotation.OptLog;
-import com.ming.m_blog.dto.UserDetailDTO;
+import com.ming.m_blog.dto.user.UserDetailDTO;
 import com.ming.m_blog.exception.ReRuntimeException;
 import com.ming.m_blog.mapper.OperationLogMapper;
 import com.ming.m_blog.pojo.OperationLog;
@@ -11,21 +11,17 @@ import com.ming.m_blog.utils.UserUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Objects;
 
 /**

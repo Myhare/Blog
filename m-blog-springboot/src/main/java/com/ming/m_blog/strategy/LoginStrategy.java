@@ -1,6 +1,6 @@
 package com.ming.m_blog.strategy;
 
-import com.ming.m_blog.dto.UserInfoDTO;
+import com.ming.m_blog.dto.user.UserInfoDTO;
 
 /**
  * 第三方策略模式

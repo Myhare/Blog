@@ -1,6 +1,6 @@
 package com.ming.m_blog.mapper;
 
-import com.ming.m_blog.dto.UniqueViewDTO;
+import com.ming.m_blog.dto.blogInfo.UniqueViewDTO;
 import com.ming.m_blog.pojo.UniqueView;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;

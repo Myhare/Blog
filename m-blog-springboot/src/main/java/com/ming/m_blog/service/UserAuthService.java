@@ -1,19 +1,12 @@
 package com.ming.m_blog.service;
 
-import com.ming.m_blog.dto.UserAreaDTO;
-import com.ming.m_blog.dto.UserInfoDTO;
+import com.ming.m_blog.dto.user.UserAreaDTO;
 import com.ming.m_blog.pojo.UserAuth;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ming.m_blog.pojo.UserInfo;
-import com.ming.m_blog.vo.LoginUserVO;
 import com.ming.m_blog.vo.PasswordVO;
 import com.ming.m_blog.vo.RegisterVO;
-import com.ming.m_blog.vo.ResponseResult;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

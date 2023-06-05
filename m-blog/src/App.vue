@@ -24,6 +24,8 @@
     <EmailModel></EmailModel>
     <!--聊天室-->
     <ChatRoom v-if="blogInfo.websiteConfig.isChatRoom === 1"></ChatRoom>
+    <!--chatGPT-->
+    <ChatGpt v-if="blogInfo.websiteConfig.isChatGpt === 1"></ChatGpt>
   </v-app>
 </template>
 
@@ -38,6 +40,7 @@ import EmailModel from "./components/model/EmailModel";
 import BackTop from "@/components/BackTop";
 import ChatRoom from "@/components/ChatRoom"; // 聊天室
 import SideNavBar from "@/components/layout/SideNavBar"; // 侧边导航栏
+import ChatGpt from "@/components/ChatGpt";
 export default {
   name: 'App',
   components:{
@@ -50,7 +53,8 @@ export default {
     EmailModel,
     BackTop,
     ChatRoom,
-    SideNavBar
+    SideNavBar,
+    ChatGpt
   },
   data: () => ({
     //

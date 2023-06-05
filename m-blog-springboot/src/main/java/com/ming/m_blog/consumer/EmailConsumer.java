@@ -1,6 +1,5 @@
 package com.ming.m_blog.consumer;
 
-import com.alibaba.fastjson.JSON;
 import com.ming.m_blog.constant.MQPrefixConst;
 import com.ming.m_blog.dto.EmailSendDTO;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;

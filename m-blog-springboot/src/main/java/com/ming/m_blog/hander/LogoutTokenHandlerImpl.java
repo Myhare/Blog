@@ -1,7 +1,6 @@
 package com.ming.m_blog.hander;
 
 import com.ming.m_blog.constant.RedisPrefixConst;
-import com.ming.m_blog.dto.UserDetailDTO;
 import com.ming.m_blog.service.RedisService;
 import com.ming.m_blog.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;

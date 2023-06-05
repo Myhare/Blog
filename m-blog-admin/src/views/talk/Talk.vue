@@ -1,7 +1,7 @@
 <template>
   <div style="padding: 20px">
     <el-card class="main-card">
-      <div class="title">{{ this.$route.name }}</div>
+      <div class="title">{{ this.$route.meta.title }}</div>
       <div class="talk-container">
         <!-- 输入框 -->
         <Editor

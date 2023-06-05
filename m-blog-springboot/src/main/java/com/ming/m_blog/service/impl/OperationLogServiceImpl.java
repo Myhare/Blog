@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ming.m_blog.dto.OperationLogDTO;
+import com.ming.m_blog.dto.log.OperationLogDTO;
 import com.ming.m_blog.pojo.OperationLog;
 import com.ming.m_blog.service.OperationLogService;
 import com.ming.m_blog.mapper.OperationLogMapper;

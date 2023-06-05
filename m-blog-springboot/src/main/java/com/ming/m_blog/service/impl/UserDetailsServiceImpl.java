@@ -1,7 +1,7 @@
 package com.ming.m_blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.ming.m_blog.dto.UserDetailDTO;
+import com.ming.m_blog.dto.user.UserDetailDTO;
 import com.ming.m_blog.exception.ReRuntimeException;
 import com.ming.m_blog.mapper.UserAuthMapper;
 import com.ming.m_blog.mapper.UserInfoMapper;
@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;

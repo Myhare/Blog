@@ -17,6 +17,7 @@ import messageRouter from "@/router/modules/message";  // 消息管理
 import websiteRouter from "@/router/modules/website";   // 网站管理
 import logRouter from "@/router/modules/log";   // 日志管理
 import talkRouter from "@/router/modules/talk";  // 说说管理
+import friendLink from "@/router/modules/friendLink";  // 友链管理
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -93,9 +94,10 @@ export const asyncRoutes = [
   usersRouter,
   articleRouter,
   messageRouter,
-  websiteRouter,
   logRouter,
   talkRouter,
+  friendLink,
+  websiteRouter,
 
   // 个人中心
   {

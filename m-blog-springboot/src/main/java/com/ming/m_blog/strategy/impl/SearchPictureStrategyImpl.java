@@ -2,7 +2,7 @@ package com.ming.m_blog.strategy.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.ming.m_blog.constant.RedisPrefixConst;
-import com.ming.m_blog.dto.SearchPictureDTO;
+import com.ming.m_blog.dto.search.SearchPictureDTO;
 import com.ming.m_blog.exception.ReRuntimeException;
 import com.ming.m_blog.service.RedisService;
 import com.ming.m_blog.vo.SearchVO;

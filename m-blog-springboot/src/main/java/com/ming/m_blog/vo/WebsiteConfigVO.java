@@ -77,6 +77,18 @@ public class WebsiteConfigVO {
     private Integer isChatRoom;
 
     /**
+     * 是否开启chatGPT
+     */
+    @ApiModelProperty(name = "isChatGpt", value = "是否开启chatGPT", required = true, dataType = "Integer")
+    private Integer isChatGpt;
+
+    /**
+     * 是否开启chatGPT
+     */
+    @ApiModelProperty(name = "chatGptAvatar", value = "GPT头像", required = true, dataType = "String")
+    private String chatGptAvatar;
+
+    /**
      * 是否评论审核
      */
     @ApiModelProperty(name = "isCommentReview", value = "是否评论审核 1需要 0不需要", required = true, dataType = "Integer")

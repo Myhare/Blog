@@ -1,16 +1,15 @@
 package com.ming.m_blog.controller;
 
 
-import com.ming.m_blog.dto.CategoryDTO;
-import com.ming.m_blog.dto.CategoryListDTO;
-import com.ming.m_blog.dto.CategorySimpleDTO;
+import com.ming.m_blog.dto.category.CategoryDTO;
+import com.ming.m_blog.dto.category.CategoryListDTO;
+import com.ming.m_blog.dto.category.CategorySimpleDTO;
 import com.ming.m_blog.service.CategoryService;
 import com.ming.m_blog.vo.PageResult;
 import com.ming.m_blog.vo.QueryInfoVO;
 import com.ming.m_blog.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

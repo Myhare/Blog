@@ -1,3 +1,10 @@
 spring:
   profiles:
     active: prod
+
+chatgpt:
+  api:
+    proxy-port: 7890
+    proxy-url: 127.0.0.1
+    api-key: 你的chatGPT API
+    chat-largest-context: 20

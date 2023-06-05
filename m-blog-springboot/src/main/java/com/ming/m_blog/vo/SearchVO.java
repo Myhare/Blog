@@ -1,6 +1,6 @@
 package com.ming.m_blog.vo;
 
-import com.ming.m_blog.dto.SearchPictureDTO;
+import com.ming.m_blog.dto.search.SearchPictureDTO;
 import com.ming.m_blog.dto.search.ArticleSearchDTO;
 import com.ming.m_blog.dto.search.CategorySearchDTO;
 import com.ming.m_blog.dto.search.TagSearchDTO;

@@ -10,6 +10,7 @@ export default new Vuex.Store({
     registerFlag: false,
     forgetFlag: false,
     emailFlag: false,
+    gptFlag : false,  // 是否打开GPT
     drawer: false,
     loginUrl: "",
     userId: null,

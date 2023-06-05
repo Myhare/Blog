@@ -1,26 +1,31 @@
 package com.ming.m_blog.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.ming.m_blog.constant.CommonConst;
-import com.ming.m_blog.dto.*;
+import com.ming.m_blog.dto.comment.CommentDTO;
+import com.ming.m_blog.dto.comment.CommentListDTO;
+import com.ming.m_blog.dto.comment.ReplyCountDTO;
+import com.ming.m_blog.dto.comment.ReplyDTO;
+import com.ming.m_blog.dto.user.UserDetailDTO;
 import com.ming.m_blog.pojo.Comment;
 import com.ming.m_blog.mapper.CommentMapper;
 import com.ming.m_blog.service.BlogService;
 import com.ming.m_blog.service.CommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ming.m_blog.service.RedisService;
+import com.ming.m_blog.utils.HTMLUtils;
 import com.ming.m_blog.utils.PageUtils;
 import com.ming.m_blog.utils.UserUtils;
 import com.ming.m_blog.vo.CommentsVO;
 import com.ming.m_blog.vo.AdminCommentsVO;
 import com.ming.m_blog.vo.PageResult;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.ming.m_blog.constant.CommonConst.*;
@@ -96,6 +101,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         // 获取是否需要审核
         Integer isReview = blogService.getWebsiteConfig().getIsCommentReview();
         UserDetailDTO loginUser = UserUtils.getLoginUser();
+        // 过滤标签并且过滤敏感词
+        commentsVO.setCommentContent(HTMLUtils.filter(commentsVO.getCommentContent()));
         Comment comment = Comment.builder()
                 .userId(loginUser.getUserId())
                 .replyUserId(commentsVO.getReplyUserId())
@@ -114,9 +121,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public PageResult<CommentDTO> getComments(CommentsVO commentsVO) {
         // 查询改主题下有多少评论
         Integer commentCount = commentMapper.selectCount(new LambdaQueryWrapper<Comment>()
-                .eq(Comment::getTopicId, commentsVO.getTopicId())
-                .eq(Comment::getIsReview, TRUE)
+                .eq(ObjectUtil.isNotEmpty(commentsVO.getTopicId()), Comment::getTopicId, commentsVO.getTopicId())
+                .eq(Comment::getType, commentsVO.getType())
                 .isNull(Comment::getParentId)
+                .eq(Comment::getIsReview, TRUE)
         );
         if (commentCount==0){
             return new PageResult<>();

@@ -1,8 +1,8 @@
 package com.ming.m_blog.service;
 
-import com.ming.m_blog.dto.CategoryDTO;
-import com.ming.m_blog.dto.CategoryListDTO;
-import com.ming.m_blog.dto.CategorySimpleDTO;
+import com.ming.m_blog.dto.category.CategoryDTO;
+import com.ming.m_blog.dto.category.CategoryListDTO;
+import com.ming.m_blog.dto.category.CategorySimpleDTO;
 import com.ming.m_blog.pojo.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ming.m_blog.vo.PageResult;

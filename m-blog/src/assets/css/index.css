@@ -1,9 +1,9 @@
 
 body {
-  cursor: url(https://static.talkxj.com/css/default.cur),default;
+  /*cursor: url(https://static.talkxj.com/css/default.cur),default;*/
 }
 a, button, img {
-  cursor: url(https://static.talkxj.com/css/pointer.cur),default;
+  /*cursor: url(https://static.talkxj.com/css/pointer.cur),default;*/
 }
 ul{
   padding:0 !important;

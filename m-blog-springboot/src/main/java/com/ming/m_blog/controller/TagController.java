@@ -1,15 +1,14 @@
 package com.ming.m_blog.controller;
 
 
-import com.ming.m_blog.dto.TagListDTO;
-import com.ming.m_blog.dto.TagSimpleDTO;
+import com.ming.m_blog.dto.talk.TagListDTO;
+import com.ming.m_blog.dto.tag.TagSimpleDTO;
 import com.ming.m_blog.service.TagService;
 import com.ming.m_blog.vo.PageResult;
 import com.ming.m_blog.vo.QueryInfoVO;
 import com.ming.m_blog.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

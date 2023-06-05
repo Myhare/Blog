@@ -1,8 +1,7 @@
 package com.ming.m_blog.mapper;
 
-import com.ming.m_blog.dto.CategoryDTO;
-import com.ming.m_blog.dto.CategoryListDTO;
-import com.ming.m_blog.dto.CategorySimpleDTO;
+import com.ming.m_blog.dto.category.CategoryDTO;
+import com.ming.m_blog.dto.category.CategoryListDTO;
 import com.ming.m_blog.pojo.Category;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
