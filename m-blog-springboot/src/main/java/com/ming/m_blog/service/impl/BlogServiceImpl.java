@@ -11,6 +11,8 @@ import com.ming.m_blog.dto.blogInfo.BlogInfoDTO;
 import com.ming.m_blog.dto.blogInfo.UniqueViewDTO;
 import com.ming.m_blog.dto.category.CategoryDTO;
 import com.ming.m_blog.dto.tag.TagSimpleDTO;
+import com.ming.m_blog.dto.user.UserDetailDTO;
+import com.ming.m_blog.enums.ArticleStatusEnum;
 import com.ming.m_blog.mapper.*;
 import com.ming.m_blog.pojo.*;
 import com.ming.m_blog.service.BlogService;
@@ -18,6 +20,7 @@ import com.ming.m_blog.service.UniqueViewService;
 import com.ming.m_blog.strategy.context.SearchStrategyContext;
 import com.ming.m_blog.utils.BeanCopyUtils;
 import com.ming.m_blog.utils.IpUtils;
+import com.ming.m_blog.utils.UserUtils;
 import com.ming.m_blog.vo.QueryInfoVO;
 import com.ming.m_blog.vo.SearchVO;
 import com.ming.m_blog.vo.WebsiteConfigVO;
@@ -74,8 +77,28 @@ public class BlogServiceImpl implements BlogService {
     @Transactional(rollbackFor=Exception.class)
     public BlogInfoDTO getBlogInfo() {
         // 查询博客文章数量
-        Integer articleCount = articleMapper.selectCount(new LambdaQueryWrapper<Article>()
-                .ne(Article::getStatus, 0));
+        Integer articleCount = 0;
+        if (UserUtils.isLogin()){
+            UserDetailDTO loginUser = UserUtils.getLoginUser();
+            // 用户登录后，可以看到自己发布的博客数量
+            articleCount  = articleMapper.selectCount(new LambdaQueryWrapper<Article>()
+                            .eq(Article::getIsDelete, FALSE)
+                    .ne(Article::getStatus, ArticleStatusEnum.DRAFT.getStatus())  // 不能是草稿
+                    .ne(Article::getStatus, ArticleStatusEnum.SECRET.getStatus())  // 不是私密
+                    .or()
+                    .eq(Article::getIsDelete, FALSE)
+                    .eq(Article::getUserId,loginUser.getUserId())  // 可以看到自己的私密文章数量
+                    .ne(Article::getStatus, ArticleStatusEnum.DRAFT.getStatus()));  // 不能是草稿
+
+        }else {
+            // 没有登录，正常获取非私有的博客
+            articleCount = articleMapper.selectCount(new LambdaQueryWrapper<Article>()
+                    .eq(Article::getIsDelete, FALSE)
+                    .ne(Article::getStatus, ArticleStatusEnum.DRAFT.getStatus())  // 不是草稿
+                    .ne(Article::getStatus, ArticleStatusEnum.SECRET.getStatus())  // 不是私密
+            );
+        }
+
         // 查询分类数量
         Integer categoryCount = categoryMapper.selectCount(null);
         // 查询标签数量

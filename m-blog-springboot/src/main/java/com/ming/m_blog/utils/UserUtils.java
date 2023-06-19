@@ -4,6 +4,8 @@ import com.ming.m_blog.dto.user.UserDetailDTO;
 import com.ming.m_blog.exception.ReRuntimeException;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Objects;
+
 public class UserUtils {
 
     // 获取当前登录用户信息
@@ -12,6 +14,19 @@ public class UserUtils {
             return (UserDetailDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         }catch (Exception e){
             throw new ReRuntimeException("请先登录再操作");
+        }
+    }
+
+    // 判断用户是否登录
+    public static Boolean isLogin(){
+        try {
+            UserDetailDTO userDetailDTO = (UserDetailDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (Objects.isNull(userDetailDTO)){
+                return false;
+            }
+            return true;
+        }catch (Exception e){
+            return false;
         }
     }
 

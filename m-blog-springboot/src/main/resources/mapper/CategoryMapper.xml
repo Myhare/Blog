@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ming.m_blog.mapper.CategoryMapper">
 
-    <select id="selectCategoryList" resultType="com.ming.m_blog.dto.CategoryListDTO">
+    <select id="selectCategoryList" resultType="com.ming.m_blog.dto.category.CategoryListDTO">
         select
         c.id categoryId,
         c.category_name categoryName,
@@ -20,7 +20,7 @@
     </select>
 
     <!--前台查询分类列表-->
-    <select id="listCategory" resultType="com.ming.m_blog.dto.CategoryDTO">
+    <select id="listCategory" resultType="com.ming.m_blog.dto.category.CategoryDTO">
         select
             c.id,
             c.category_name categoryName,

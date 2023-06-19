@@ -22,7 +22,7 @@
     </sql>
 
     <!--后台查询说说列表-->
-    <select id="talkBackList" resultType="com.ming.m_blog.dto.TalkBackDTO">
+    <select id="talkBackList" resultType="com.ming.m_blog.dto.talk.TalkBackDTO">
         select
             t.id,
             nickname,
@@ -46,7 +46,7 @@
     </select>
 
     <!--通过id查询后台说说-->
-    <select id="getTalkBackById" resultType="com.ming.m_blog.dto.TalkBackDTO">
+    <select id="getTalkBackById" resultType="com.ming.m_blog.dto.talk.TalkBackDTO">
         SELECT
             t.id,
             nickname,
@@ -64,7 +64,7 @@
     </select>
 
     <!--分页查询说说-->
-    <select id="listTalks" resultType="com.ming.m_blog.dto.TalkDTO">
+    <select id="listTalks" resultType="com.ming.m_blog.dto.talk.TalkDTO">
         SELECT
             t.id,
             nickname,
@@ -85,7 +85,7 @@
     </select>
 
     <!--通过id查询说说-->
-    <select id="getTalkById" resultType="com.ming.m_blog.dto.TalkDTO">
+    <select id="getTalkById" resultType="com.ming.m_blog.dto.talk.TalkDTO">
         SELECT
             t.id,
             nickname,

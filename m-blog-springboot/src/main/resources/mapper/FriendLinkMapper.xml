@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ming.m_blog.mapper.FriendLinkMapper">
+
+    <resultMap id="BaseResultMap" type="com.ming.m_blog.pojo.FriendLink">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="linkName" column="link_name" jdbcType="VARCHAR"/>
+            <result property="linkAvatar" column="link_avatar" jdbcType="VARCHAR"/>
+            <result property="linkAddress" column="link_address" jdbcType="VARCHAR"/>
+            <result property="linkIntro" column="link_intro" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,link_name,link_avatar,
+        link_address,link_intro,create_time,
+        update_time
+    </sql>
+</mapper>

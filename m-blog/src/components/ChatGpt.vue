@@ -38,7 +38,7 @@
                 :class="isMyContent(item)"
             >
               <!-- 文字消息 -->
-              <div v-html="item.content" />
+              <article v-html="item.content" class="markdown-body"/>
             </div>
           </div>
         </div>
@@ -63,8 +63,10 @@
 import Recorderx, { ENCODE_TYPE } from "recorderx";
 import Emoji from "./Emoji";
 import EmojiList from "../assets/js/emoji";
+import Article from "@/views/article/Article";
 export default {
   components: {
+    Article,
     Emoji
   },
   updated() {
@@ -90,7 +92,6 @@ export default {
     },
     // 发送消息
     sendMessage(event){
-      alert(1)
       // 阻止按回车默认换行
       event.preventDefault();
       // 判空
@@ -126,8 +127,8 @@ export default {
       }
       this.chatRecordList.push(gptChat)
 
-      // const eventSource = new EventSource(`/api/sendStream/${tempContent}`);
-      const eventSource = new EventSource(`/api/stream3/${tempContent}`);
+      const eventSource = new EventSource(`/api/sendStream/${tempContent}`);
+      // const eventSource = new EventSource(`/api/stream3/${tempContent}`);
 
       let that = this;
 
@@ -141,10 +142,10 @@ export default {
       // 接收消息
       eventSource.onmessage = function (event) {
         // console.log("接收到数据event" + event);
-        console.log(event.data);
+        // console.log(event.data);
         if (event.data && typeof event.data === 'string'){
           const data = JSON.parse(event.data);
-          console.log(data);
+          // console.log(data);
           const reMessage = data.delta.content;
           // console.log(reMessage);
           // 将查询到的数据添加到最新的回答中
@@ -157,11 +158,11 @@ export default {
 
       eventSource.onerror = function (err) {
         console.log('SSE连接异常,关闭连接');
-        console.log(err);
-        console.log(err.eventPhase);
-        console.log(err.currentTarget.readyState);
-        console.log(err.currentTarget.status);
-        // eventSource.close();
+        // console.log(err);
+        // console.log(err.eventPhase);
+        // console.log(err.currentTarget.readyState);
+        // console.log(err.currentTarget.status);
+        eventSource.close();
         // const lastIndex = this.chatRecordList.length - 1;
         // const chat = this.chatRecordList[lastIndex];
         // chat.content = '出现错误，可能是网络出现问题';
@@ -210,7 +211,7 @@ export default {
     },
     isMyContent() {
       return function(item) {
-        return this.isSelf(item) ? "my-content" : "user-content";
+        return this.isSelf(item) ? "my-content" : "user-content markdown-body";
       };
     },
     isMyMessage() {

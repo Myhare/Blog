@@ -3,7 +3,7 @@
 <mapper namespace="com.ming.m_blog.mapper.UniqueViewMapper">
 
     <!--获取最近七天的访问结果-->
-    <select id="getUniqueViewDTO" resultType="com.ming.m_blog.dto.UniqueViewDTO">
+    <select id="getUniqueViewDTO" resultType="com.ming.m_blog.dto.blogInfo.UniqueViewDTO">
         select
             DATE_FORMAT(create_time,"%Y-%m-%d") day,
             views_count

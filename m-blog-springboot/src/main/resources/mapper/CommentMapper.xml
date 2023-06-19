@@ -88,7 +88,7 @@
     </select>
 
     <!--查询评论-->
-    <select id="getCommentDTO" resultType="com.ming.m_blog.dto.CommentDTO">
+    <select id="getCommentDTO" resultType="com.ming.m_blog.dto.comment.CommentDTO">
         select
             c.id,
             user_id userId,
@@ -99,17 +99,21 @@
         from comment c
                  left join user_auth ua on ua.id=c.user_id
                  left join user_info ui on ua.user_info_id = ui.id
-        where
+        <where>
             c.is_review = 1
-          and c.parent_id is null
-          and c.type = #{commentsVO.type}
-          and c.topic_id = #{commentsVO.topicId}
+            and c.is_delete = 0
+            and c.parent_id is null
+            and c.type = #{commentsVO.type}
+            <if test="commentsVO.topicId != null">
+                and topic_id = #{commentsVO.topicId}
+            </if>
+        </where>
         order by c.id desc
         limit #{pageNum},#{pageSize}
     </select>
 
     <!--获取主题评论的子评论-->
-    <select id="getReplyDTO" resultType="com.ming.m_blog.dto.ReplyDTO">
+    <select id="getReplyDTO" resultType="com.ming.m_blog.dto.comment.ReplyDTO">
         select *
         from (
         select
@@ -139,7 +143,7 @@
     </select>
 
     <!--查询评论回复数量-->
-    <select id="getReplyCount" resultType="com.ming.m_blog.dto.ReplyCountDTO">
+    <select id="getReplyCount" resultType="com.ming.m_blog.dto.comment.ReplyCountDTO">
         select
         parent_id commentId,
         count(*) replyCount
@@ -155,7 +159,7 @@
     </select>
 
     <!--查询具体某个评论下的回复-->
-    <select id="getReplyByCommentId" resultType="com.ming.m_blog.dto.ReplyDTO">
+    <select id="getReplyByCommentId" resultType="com.ming.m_blog.dto.comment.ReplyDTO">
         select
             c.id,
             parent_id,
@@ -180,7 +184,7 @@
     </select>
 
     <!--通过主题id查看评论数量-->
-    <select id="listCommentCountByTopicIds" resultType="com.ming.m_blog.dto.CommentCountDTO">
+    <select id="listCommentCountByTopicIds" resultType="com.ming.m_blog.dto.comment.CommentCountDTO">
         SELECT
         topic_id as id,
         COUNT( 1 ) AS comment_count
@@ -198,7 +202,7 @@
     </select>
 
     <!--查询后台评论列表-->
-    <resultMap id="adminCommentDTO" type="com.ming.m_blog.dto.CommentListDTO">
+    <resultMap id="adminCommentDTO" type="com.ming.m_blog.dto.comment.CommentListDTO">
         <result column="id" property="id"/>
         <result column="avatar" property="avatar"/>
         <result column="nickname" property="nickname"/>

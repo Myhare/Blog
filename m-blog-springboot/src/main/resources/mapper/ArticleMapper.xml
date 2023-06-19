@@ -265,7 +265,7 @@
     </select>
 
     <!--查询推荐文章-->
-    <select id="getArticleRecommend" resultType="com.ming.m_blog.dto.ArticleRecommendDTO">
+    <select id="getArticleRecommend" resultType="com.ming.m_blog.dto.article.ArticleRecommendDTO">
         select
             a.id,
             a.cover,
@@ -315,7 +315,7 @@
     </select>
 
     <!--查询文章统计列表-->
-    <select id="listArticleStatistics" resultType="com.ming.m_blog.dto.ArticleStatisticsDTO">
+    <select id="listArticleStatistics" resultType="com.ming.m_blog.dto.article.ArticleStatisticsDTO">
         select
             DATE_FORMAT(create_time,'%Y-%m-%d') date,
             count(1) count
@@ -327,7 +327,7 @@
     </select>
 
     <!--登录查询文章归档-->
-    <select id="loginGetArchive" resultType="com.ming.m_blog.dto.ArchiveDTO">
+    <select id="loginGetArchive" resultType="com.ming.m_blog.dto.article.ArchiveDTO">
         select
             a.id,
             a.title,
@@ -365,7 +365,7 @@
     </select>
 
     <!--查询文章详细信息-->
-    <resultMap id="articleDetailedById" type="com.ming.m_blog.dto.ArticleDTO">
+    <resultMap id="articleDetailedById" type="com.ming.m_blog.dto.article.ArticleDTO">
         <result column="id" property="id"/>
         <result column="cover" property="cover"/>
         <result column="title" property="title"/>
@@ -376,28 +376,28 @@
         <result column="update_time" property="updateTime"/>
         <result column="category_id" property="categoryId"/>
         <result column="category_name" property="categoryName"/>
-        <collection property="tagList" ofType="com.ming.m_blog.dto.TagSimpleDTO">
+        <collection property="tagList" ofType="com.ming.m_blog.dto.tag.TagSimpleDTO">
             <result column="tagId" property="id"/>
             <result column="tag_name" property="tagName"/>
         </collection>
     </resultMap>
 
     <!--查询文章缩略图-->
-    <resultMap id="articleCondition" type="com.ming.m_blog.dto.ArticlePreviewDTO">
+    <resultMap id="articleCondition" type="com.ming.m_blog.dto.article.ArticlePreviewDTO">
         <result column="id" property="id"/>
         <result column="cover" property="cover"/>
         <result column="title" property="title"/>
         <result column="update_time" property="updateTime"/>
         <result column="category_id" property="categoryId"/>
         <result column="category_name" property="categoryName"/>
-        <collection property="tagDTOList" ofType="com.ming.m_blog.dto.TagSimpleDTO">
+        <collection property="tagDTOList" ofType="com.ming.m_blog.dto.tag.TagSimpleDTO">
             <result column="tagId" property="id"/>
             <result column="tag_name" property="tagName"/>
         </collection>
     </resultMap>
 
     <!--首页文章查询映射-->
-    <resultMap id="homeArticle" type="com.ming.m_blog.dto.HomeArticleDTO">
+    <resultMap id="homeArticle" type="com.ming.m_blog.dto.article.HomeArticleDTO">
         <result column="id" property="id"/>
         <result column="cover" property="cover"/>
         <result column="title" property="title"/>
@@ -407,7 +407,7 @@
         <result column="type" property="type"/>
         <result column="is_top" property="isTop"/>
         <result column="update_time" property="updateTime"/>
-        <collection property="tagList" ofType="com.ming.m_blog.dto.TagSimpleDTO">
+        <collection property="tagList" ofType="com.ming.m_blog.dto.tag.TagSimpleDTO">
             <result column="tag_name" property="tagName"/>
             <result column="tagId" property="id"/>
         </collection>
@@ -428,7 +428,7 @@
         </collection>
     </resultMap>
 
-    <resultMap id="articleListMap" type="com.ming.m_blog.dto.ArticleListInfoDTO">
+    <resultMap id="articleListMap" type="com.ming.m_blog.dto.article.ArticleListInfoDTO">
         <result column="id" property="id"/>
         <result column="cover" property="cover"/>
         <result column="title" property="title"/>

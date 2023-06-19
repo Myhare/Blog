@@ -2,7 +2,7 @@
 
 前端：vue2 + vuex + vue-router + axios + vuetify + element + echarts
 
-后端：SpringBoot+SpringSecurity+MybatisPlus+MySQL+nginx+docker+Swagger2+Redis
+后端：SpringBoot + SpringSecurity + MybatisPlus + MySQL + nginx + docker + Swagger2 + Redis \+ RabbitMQ + Websocket + Maxwell + ElasticSearch + Jsoup 
 #  2.运行截图
 **前台界面**
 ![博客主页](http://www.static.mingzib.xyz/blogUploadFile/articles/80eb0e16d7784222ac87a93ceeae04ec.png)

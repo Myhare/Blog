@@ -1,13 +1,9 @@
 package com.ming.m_blog.controller;
 
 import com.ming.chatgptdemo.client.ChatClient;
-import com.ming.chatgptdemo.model.dto.MessageDTO;
 import com.ming.m_blog.constant.CommonConst;
-import com.ming.m_blog.dto.chatGpt.ReMessageDTO;
 import com.ming.m_blog.exception.ReRuntimeException;
 import com.ming.m_blog.service.BlogService;
-import com.ming.m_blog.utils.BeanCopyUtils;
-import com.ming.m_blog.vo.ResponseResult;
 import com.ming.m_blog.vo.WebsiteConfigVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,21 +36,12 @@ public class ChatGptController {
         SseEmitter sseEmitter = new SseEmitter();
         try {
             chatClient.streamSend(sseEmitter, message, streamReDTO -> {
+                // TODO 通过完整的回复进行一些操作，比如存数据库之类的
                 System.out.println("完整的回复是："+  streamReDTO.getContent());
             });
         } catch (Exception e) {
             sseEmitter.completeWithError(e);
         }
-        return sseEmitter;
-    }
-
-    // 测试流式请求3
-    @GetMapping("/stream3/{message}")
-    public SseEmitter streamData3(@PathVariable("message")String message){
-        SseEmitter sseEmitter = new SseEmitter();
-        chatClient.streamSend(sseEmitter ,message, streamReDTO -> {
-            System.out.println("获取到的完整数据" + streamReDTO.getContent());
-        });
         return sseEmitter;
     }
 
