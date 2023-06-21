@@ -59,13 +59,21 @@
 ##  运行截图
 **前台界面**
 ![博客主页](README.assets/home.png)
-![阅读文章](README.assets\chatgpt.png)
-![阅读文章详细信息](README.assets/article1.jpg)
 
-**后台界面**
+chatGPT流式对话
+
+![阅读文章](README.assets\chatgpt.png)
+
+文章详细信息
+
+![阅读文章详细信息](README.assets/article1.jpg)
 ![后台主页](README.assets/article2.png)
 
+说说页面
+
 ![文章管理](README.assets/talk.png )
+
+**后台界面**
 
 ![1687182925679](README.assets/admin-home.png)
 
