@@ -62,7 +62,7 @@
 
 chatGPT流式对话
 
-![ChatGPT](README.assets\chatgpt.png)
+![ChatGPT](README.assets\chat.png)
 
 文章详细信息
 
