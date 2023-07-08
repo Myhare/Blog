@@ -10,7 +10,7 @@ import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
  */
 public class HTMLUtils {
 
-    // 敏感词过滤
+    // 敏感词过滤工具
     private static final SensitiveWordBs WORD_BS = SensitiveWordBs.newInstance()
             .ignoreCase(true)
             .ignoreWidth(true)
@@ -31,13 +31,21 @@ public class HTMLUtils {
      * @return 过滤后的内容
      */
     public static String filter(String source) {
-        // 敏感词过滤
-        source = WORD_BS.replace(source);
         // 保留图片标签
         source = source.replaceAll("(?!<(img).*?>)<.*?>", "")
                 .replaceAll("(onload(.*?)=)", "")
                 .replaceAll("(onerror(.*?)=)", "");
         return deleteHMTLTag(source);
+    }
+
+    /**
+     * 敏感词过滤
+     * @param source
+     * @return
+     */
+    public static String sensitiveFilter(String source){
+        // 敏感词过滤
+        return WORD_BS.replace(source);
     }
 
     /**

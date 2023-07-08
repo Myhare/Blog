@@ -19,12 +19,14 @@ import NProgress from "nprogress";
 import "vue-image-swipe/dist/vue-image-swipe.css";
 import Toast from "./components/toast/index";       // 全局消息提示
 import global from "@/assets/js/global";        // 全局变量
+// import Meta from 'vue-meta';   // meta相关
 
 // Vue.use(animated);
 Vue.use(InfiniteLoading);
 Vue.use(VueImageSwipe);
 Vue.use(Toast);
 Vue.use(vueBaberrage)
+// Vue.use(Meta)
 
 Vue.prototype.$global = global; // 设置全局变量
 Vue.prototype.config = config;
@@ -78,6 +80,7 @@ router.beforeEach((to, from, next) => {
     }
     next();
 });
+
 router.afterEach(() => {
     window.scrollTo({
         top: 0,
@@ -86,11 +89,34 @@ router.afterEach(() => {
     NProgress.done();
 });
 
+// 路由前置守卫用来修改meta数据
+// router.beforeEach((to, from, next) => {
+//     if (to.meta.metaInfo){
+//         store.commit("CHANGE_META_INFO", to.meta.metaInfo)
+//     }
+//     next()
+// });
+
 Vue.config.productionTip = false
 
 new Vue({
     router,
     store,
     vuetify,
+    // metaInfo(){
+    //   return{
+    //       title: this.$store.state.metaInfo.title,
+    //       meta: [
+    //           {
+    //               name: "keywords",
+    //               content: "11111"
+    //               // content: this.$store.state.metaInfo.keywords
+    //           }, {
+    //               name: "description",
+    //               content: this.$store.state.metaInfo.description
+    //           }
+    //       ]
+    //   }
+    // },
     render: h => h(App)
 }).$mount('#app')

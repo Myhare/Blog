@@ -25,6 +25,7 @@ export default new Vuex.Store({
     talkLikeSet: [],      // 说说点赞集合
     loginFlag: false, // 是否打开登录对话框
     blogInfo:{}, // 博客信息
+    // metaInfo: {}, // meta信息
   },
   getters: {
   },
@@ -66,6 +67,7 @@ export default new Vuex.Store({
       state.loginFlag = false;
       state.registerFlag = false;
       state.emailFlag = false;
+      state.gptFlag = false;
     },
     // 评论点赞
     COMMENT_LIKE(state,commentId){
@@ -99,7 +101,12 @@ export default new Vuex.Store({
     // 保存登录路径
     SAVE_LOGIN_URL(state, url){
       state.loginUrl = url;
-    }
+    },
+    // 修改页面META信息
+    // CHANGE_META_INFO(state, metaInfo) {
+    //   console.log(metaInfo,"metaInfo")
+    //   state.metaInfo = metaInfo;
+    // }
   },
   actions: {
 

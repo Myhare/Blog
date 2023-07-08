@@ -86,6 +86,9 @@ mybatis-plus:
       logic-not-delete-value: 0
   mapper-locations: classpath:/mapper/**/*.xml
 
+# 网站路径,用于邮件通知
+website:
+  url: 127.0.0.1/
 
 gravatar:
   qqEmail: 你的邮箱，和上面发送邮箱相同

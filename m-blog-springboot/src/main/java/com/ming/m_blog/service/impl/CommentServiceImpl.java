@@ -2,39 +2,51 @@ package com.ming.m_blog.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ming.m_blog.constant.MQPrefixConst;
+import com.ming.m_blog.dto.EmailSendDTO;
 import com.ming.m_blog.dto.comment.CommentDTO;
 import com.ming.m_blog.dto.comment.CommentListDTO;
 import com.ming.m_blog.dto.comment.ReplyCountDTO;
 import com.ming.m_blog.dto.comment.ReplyDTO;
 import com.ming.m_blog.dto.user.UserDetailDTO;
+import com.ming.m_blog.enums.CommentTypeEnum;
+import com.ming.m_blog.exception.ReRuntimeException;
+import com.ming.m_blog.mapper.*;
 import com.ming.m_blog.pojo.Comment;
-import com.ming.m_blog.mapper.CommentMapper;
+import com.ming.m_blog.pojo.UserAuth;
+import com.ming.m_blog.pojo.UserInfo;
 import com.ming.m_blog.service.BlogService;
 import com.ming.m_blog.service.CommentService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ming.m_blog.service.RedisService;
+import com.ming.m_blog.utils.CommonUtils;
 import com.ming.m_blog.utils.HTMLUtils;
 import com.ming.m_blog.utils.PageUtils;
 import com.ming.m_blog.utils.UserUtils;
-import com.ming.m_blog.vo.CommentsVO;
 import com.ming.m_blog.vo.AdminCommentsVO;
+import com.ming.m_blog.vo.CommentsVO;
 import com.ming.m_blog.vo.PageResult;
+import com.ming.m_blog.vo.WebsiteConfigVO;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+import static com.ming.m_blog.enums.CommentTypeEnum.*;
 import static com.ming.m_blog.constant.CommonConst.*;
-import static com.ming.m_blog.constant.RedisPrefixConst.*;
+import static com.ming.m_blog.constant.RedisPrefixConst.COMMENT_LIKE_COUNT;
+import static com.ming.m_blog.constant.RedisPrefixConst.COMMENT_USER_LIKE;
 
 /**
- * <p>
- *  服务实现类
- * </p>
+ * 评论服务
  *
  * @author Ming
  * @since 2022-09-09
@@ -49,6 +61,20 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Autowired
     private BlogService blogService;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private ArticleMapper articleMapper;
+    @Autowired
+    private UserAuthMapper userAuthMapper;
+    @Autowired
+    private UserInfoMapper userInfoMapper;
+    @Autowired
+    private TalkMapper talkMapper;
+
+    @Value("${website.url}")
+    private String websiteUrl;
 
     // 后台查询评论列表
     @Override
@@ -99,10 +125,18 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Override
     public int addComments(CommentsVO commentsVO) {
         // 获取是否需要审核
-        Integer isReview = blogService.getWebsiteConfig().getIsCommentReview();
+        WebsiteConfigVO websiteConfig = blogService.getWebsiteConfig();
+        Integer isReview = websiteConfig.getIsCommentReview();
+        // 获取登录用户
         UserDetailDTO loginUser = UserUtils.getLoginUser();
         // 过滤标签并且过滤敏感词
-        commentsVO.setCommentContent(HTMLUtils.filter(commentsVO.getCommentContent()));
+        String filterComment = HTMLUtils.filter(commentsVO.getCommentContent());
+        // 如果不是友链评论的话，过滤敏感词
+        if (!commentsVO.getType().equals(FRIEND_LINK.getType())){
+            filterComment = HTMLUtils.sensitiveFilter(filterComment);
+        }
+        commentsVO.setCommentContent(filterComment);
+
         Comment comment = Comment.builder()
                 .userId(loginUser.getUserId())
                 .replyUserId(commentsVO.getReplyUserId())
@@ -113,6 +147,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
                 .isReview(isReview == TRUE ? FALSE : TRUE)
                 .build();
         // TODO 可以添加邮箱通知用户功能
+        // 查看是否开启邮件通知功能
+        if (websiteConfig.getIsEmailNotice() == TRUE){
+            CompletableFuture.runAsync(() -> noticeEmail(comment, loginUser));
+        }
+
         return commentMapper.insert(comment);
     }
 
@@ -202,4 +241,82 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public int restoreComment(List<Integer> commentIdList) {
         return commentMapper.restoreCommentList(commentIdList);
     }
+
+    /**
+     * 发送评论邮件通知
+     * @param comment 评论信息
+     */
+    public void noticeEmail(Comment comment, UserDetailDTO loginUser) {
+        // 默认是自己的id
+        Integer userAuthId = BLOG_ID;
+        Integer userInfoId = BLOG_ID;
+
+        // 获取回复用户的userInfo Id  这里因为之前没有统一好存userInfo还是UserAuth导致有点麻烦
+        // 判断是否有回复用户，如果没有说明可能是文章或者说说
+        if (Objects.nonNull(comment.getReplyUserId())){
+            // 说明这里有回复的用户，不一定是博主
+            userAuthId = comment.getReplyUserId();
+            userInfoId = userAuthMapper.selectById(userAuthId).getUserInfoId();
+        }else {
+            // 当前没有回复用户，可能是说说或者博客
+            switch (Objects.requireNonNull(getCommentTypeEnum(comment.getType()))){
+                case ARTICLE:
+                    userAuthId = articleMapper.selectById(comment.getTopicId()).getUserId();
+                    userInfoId = userAuthMapper.selectById(userAuthId).getUserInfoId();
+                    break;
+                case TALK:
+                    userInfoId = talkMapper.selectById(comment.getTopicId()).getUserId();
+            }
+        }
+
+        // 获取回复的邮箱
+        UserInfo userInfo = userInfoMapper.selectById(userInfoId);
+        String email = userInfo.getEmail();
+        if (StringUtils.isBlank(email)){
+            return;
+        }
+        // 校验格式
+        if (!CommonUtils.checkEmail(email)){
+            throw new ReRuntimeException("邮箱格式错误");
+        }
+        // 发送邮件
+
+        // 发送给被评论用户 还是博主
+        EmailSendDTO emailSendDTO = new EmailSendDTO();
+        // 如果已经审核了，直接发送给被回复的用户
+        if (comment.getIsReview().equals(TRUE)){
+            System.out.println(getCommentPath(comment.getType()));
+            String url = this.websiteUrl + getCommentPath(comment.getType()) + comment.getTopicId();
+            // 发送回复用户
+            String content = String.format("你好，%s，%s回复了你的评论。请前往%s 页面查看",
+                    userInfo.getNickname(), loginUser.getNickname(),url);
+            emailSendDTO = EmailSendDTO.builder()
+                    .email(email)
+                    // TODO 将 博客 换成主题的详细信息
+                    .subject("你在博客的评论有了新回复")
+                    .content(content)
+                    .build();
+        }else {
+            // 如果没有审核，将邮件发送给博主
+            String blogEmail = userInfoMapper.selectById(BLOG_ID).getEmail();
+            emailSendDTO.setEmail(blogEmail);
+            emailSendDTO.setSubject("审核提醒");
+            emailSendDTO.setContent("有一条新的评论，请去博客后台审核");
+        }
+        // 直接使用对象发送,向消费者发送消息
+        rabbitTemplate.convertAndSend(MQPrefixConst.EMAIL_EXCHANGE,"",emailSendDTO);
+    }
+
+    /**
+     * 获取评论路径
+     */
+    private String getCommentPath(Integer type){
+        for (CommentTypeEnum value : CommentTypeEnum.values()) {
+            if (value.getType().equals(type)) {
+                return value.getPath();
+            }
+        }
+        return null;
+    }
+
 }

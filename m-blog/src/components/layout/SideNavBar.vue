@@ -88,6 +88,11 @@
           <i class="iconfont iconpinglunzu" /> 留言
         </router-link>
       </div>
+      <div class="menus-item">
+        <button @click="openGpt">
+          <i class="iconfont icon-chatgpt" /> ChatGpt
+        </button>
+      </div>
       <div class="menus-item" v-if="!this.$store.state.avatar">
         <a @click="openLogin"><i class="iconfont icondenglu" /> 登录 </a>
       </div>
@@ -129,6 +134,11 @@ hr {
   animation: 0.8s ease 0s 1 normal none running sidebarItem;
 }
 .menus-item a {
+  padding: 6px 30px;
+  display: block;
+  line-height: 2;
+}
+.menus-item button{
   padding: 6px 30px;
   display: block;
   line-height: 2;
@@ -178,7 +188,16 @@ export default {
           this.$toast({ type: "error", message: data.message });
         }
       });
-    }
+    },
+    // 打开GPT
+    openGpt() {
+      // this.$store.commit("OPEN_GPT");
+      // 判断管理员是否开启chatGPT
+      if (this.$store.state.blogInfo.websiteConfig.isChatGpt !== 1) {
+        this.$toast({type: "warnning", message: "管理员未打开chatGPT-_-"})
+      }
+      this.$store.state.gptFlag = true;
+    },
   }
 };
 </script>

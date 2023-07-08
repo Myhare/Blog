@@ -48,7 +48,7 @@ public class UserAuthController {
     @ApiOperation("发送邮件")
     @GetMapping("/sendEmail")
     public ResponseResult<String> sendEmail(String email){
-        userAuthService.sendEmail(email);
+        userAuthService.sendCodeEmail(email);
         return ResponseResult.ok("邮件发送成功，请等待",null);
     }
 

@@ -20,7 +20,7 @@ public class Talk implements Serializable {
     private Integer id;
 
     /**
-     * 用户id
+     * 用户id(userInfo)
      */
     private Integer userId;
 

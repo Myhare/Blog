@@ -89,4 +89,9 @@ public class CommonConst {
      */
     public static final Integer LOGIN_TYPE_QQ_CODE = 2;
 
+    /**
+     * 博主id
+     */
+    public static final Integer BLOG_ID = 1;
+
 }

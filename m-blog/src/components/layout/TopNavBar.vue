@@ -181,7 +181,8 @@ export default {
       // console.log(this.$store.state.loginFlag);
     },
     // 打开GPT
-    openGpt(){
+    openGpt() {
+      // this.$store.commit("OPEN_GPT");
       // 判断管理员是否开启chatGPT
       if (this.$store.state.blogInfo.websiteConfig.isChatGpt !== 1) {
         this.$toast({type: "warnning", message: "管理员未打开chatGPT-_-"})

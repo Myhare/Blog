@@ -36,6 +36,7 @@
         <div>名称：{{ blogInfo.websiteConfig.websiteName }}</div>
         <div>简介：{{ blogInfo.websiteConfig.websiteIntro }}</div>
         <div>头像：{{ blogInfo.websiteConfig.userAvatar }}</div>
+        <div>网站链接：http://www.mingzib.xyz</div>
       </blockquote>
       <div class="mt-5 mb-5">
         需要交换友链的可在下方留言💖

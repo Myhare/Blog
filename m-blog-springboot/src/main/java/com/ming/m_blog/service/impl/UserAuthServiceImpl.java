@@ -93,9 +93,9 @@ public class UserAuthServiceImpl extends ServiceImpl<UserAuthMapper, UserAuth> i
         return userInfoMapper.updateUserDelState(userInfo);
     }
 
-    // 发送邮件
+    // 发送验证码邮件
     @Override
-    public void sendEmail(String email) {
+    public void sendCodeEmail(String email) {
         // 校验格式
         if (!CommonUtils.checkEmail(email)){
             throw new ReRuntimeException("邮箱格式错误");

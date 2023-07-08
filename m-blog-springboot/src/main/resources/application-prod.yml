@@ -95,6 +95,10 @@ search:
   mode: mysql
 #  mode: elasticSearch
 
+# 网站路径,用于邮件通知
+website:
+  url: http://www.mingzib.xyz/
+
 # 第三方QQ登录
 qq:
   app-id: 102045697

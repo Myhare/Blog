@@ -28,7 +28,7 @@ public interface UserAuthService extends IService<UserAuth> {
      * 发送邮件
      * @param email 要发送的邮箱号
      */
-    void sendEmail(String email);
+    void sendCodeEmail(String email);
 
     /**
      * 注册用户
