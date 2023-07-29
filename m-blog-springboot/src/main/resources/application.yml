@@ -1,3 +1,13 @@
+server:
+  port: 8080
+  servlet:
+    session:
+      # 设置session过期时间，6个小时
+      timeout: 21600
+#  tomcat:
+#    connection-timeout: 18000000
+
+# 选择使用开发环境还是生产环境
 spring:
   profiles:
     active: prod

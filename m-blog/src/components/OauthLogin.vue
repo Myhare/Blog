@@ -35,7 +35,7 @@ export default {
                 that.$store.commit("LOGIN", data.data);
                 if (data.data.email == null) {
                   that.$toast({
-                    type: "warnning",
+                    type: "warning",
                     message: "请绑定邮箱以便及时收到回复"
                   });
                 } else {

@@ -58,7 +58,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
             // token对用户的id进行加密
             String token = createToken(userId);
             // 将token存到redis中
-            redisService.set(RedisPrefixConst.BACKSTAGE_LOGIN_TOKEN+userId,token,60*60);
+            redisService.set(RedisPrefixConst.BACKSTAGE_LOGIN_TOKEN+userId,token,6*60*60);
             httpServletResponse.setContentType(APPLICATION_JSON);
             httpServletResponse.getWriter().write(JSON.toJSONString(ResponseResult.ok(token))); // 将token返回给前端
         }

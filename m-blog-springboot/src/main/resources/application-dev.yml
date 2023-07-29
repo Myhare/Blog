@@ -1,12 +1,3 @@
-server:
-  port: 8080
-  servlet:
-    session:
-      # 设置session过期时间
-      timeout: 21600
-#  tomcat:
-#    connection-timeout: 18000000
-
 spring:
   application:
     name: m-blog-springboot

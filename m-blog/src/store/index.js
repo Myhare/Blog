@@ -113,6 +113,7 @@ export default new Vuex.Store({
   },
   modules: {
   },
+  // 解决刷新后vuex会清除的问题
   plugins: [
     createPersistedState({
       storage: window.sessionStorage
