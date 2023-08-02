@@ -349,22 +349,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         try {
             // 登录后可以查询当前用的发表的私密文章
             Integer loginUserId = UserUtils.getLoginUserId();
-            List<ArchiveDTO> archiveDTOList = articleMapper.loginGetArchive(PageUtils.getLimitCurrent(), PageUtils.getSize(), loginUserId);
+            List<ArchiveDTO> archiveDTOList =
+                    articleMapper.loginGetArchive(PageUtils.getLimitCurrent(), PageUtils.getSize(), loginUserId);
             Integer archiveCount = articleMapper.loginGetArchiveCount(loginUserId);
             return new PageResult<ArchiveDTO>(archiveDTOList,archiveCount);
         } catch (Exception e) {
             // 用户没有登录
-            Page<Article> articlePage =
-                    articleMapper.selectPage(new Page<>(PageUtils.getLimitCurrent(), PageUtils.getSize()),
-                            new LambdaQueryWrapper<Article>()
-                                    .select(Article::getId, Article::getTitle, Article::getCreateTime)
-                                    .eq(Article::getStatus, ArticleStatusEnum.PUBLIC.getStatus())
-                    );
-            List<ArchiveDTO> archiveDTOList = BeanCopyUtils.copyList(articlePage.getRecords(), ArchiveDTO.class);
+            List<ArchiveDTO> archiveList = articleMapper.getArchive(PageUtils.getLimitCurrent(), PageUtils.getSize());
             // 查询一共发布了多少文章
             Integer archiveCount = articleMapper.selectCount(new LambdaQueryWrapper<Article>()
                     .eq(Article::getStatus, ArticleStatusEnum.PUBLIC.getStatus())
             );
+            List<ArchiveDTO> archiveDTOList = BeanCopyUtils.copyList(archiveList, ArchiveDTO.class);
             return new PageResult<ArchiveDTO>(archiveDTOList,archiveCount);
         }
     }

@@ -93,6 +93,13 @@ public interface ArticleMapper extends BaseMapper<Article> {
     List<ArticleStatisticsDTO> listArticleStatistics();
 
     /**
+     * 未登录获取文章归档
+     */
+    List<ArchiveDTO> getArchive(@Param("pageNum")Long pageNum,
+                                     @Param("pageSize")Long pageSize
+    );
+
+    /**
      * 登录用户查询归档
      * @param userId 登录用户id
      */

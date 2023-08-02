@@ -35,7 +35,7 @@
 import { Timeline, TimelineItem, TimelineTitle } from "vue-cute-timeline";
 export default {
   created() {
-    this.listArchives();
+    this.listArchives(this.current);
   },
   components: {
     Timeline,
@@ -50,10 +50,10 @@ export default {
     };
   },
   methods: {
-    listArchives() {
+    listArchives(value) {
       this.$axios
           .get("/api/articles/archives", {
-            params: { current: this.current }
+            params: { current: value }
           })
           .then(({ data }) => {
             console.log("查询到的data数据：");
@@ -81,14 +81,8 @@ export default {
   },
   watch: {
     current(value) {
-      this.axios
-          .get("/api/articles/archives", {
-            params: { current: value }
-          })
-          .then(({ data }) => {
-            this.archiveList = data.data.recordList;
-            this.count = data.data.count;
-          });
+      console.log('检测到数据变化,新数据：'+ value);
+      this.listArchives(value)
     }
   }
 };
