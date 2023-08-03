@@ -64,9 +64,13 @@ const routes = [
       title: "留言板"
     }
   },
-  // 第三方去登录中间界面
+  // 第三方去登录中间界面（QQ）
   {
     path: "/oauth/login/qq",
+    component: () => import('@/components/OauthLogin')
+  },
+  {
+    path: "/oauth/login/GitHub",
     component: () => import('@/components/OauthLogin')
   },
   {

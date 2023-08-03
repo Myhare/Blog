@@ -12,6 +12,7 @@ import com.ming.m_blog.strategy.context.SocialLoginStrategyContext;
 import com.ming.m_blog.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -88,7 +89,15 @@ public class UserAuthController {
     @PostMapping("/oauth/qq")
     public ResponseResult<UserInfoDTO> qqLogin(@RequestBody QQLoginVO qqLoginVO){
         // 第三方QQ登录
-        UserInfoDTO userInfoDTO = socialLoginStrategyContext.executeLoginStrategy(JSON.toJSONString(qqLoginVO), LoginTypeEnum.QQ);
+        UserInfoDTO userInfoDTO =
+                socialLoginStrategyContext.executeLoginStrategy(JSON.toJSONString(qqLoginVO), LoginTypeEnum.QQ);
+        return ResponseResult.ok(userInfoDTO);
+    }
+
+    @ApiOperation("GitHub登录")
+    @PostMapping("/oauth/github")
+    public ResponseResult<UserInfoDTO> githubLogin(@RequestBody GithubLoginVO githubLoginVO){
+        UserInfoDTO userInfoDTO = socialLoginStrategyContext.executeLoginStrategy(JSON.toJSONString(githubLoginVO), LoginTypeEnum.GIT_HUB);
         return ResponseResult.ok(userInfoDTO);
     }
 

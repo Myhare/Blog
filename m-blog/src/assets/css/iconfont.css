@@ -191,3 +191,12 @@
   content: "\e6bf";
 }
 
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont_github.ttf?t=1690977138789') format('truetype');
+}
+
+.icon-github:before {
+  content: "\ea0b";
+}
+

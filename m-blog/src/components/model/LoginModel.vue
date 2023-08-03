@@ -52,10 +52,16 @@
             <!-- qq登录 -->
             <a
               v-if="showLogin('qq')"
-              class="iconfont iconqq"
+              class="mr-3 iconfont iconqq"
               style="color:#00AAEE"
               @click="qqLogin"
             />
+            <!--GitHub登录-->
+            <a
+                v-if="showLogin('GitHub')"
+                class="mr-3 iconfont icon-github"
+                style="color:#00AAEE"
+                @click="githubLogin"/>
           </div>
         </div>
       </div>
@@ -177,6 +183,15 @@ export default {
         );
       }
     },
+    // 第三方GitHub登录
+    githubLogin(){
+      // 保存当前路径
+      this.$store.commit("SAVE_LOGIN_URL", this.$route.path);
+      // 向GitHub发送请求
+      const authUrl = `https://github.com/login/oauth/authorize?client_id=${this.config.GITHUB_CLIENT_ID}&redirect_uri=${this.config.GITHUB_REDIRECT_URI}`;
+      window.location.href = authUrl;
+    },
+    // 微博登录
     weiboLogin() {
       //保留当前路径
       this.$store.commit("saveLoginUrl", this.$route.path);

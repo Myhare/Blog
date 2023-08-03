@@ -29,13 +29,13 @@ export default {
               accessToken: accessToken
             })
             .then(({ data }) => {
-              console.log(data);
+              // console.log(data);
               if (data.flag) {
                 //保存登录状态
                 that.$store.commit("LOGIN", data.data);
                 if (data.data.email == null) {
                   that.$toast({
-                    type: "warning",
+                    type: "warnning",
                     message: "请绑定邮箱以便及时收到回复"
                   });
                 } else {
@@ -49,6 +49,29 @@ export default {
       } else {
         that.$toast({ type: "error", message: data.message });
       }
+    }else if (that.$route.path === "/oauth/login/GitHub"){
+      // GitHub登录
+      // 获取到返回的code
+      const code = that.$route.query.code;
+      // 后端传递登录数据
+      that.$axios.post('/api/oauth/github', {
+        code
+      }).then(({ data }) => {
+        if (data.flag) {
+          //保存登录状态
+          that.$store.commit("LOGIN", data.data);
+          if (data.data.email == null) {
+            that.$toast({
+              type: "warnning",
+              message: "请绑定邮箱以便及时收到回复"
+            });
+          } else {
+            that.$toast({ type: "success", message: data.message });
+          }
+        } else {
+          that.$toast({ type: "error", message: data.message });
+        }
+      })
     }
     // 跳转回原页面
     const loginUrl = that.$store.state.loginUrl;

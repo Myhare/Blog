@@ -18,7 +18,12 @@ public enum LoginTypeEnum {
     /**
      * QQ登录
      */
-    QQ(2, "QQ登录", "qqLoginStrategyImpl");
+    QQ(2, "QQ登录", "qqLoginStrategyImpl"),
+
+    /**
+     * GitHub登录
+     */
+    GIT_HUB(3, "GitHub登录", "githubLoginStrategyImpl");
     // /**
     //  * 微博登录
     //  */

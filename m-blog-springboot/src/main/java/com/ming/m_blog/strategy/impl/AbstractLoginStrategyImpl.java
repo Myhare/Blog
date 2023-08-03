@@ -48,34 +48,48 @@ public abstract class AbstractLoginStrategyImpl implements LoginStrategy {
 
     /**
      * 登录
-     * @param data 用户信息
+     * @param data 用户信息的JSON格式
      * @return
      */
     @Override
     public UserInfoDTO login(String data) {
-        UserDetailDTO userDetailDTO;
+        UserDetailDTO userDetailDTO = null;
         // 获取第三方的token信息
         SocialTokenDTO socialTokenDTO = getSocialTokenDTO(data);
         // 获取用户的ip信息
         String ipAddress = IpUtils.getIpAddress(request);
         String ipSource = IpUtils.getIpSource(ipAddress);
-        // 判断有没有这个用户
-        UserAuth userAuth = getUserAuth(socialTokenDTO);
-        if (Objects.isNull(userAuth)){
-            // 这个用户没有注册,将当前用户信息保存到数据库中返回
-            userDetailDTO = saveUser(socialTokenDTO,ipAddress,ipSource);
+        // 可以直接获取唯一id的平台
+        if (socialTokenDTO.getOpenId() != null){
+            // 判断有没有这个用户
+            UserAuth userAuth = getUserAuth(socialTokenDTO);
+            if (Objects.isNull(userAuth)){
+                // 这个用户没有注册,将当前用户信息保存到数据库中返回
+                userDetailDTO = saveUser(socialTokenDTO,ipAddress,ipSource);
+            }else {
+                // 当前用户已经在数据库中注册了
+                userDetailDTO = getUserInfoDTO(userAuth, ipAddress, ipSource);
+            }
+            // 判断账号是否被禁用
+            if (userDetailDTO.getIsDisable() == CommonConst.TRUE){
+                throw new ReRuntimeException("账号被禁用");
+            }
         }else {
-            // 当前用户已经在数据库中注册了
-            userDetailDTO = getUserInfoDTO(userAuth, ipAddress, ipSource);
-        }
-        // 判断账号是否被禁用
-        if (userDetailDTO.getIsDisable() == CommonConst.TRUE){
-            throw new ReRuntimeException("账号被禁用");
+            // 不能直接获取用户唯一id平台
+            // 手动再次查询用户
+            SocialUserInfoDTO socialUserInfoDTO = socialUserInfoDTO(socialTokenDTO);
+            socialTokenDTO.setOpenId(socialUserInfoDTO.getId());
+            UserAuth userAuth = getUserAuth(socialTokenDTO);
+            if (Objects.isNull(userAuth)){
+                // 注册一个用户
+                userDetailDTO = saveUser(socialUserInfoDTO, socialTokenDTO, ipAddress, ipSource);
+            }else {
+                userDetailDTO = getUserInfoDTO(userAuth, ipAddress, ipSource);
+            }
         }
         // 将用户信息放入SpringSecurity
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetailDTO, null, userDetailDTO.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
-
 
         return BeanCopyUtils.copyObject(userDetailDTO,UserInfoDTO.class);
     }
@@ -113,9 +127,9 @@ public abstract class AbstractLoginStrategyImpl implements LoginStrategy {
      * @return
      */
     private UserDetailDTO getUserInfoDTO(UserAuth userAuth, String ipAddress, String ipSource){
-        UserInfo userInfo = userInfoMapper.selectOne(new LambdaQueryWrapper<UserInfo>()
-                .eq(UserInfo::getId, userAuth.getUserInfoId())
-        );
+        // UserInfo userInfo = userInfoMapper.selectOne(new LambdaQueryWrapper<UserInfo>()
+        //         .eq(UserInfo::getId, userAuth.getUserInfoId())
+        // );
         // 更新登录的ip信息
         userAuth.setIpAddress(ipAddress);
         userAuth.setIpSource(ipSource);
@@ -146,6 +160,37 @@ public abstract class AbstractLoginStrategyImpl implements LoginStrategy {
                 .username(socialTokenDTO.getOpenId())
                 .password(socialTokenDTO.getAccessToken())
                 .loginType(LoginTypeEnum.QQ.getType())
+                .loginTime(new Date())
+                .ipAddress(ipAddress)
+                .ipSource(ipSource)
+                .build();
+        userAuthMapper.insert(userAuth);
+        // 保存用户的角色
+        InUserRole inUserRole = InUserRole.builder()
+                .roleId(RoleEnum.USER.getRoleId())
+                .userId(userInfo.getId())
+                .build();
+        inUserRoleMapper.insert(inUserRole);
+        return userDetailsService.convertUserDetail(userAuth,request);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public UserDetailDTO saveUser(SocialUserInfoDTO socialUserInfoDTO, SocialTokenDTO socialTokenDTO, String ipAddress, String ipSource){
+        // 封装用户的基本信息存入数据库
+        UserInfo userInfo = UserInfo.builder()
+                .nickname(socialUserInfoDTO.getNickname())
+                .avatar(socialUserInfoDTO.getAvatar())
+                .build();
+        userInfoMapper.insert(userInfo);
+        // 设置用户基本信息的初始值(方便封装返回给前端使用)
+        userInfo.setIsDelete(CommonConst.FALSE);
+
+        // 保存账号信息
+        UserAuth userAuth = UserAuth.builder()
+                .userInfoId(userInfo.getId())
+                .username(socialUserInfoDTO.getId())
+                .password(socialTokenDTO.getAccessToken())
+                .loginType(LoginTypeEnum.GIT_HUB.getType())
                 .loginTime(new Date())
                 .ipAddress(ipAddress)
                 .ipSource(ipSource)

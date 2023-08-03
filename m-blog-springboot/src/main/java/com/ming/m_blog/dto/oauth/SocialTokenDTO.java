@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class SocialTokenDTO {
 
     /**
-     * 开放id
+     * 开放id(用户唯一id)
      */
     private String openId;
 
