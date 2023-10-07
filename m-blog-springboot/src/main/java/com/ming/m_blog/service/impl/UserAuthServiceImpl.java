@@ -23,10 +23,12 @@ import com.ming.m_blog.service.RedisService;
 import com.ming.m_blog.service.UserAuthService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ming.m_blog.utils.CommonUtils;
+import com.ming.m_blog.utils.UUIDUtils;
 import com.ming.m_blog.utils.UserUtils;
 import com.ming.m_blog.vo.PasswordVO;
 import com.ming.m_blog.vo.RegisterVO;
 import com.ming.m_blog.vo.WebsiteConfigVO;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -111,7 +113,12 @@ public class UserAuthServiceImpl extends ServiceImpl<UserAuthMapper, UserAuth> i
         // 通知rabbitMQ消费者发送邮件
         // rabbitTemplate.convertAndSend(MQPrefixConst.EMAIL_EXCHANGE,"",new Message(JSON.toJSONBytes(emailSendDTO),new MessageProperties()));
         // 直接使用对象发送,向消费者发送消息
-        rabbitTemplate.convertAndSend(MQPrefixConst.EMAIL_EXCHANGE,"",emailSendDTO);
+        rabbitTemplate.convertAndSend(MQPrefixConst.EMAIL_EXCHANGE,"",emailSendDTO, message -> {
+            // 设置消息唯一id
+            MessageProperties messageProperties = message.getMessageProperties();
+            messageProperties.setMessageId(UUIDUtils.getUUID());
+            return message;
+        });
         // 将随机数存入redis
         redisService.set(REGISTER_CODE+email,randomCode,60 * CODE_TIME);
     }

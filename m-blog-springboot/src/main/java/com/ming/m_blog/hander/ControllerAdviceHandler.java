@@ -70,7 +70,6 @@ public class ControllerAdviceHandler {
     /**
      * 如果在登录认证的UserDetailsServer中抛出异常，会被SpringSecurity捕获并转化成其他异常
      * SpringSecurity如果匹配不到具体的异常，就会把此时的Exception转化成InternalAuthenticationServiceException异常再抛出
-     *
      * 这里用来检测前台自定义登录接口认证中自己抛出的认证异常
      *
      * @param e 异常

@@ -90,6 +90,13 @@ qq:
   check-token-url: https://graph.qq.com/oauth2.0/me?access_token={access_token}
   user-info-url: https://graph.qq.com/user/get_user_info?openid={openid}&access_token={access_token}&oauth_consumer_key={oauth_consumer_key}
 
+# 第三方GitHub登录
+github:
+  client-id: 
+  client-secret: 
+  get-token-url: https://github.com/login/oauth/access_token # 通过code获取token
+  get-user-url: https://api.github.com/user # 获取用户信息
+
 # 搜索文章模式
 search:
   mode: mysql

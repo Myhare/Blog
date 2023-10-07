@@ -86,6 +86,10 @@ public abstract class AbstractLoginStrategyImpl implements LoginStrategy {
             }else {
                 userDetailDTO = getUserInfoDTO(userAuth, ipAddress, ipSource);
             }
+            // 判断账号是否被禁用
+            if (userDetailDTO.getIsDisable() == CommonConst.TRUE){
+                throw new ReRuntimeException("账号被禁用");
+            }
         }
         // 将用户信息放入SpringSecurity
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetailDTO, null, userDetailDTO.getAuthorities());

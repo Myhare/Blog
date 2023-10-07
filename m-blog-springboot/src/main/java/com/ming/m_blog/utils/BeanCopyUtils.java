@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 复制对象或集合属性
  *
- * @author yezhiqiu
+ * @author ming
  * @date 2021/08/10
  */
 public class BeanCopyUtils {

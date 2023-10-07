@@ -20,14 +20,12 @@ import com.ming.m_blog.pojo.UserInfo;
 import com.ming.m_blog.service.BlogService;
 import com.ming.m_blog.service.CommentService;
 import com.ming.m_blog.service.RedisService;
-import com.ming.m_blog.utils.CommonUtils;
-import com.ming.m_blog.utils.HTMLUtils;
-import com.ming.m_blog.utils.PageUtils;
-import com.ming.m_blog.utils.UserUtils;
+import com.ming.m_blog.utils.*;
 import com.ming.m_blog.vo.AdminCommentsVO;
 import com.ming.m_blog.vo.CommentsVO;
 import com.ming.m_blog.vo.PageResult;
 import com.ming.m_blog.vo.WebsiteConfigVO;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -304,7 +302,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             emailSendDTO.setContent("有一条新的评论，请去博客后台审核");
         }
         // 直接使用对象发送,向消费者发送消息
-        rabbitTemplate.convertAndSend(MQPrefixConst.EMAIL_EXCHANGE,"",emailSendDTO);
+        rabbitTemplate.convertAndSend(MQPrefixConst.EMAIL_EXCHANGE,"",emailSendDTO, message -> {
+            // 设置消息唯一id
+            MessageProperties messageProperties = message.getMessageProperties();
+            messageProperties.setMessageId(UUIDUtils.getUUID());
+            return message;
+        });
     }
 
     /**
