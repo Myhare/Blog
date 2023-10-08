@@ -6,7 +6,7 @@ import lombok.Getter;
 /**
  * 文件路径枚举
  *
- * @author yezhiqiu
+ * @author ming
  * @date 2021/08/04
  */
 @Getter

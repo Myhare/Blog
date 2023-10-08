@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * 第三方登录策略上下文
  *
- * @author yezhiqiu
+ * @author ming
  * @date 2021/07/28
  */
 @Service
