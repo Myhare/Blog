@@ -164,7 +164,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
                 .eq(Comment::getIsReview, TRUE)
         );
         if (commentCount==0){
-            return new PageResult<>();
+            return new PageResult<>(null, 0);
         }
         // 分类查询评论数据
         // 从分页工具中获取分页信息
